@@ -3,4 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!--自定义-->
+    <!--tab主页的字体颜色-->
+    <color name="main_tab_textColor">#000000</color>
+    <color name="main_tab_textColor_selected">#ffffff</color>
+
 </resources>

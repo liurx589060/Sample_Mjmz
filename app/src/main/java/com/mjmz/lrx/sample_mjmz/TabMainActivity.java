@@ -1,5 +1,6 @@
 package com.mjmz.lrx.sample_mjmz;
 
+import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,6 +14,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mjmz.lrx.sample_mjmz.base.BaseFragmentActivity;
+import com.mjmz.lrx.sample_mjmz.tab.CartFragment;
+import com.mjmz.lrx.sample_mjmz.tab.DesignFragment;
+import com.mjmz.lrx.sample_mjmz.tab.GoodsFragment;
+import com.mjmz.lrx.sample_mjmz.tab.HomeFragment;
+import com.mjmz.lrx.sample_mjmz.tab.MyFragment;
+
 import java.util.ArrayList;
 
 public class TabMainActivity extends BaseFragmentActivity {
@@ -21,6 +28,7 @@ public class TabMainActivity extends BaseFragmentActivity {
     private ViewPager mViewPager;
 
     //数据类
+    private int defaltIndex = 0;//默认显示第一页
     private String tabTitles[] = {"首页","设计","购物车","商品","我的"};
     private ArrayList<Fragment> fragmentList;
     private MyFragmentPagerAdapter pagerAdapter;
@@ -45,22 +53,23 @@ public class TabMainActivity extends BaseFragmentActivity {
         fragmentList = new ArrayList<>();
 
         //添加主页tab
-        Fragment fragment1 = new Fragment();
+        HomeFragment fragment1 = new HomeFragment();
         fragmentList.add(fragment1);
 
-        Fragment fragment2 = new Fragment();
+        DesignFragment fragment2 = new DesignFragment();
         fragmentList.add(fragment2);
 
-        Fragment fragment3 = new Fragment();
+        CartFragment fragment3 = new CartFragment();
         fragmentList.add(fragment3);
 
-        Fragment fragment4 = new Fragment();
+        GoodsFragment fragment4 = new GoodsFragment();
         fragmentList.add(fragment4);
 
-        Fragment fragment5 = new Fragment();
+        MyFragment fragment5 = new MyFragment();
         fragmentList.add(fragment5);
 
         //设置适配器
+        mTabLayout.setTabMode(TabLayout.MODE_FIXED);//设置tab模式，当前为系统默认模式
         pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(),fragmentList);
         mViewPager.setAdapter(pagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
@@ -68,9 +77,36 @@ public class TabMainActivity extends BaseFragmentActivity {
         for (int i = 0 ; i < mTabLayout.getTabCount(); i++) {
             TabLayout.Tab tab = mTabLayout.getTabAt(i);
             if(tab != null) {
-                tab.setCustomView(pagerAdapter.getTabView(i)).setIcon(R.mipmap.ic_launcher);
+                tab.setCustomView(pagerAdapter.getTabView(i));
             }
         }
+
+        //添加TabLayout选中的监听
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                View v = tab.getCustomView();
+                TextView tv = (TextView) v.findViewById(R.id.main_tab_title);
+                tv.setTextColor(getResources().getColor(R.color.main_tab_textColor_selected));
+                ImageView img = (ImageView) v.findViewById(R.id.main_tab_image);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                View v = tab.getCustomView();
+                TextView tv = (TextView) v.findViewById(R.id.main_tab_title);
+                tv.setTextColor(getResources().getColor(R.color.main_tab_textColor));
+                ImageView img = (ImageView) v.findViewById(R.id.main_tab_image);
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        //默认显示第一页
+        mViewPager.setCurrentItem(defaltIndex);
     }
 
     /**
@@ -104,8 +140,12 @@ public class TabMainActivity extends BaseFragmentActivity {
             View v = LayoutInflater.from(TabMainActivity.this).inflate(R.layout.main_tab_view, null);
             TextView tv = (TextView) v.findViewById(R.id.main_tab_title);
             tv.setText(tabTitles[position]);
+            if(position == defaltIndex) {
+                tv.setTextColor(getResources().getColor(R.color.main_tab_textColor_selected));
+            }else {
+                tv.setTextColor(getResources().getColor(R.color.main_tab_textColor));
+            }
             ImageView img = (ImageView) v.findViewById(R.id.main_tab_image);
-            img.setImageResource(R.mipmap.ic_launcher);
             return v;
         }
     }
