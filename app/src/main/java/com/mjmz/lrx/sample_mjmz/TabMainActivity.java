@@ -89,6 +89,8 @@ public class TabMainActivity extends BaseFragmentActivity {
                 TextView tv = (TextView) v.findViewById(R.id.main_tab_title);
                 tv.setTextColor(getResources().getColor(R.color.main_tab_textColor_selected));
                 ImageView img = (ImageView) v.findViewById(R.id.main_tab_image);
+
+                mViewPager.setCurrentItem(tab.getPosition(),false);
             }
 
             @Override

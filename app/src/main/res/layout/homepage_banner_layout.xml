@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.stx.xhb.xbanner.XBanner
+        android:id="@+id/homepage_banner_Xbanner"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        app:pointsPosition="CENTER"
+        app:AutoPlayTime="3000"
+        app:pointsContainerBackground="#44aaaaaa"
+        />
+
+</LinearLayout>
