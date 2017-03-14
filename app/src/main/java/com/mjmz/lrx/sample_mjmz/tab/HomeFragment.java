@@ -50,8 +50,8 @@ public class HomeFragment extends BaseFragment {
     private RecomGoodsRecyclerViewAdapter mRecomGoodsRecyclerAdapter;
 
     /*数据类*/
-    private boolean isLoadingComplete;//是否数据加载完全
     private HomeRecyclerViewAdapter mAdapter;
+    private ArrayList<String> mDataList;
     private List<String> imgesUrl;
     private Handler mHandler;
 
@@ -86,18 +86,24 @@ public class HomeFragment extends BaseFragment {
      * 初始化
      */
     private void init(View view) {
+        //创建集合
+        mDataList = new ArrayList<>();
+
         //设置其他模块数据
         imgesUrl = new ArrayList<>();
         imgesUrl.add("http://img3.fengniao.com/forum/attachpics/913/114/36502745.jpg");
         imgesUrl.add("http://imageprocess.yitos.net/images/public/20160910/99381473502384338.jpg");
         imgesUrl.add("http://imageprocess.yitos.net/images/public/20160910/77991473496077677.jpg");
         imgesUrl.add("http://imageprocess.yitos.net/images/public/20160906/1291473163104906.jpg");
+        mDataList.addAll(imgesUrl);
 
+        //找寻控件
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
 
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext()));
-        mAdapter = new HomeRecyclerViewAdapter(imgesUrl);
+        mAdapter = new HomeRecyclerViewAdapter(mDataList);
         mAdapter.setmBannerView(LayoutInflater.from(mRecyclerView.getContext()).inflate(R.layout.homepage_banner_layout,null));
         mAdapter.setmHotDesignView(LayoutInflater.from(mRecyclerView.getContext()).inflate(R.layout.homepage_hot_design_layout,null));
         mAdapter.setmRecomGoodsView(LayoutInflater.from(mRecyclerView.getContext()).inflate(R.layout.homepage_recom_goods_layout,null));
@@ -109,20 +115,20 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onLoadMore(int page) {
                 Log.e("yy","load=");
-                if(isLoadingComplete) {
+                if(loadingMoreUtil.isLoadingComplete) {
                     return;
                 }
 
                 Log.e("yy","size=" + imgesUrl.size());
-                if(imgesUrl.size() > 40) {
+                if(mDataList.size() > 40) {
                     endless.loadMoreComplete();
                     loadingMoreUtil.setLoadingCompleted();
-                    isLoadingComplete = true;
+                    loadingMoreUtil.isLoadingComplete = true;
                 }else {
                     mHandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            imgesUrl.addAll(imgesUrl);
+                            mDataList.addAll(mDataList);
                             endless.loadMoreComplete();
                         }
                     },2000);
@@ -133,14 +139,10 @@ public class HomeFragment extends BaseFragment {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                endless.loadMoreComplete();
-                loadingMoreUtil.setLoadingState();
-                isLoadingComplete = false;
-                imgesUrl.clear();
-                imgesUrl.add("http://img3.fengniao.com/forum/attachpics/913/114/36502745.jpg");
-                imgesUrl.add("http://imageprocess.yitos.net/images/public/20160910/99381473502384338.jpg");
-                imgesUrl.add("http://imageprocess.yitos.net/images/public/20160910/77991473496077677.jpg");
-                imgesUrl.add("http://imageprocess.yitos.net/images/public/20160906/1291473163104906.jpg");
+                loadingMoreUtil.setLoadingState(endless);
+                loadingMoreUtil.isLoadingComplete = false;
+                mDataList.clear();
+                mDataList.addAll(imgesUrl);
                 mAdapter.notifyDataSetChanged();
                 mSwipeRefreshLayout.setRefreshing(false);
             }

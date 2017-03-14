@@ -5,6 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/Sample_Mjmz.iml" filepath="$PROJECT_DIR$/Sample_Mjmz.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/httpwrapper/httpwrapper.iml" filepath="$PROJECT_DIR$/httpwrapper/httpwrapper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/httpwrapper/httpwrapper.iml" filepath="$PROJECT_DIR$/httpwrapper/httpwrapper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/imagewrapper/imagewrapper.iml" filepath="$PROJECT_DIR$/imagewrapper/imagewrapper.iml" />
       <module fileurl="file://$PROJECT_DIR$/imagewrapper/imagewrapper.iml" filepath="$PROJECT_DIR$/imagewrapper/imagewrapper.iml" />
     </modules>
   </component>

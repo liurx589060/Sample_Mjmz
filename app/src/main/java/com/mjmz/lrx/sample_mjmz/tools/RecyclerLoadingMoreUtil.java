@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.github.ybq.endless.Endless;
 import com.mjmz.lrx.sample_mjmz.R;
 
 /**
@@ -17,6 +18,8 @@ public class RecyclerLoadingMoreUtil {
     private View loadingView;
     private TextView mTextView;
     private ProgressBar mProgressBar;
+
+    public boolean isLoadingComplete;//是否数据加载完全
 
     public RecyclerLoadingMoreUtil(Context context) {
         loadingView = LayoutInflater.from(context).inflate(R.layout.common_loading_view,null);
@@ -32,9 +35,10 @@ public class RecyclerLoadingMoreUtil {
     /**
      * 加载状态
      */
-    public void setLoadingState() {
+    public void setLoadingState(Endless endless) {
         mProgressBar.setVisibility(View.VISIBLE);
         mTextView.setText("加载中...");
+        endless.loadMoreComplete();
     }
 
     /**
