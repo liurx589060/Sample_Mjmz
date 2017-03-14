@@ -48,6 +48,7 @@ public class TabMainActivity extends BaseFragmentActivity {
         //找寻控件
         mTabLayout = (TabLayout) findViewById(R.id.tab_tabLayout);
         mViewPager = (ViewPager) findViewById(R.id.tab_viewPager);
+        mViewPager.setOffscreenPageLimit(5);
 
         //数据
         fragmentList = new ArrayList<>();
