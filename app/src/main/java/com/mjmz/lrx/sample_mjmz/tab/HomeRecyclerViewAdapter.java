@@ -6,8 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.imagewrapper.ImageWrapper;
 import com.mjmz.lrx.sample_mjmz.R;
 import com.mjmz.lrx.sample_mjmz.common.OnRecyclerItemClickListener;
+
+import java.util.List;
 
 
 /**
@@ -25,6 +29,8 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter {
     private View mRecomGoodsView;
 
     private OnRecyclerItemClickListener listener;
+
+    private List<String> mAdapterList;
 
     public void setOnRecyclerItemClickListener (OnRecyclerItemClickListener listener) {
         this.listener = listener;
@@ -52,6 +58,10 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter {
 
     public View getmRecomGoodsView() {
         return mRecomGoodsView;
+    }
+
+    public HomeRecyclerViewAdapter(List<String> list) {
+        this.mAdapterList = list;
     }
 
     @Override
@@ -85,7 +95,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         int viewType = getItemViewType(position);
         if(viewType == TYPE_RECOM_EDITOR) {
-            ((RecomEditorViewHolder)holder).bindRecomEditorVH();
+            ((RecomEditorViewHolder)holder).bindRecomEditorVH(position);
         }else {
             return;
         }
@@ -93,7 +103,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return 3 + 15;
+        return 3 + mAdapterList.size();
     }
 
     //轮播ViewHolder
@@ -134,8 +144,8 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter {
             mthumbsImage = (ImageView) itemView.findViewById(R.id.homepage_recom_editor_thumbs);
         }
 
-        public void bindRecomEditorVH() {
-
+        public void bindRecomEditorVH(int position) {
+            ImageWrapper.getInstance().with(this.itemView.getContext()).setUrl(mAdapterList.get(position % mAdapterList.size())).setImageView(mthumbsImage);
         }
     }
 }

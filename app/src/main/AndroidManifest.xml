@@ -11,6 +11,11 @@
         android:supportsRtl="true"
         android:theme="@style/MyTheme"
         android:name=".MyApplication">
+
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${UMENG_CHANNEL_VALUE}" />
+
         <activity android:name=".TabMainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

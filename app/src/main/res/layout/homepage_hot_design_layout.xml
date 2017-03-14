@@ -36,6 +36,9 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/homepage_hot_design_recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="150dp">
+        android:layout_height="100dp"
+        android:layout_marginLeft="11dp"
+        android:layout_marginRight="11dp"
+        >
     </android.support.v7.widget.RecyclerView>
 </LinearLayout>

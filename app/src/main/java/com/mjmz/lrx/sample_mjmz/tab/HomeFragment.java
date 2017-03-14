@@ -1,6 +1,8 @@
 package com.mjmz.lrx.sample_mjmz.tab;
 
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,12 +12,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.ImageHeaderParser;
+import com.example.imagewrapper.ImageWrapper;
+import com.github.ybq.endless.Endless;
 import com.mjmz.lrx.sample_mjmz.R;
 import com.mjmz.lrx.sample_mjmz.base.BaseFragment;
+import com.mjmz.lrx.sample_mjmz.tools.GlobalToolsUtil;
+import com.mjmz.lrx.sample_mjmz.tools.RecyclerLoadingMoreUtil;
+import com.mjmz.lrx.sample_mjmz.tools.SystemUtil;
 import com.stx.xhb.xbanner.XBanner;
-import com.stx.xhb.xbanner.XBannerViewPager;
 import com.stx.xhb.xbanner.transformers.Transformer;
 
 import java.util.ArrayList;
@@ -35,12 +43,17 @@ public class HomeFragment extends BaseFragment {
 
       //热门设计
     private RecyclerView mHotDesignRecycler;
+    private HotRecyclerViewAdapter mHotDesignRecyclerAdapter;
 
       //商品推荐
     private RecyclerView mRecomGoodsRecycler;
+    private RecomGoodsRecyclerViewAdapter mRecomGoodsRecyclerAdapter;
 
     /*数据类*/
+    private boolean isLoadingComplete;//是否数据加载完全
     private HomeRecyclerViewAdapter mAdapter;
+    private List<String> imgesUrl;
+    private Handler mHandler;
 
     @Nullable
     @Override
@@ -48,6 +61,7 @@ public class HomeFragment extends BaseFragment {
         View rootView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_home,null);
 
         init(rootView);
+        mHandler = new Handler();
         return rootView;
 
     }
@@ -72,53 +86,195 @@ public class HomeFragment extends BaseFragment {
      * 初始化
      */
     private void init(View view) {
+        //设置其他模块数据
+        imgesUrl = new ArrayList<>();
+        imgesUrl.add("http://img3.fengniao.com/forum/attachpics/913/114/36502745.jpg");
+        imgesUrl.add("http://imageprocess.yitos.net/images/public/20160910/99381473502384338.jpg");
+        imgesUrl.add("http://imageprocess.yitos.net/images/public/20160910/77991473496077677.jpg");
+        imgesUrl.add("http://imageprocess.yitos.net/images/public/20160906/1291473163104906.jpg");
+
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext()));
-        mAdapter = new HomeRecyclerViewAdapter();
+        mAdapter = new HomeRecyclerViewAdapter(imgesUrl);
         mAdapter.setmBannerView(LayoutInflater.from(mRecyclerView.getContext()).inflate(R.layout.homepage_banner_layout,null));
         mAdapter.setmHotDesignView(LayoutInflater.from(mRecyclerView.getContext()).inflate(R.layout.homepage_hot_design_layout,null));
         mAdapter.setmRecomGoodsView(LayoutInflater.from(mRecyclerView.getContext()).inflate(R.layout.homepage_recom_goods_layout,null));
         mRecyclerView.setAdapter(mAdapter);
 
-        //设置其他模块数据
-        initBannerData(mAdapter.getmBannerView());
+        final RecyclerLoadingMoreUtil loadingMoreUtil = new RecyclerLoadingMoreUtil(mRecyclerView.getContext());
+        final Endless endless = Endless.applyTo(mRecyclerView, loadingMoreUtil.getLoadingView());
+        endless.setLoadMoreListener(new Endless.LoadMoreListener() {
+            @Override
+            public void onLoadMore(int page) {
+                Log.e("yy","load=");
+                if(isLoadingComplete) {
+                    return;
+                }
+
+                Log.e("yy","size=" + imgesUrl.size());
+                if(imgesUrl.size() > 40) {
+                    endless.loadMoreComplete();
+                    loadingMoreUtil.setLoadingCompleted();
+                    isLoadingComplete = true;
+                }else {
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            imgesUrl.addAll(imgesUrl);
+                            endless.loadMoreComplete();
+                        }
+                    },2000);
+                }
+            }
+        });
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                endless.loadMoreComplete();
+                loadingMoreUtil.setLoadingState();
+                isLoadingComplete = false;
+                imgesUrl.clear();
+                imgesUrl.add("http://img3.fengniao.com/forum/attachpics/913/114/36502745.jpg");
+                imgesUrl.add("http://imageprocess.yitos.net/images/public/20160910/99381473502384338.jpg");
+                imgesUrl.add("http://imageprocess.yitos.net/images/public/20160910/77991473496077677.jpg");
+                imgesUrl.add("http://imageprocess.yitos.net/images/public/20160906/1291473163104906.jpg");
+                mAdapter.notifyDataSetChanged();
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
+        initBannerData();
+        initHotDesignData();
+        initRecomGoodsData();
     }
 
     /**
      * 设置Banner
      */
-    private void initBannerData(View view) {
-        if(view != null) {
-            mXBanner = (XBanner) mAdapter.getmBannerView().findViewById(R.id.homepage_banner_Xbanner);
-            final List<String> imgesUrl = new ArrayList<>();
-            imgesUrl.add("http://img3.fengniao.com/forum/attachpics/913/114/36502745.jpg");
-            imgesUrl.add("http://imageprocess.yitos.net/images/public/20160910/99381473502384338.jpg");
-            imgesUrl.add("http://imageprocess.yitos.net/images/public/20160910/77991473496077677.jpg");
-            imgesUrl.add("http://imageprocess.yitos.net/images/public/20160906/1291473163104906.jpg");
-            mXBanner.setData(imgesUrl,null);
-            mXBanner.setmAdapter(new XBanner.XBannerAdapter() {
-                @Override
-                public void loadBanner(XBanner banner, Object model, View view, int position) {
-                    Glide.with(banner.getContext()).load(imgesUrl.get(position)).into((ImageView)view);
-                }
-            });
-            mXBanner.setPageTransformer(Transformer.Zoom);
-        }
+    private void initBannerData() {
+        mXBanner = (XBanner) mAdapter.getmBannerView().findViewById(R.id.homepage_banner_Xbanner);
+        mXBanner.setData(imgesUrl,null);
+        mXBanner.setmAdapter(new XBanner.XBannerAdapter() {
+            @Override
+            public void loadBanner(XBanner banner, Object model, View view, int position) {
+                ImageWrapper.getInstance().with(getContext()).setUrl(imgesUrl.get(position)).setImageView((ImageView)view);
+            }
+        });
+        mXBanner.setPageTransformer(Transformer.Zoom);
     }
 
     /**
      * 设置热门设计
      */
-    private void initHotDesignData(View view) {
-
+    private void initHotDesignData() {
+        mHotDesignRecycler = (RecyclerView) mAdapter.getmHotDesignView().findViewById(R.id.homepage_hot_design_recyclerView);
+        mHotDesignRecycler.setLayoutManager(new LinearLayoutManager(mHotDesignRecycler.getContext(),LinearLayoutManager.HORIZONTAL,false));//水平
+        mHotDesignRecycler.setHasFixedSize(true);
+        mHotDesignRecyclerAdapter = new HotRecyclerViewAdapter();
+        mHotDesignRecycler.setAdapter(mHotDesignRecyclerAdapter);
+        mHotDesignRecycler.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                super.getItemOffsets(outRect, view, parent, state);
+                if(parent.getChildAdapterPosition(view) != 0) {
+                    outRect.left = SystemUtil.dip2px(getContext(),9);
+                }
+            }
+        });
     }
 
     /**
      * 设置商品推荐
      */
-    private void initRecomGoodsData(View view) {
+    private void initRecomGoodsData() {
+        mRecomGoodsRecycler = (RecyclerView) mAdapter.getmRecomGoodsView().findViewById(R.id.homepage_recom_goods_recyclerView);
+        mRecomGoodsRecycler.setLayoutManager(new LinearLayoutManager(mHotDesignRecycler.getContext(),LinearLayoutManager.HORIZONTAL,false));//水平
+        mRecomGoodsRecycler.setHasFixedSize(true);
+        mRecomGoodsRecyclerAdapter = new RecomGoodsRecyclerViewAdapter();
+        mRecomGoodsRecycler.setAdapter(mRecomGoodsRecyclerAdapter);
+        mRecomGoodsRecycler.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                super.getItemOffsets(outRect, view, parent, state);
+                if(parent.getChildAdapterPosition(view) != 0) {
+                    outRect.left = SystemUtil.dip2px(getContext(),9);
+                }
+            }
+        });
+    }
 
+    /**
+     * 热门设计的adapter
+     */
+    private class HotRecyclerViewAdapter extends RecyclerView.Adapter {
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.homepage_hot_design_recyclerview_item,parent,false);
+            return new HotDesignViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            ((HotDesignViewHolder)holder).bindVH(position);
+        }
+
+        @Override
+        public int getItemCount() {
+            return 15;
+        }
+
+        private class HotDesignViewHolder extends RecyclerView.ViewHolder {
+            private ImageView mImageView;
+
+            public HotDesignViewHolder(View itemView) {
+                super(itemView);
+                mImageView = (ImageView) itemView.findViewById(R.id.hot_design_recyclerview_item_image);
+            }
+
+            public void bindVH(int position) {
+                ImageWrapper.getInstance().with(this.itemView.getContext()).setUrl(imgesUrl.get(position % imgesUrl.size())).setImageView(mImageView);
+            }
+        }
+    }
+
+    /**
+     * 商品推荐的adapter
+     */
+    private class RecomGoodsRecyclerViewAdapter extends RecyclerView.Adapter {
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.homepage_recom_goods_recyclerview_item,parent,false);
+            return new RecomGoodsViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            ((RecomGoodsViewHolder)holder).bindVH(position);
+        }
+
+        @Override
+        public int getItemCount() {
+            return 40;
+        }
+
+        private class RecomGoodsViewHolder extends RecyclerView.ViewHolder {
+            private ImageView mImageView;
+            private TextView mTitle;
+
+            public RecomGoodsViewHolder(View itemView) {
+                super(itemView);
+                mImageView = (ImageView) itemView.findViewById(R.id.recom_goods_recyclerView_item_image);
+                mTitle = (TextView) itemView.findViewById(R.id.recom_goods_recyclerView_item_title);
+
+            }
+
+            public void bindVH(int position) {
+                ImageWrapper.getInstance().with(this.itemView.getContext()).setUrl(imgesUrl.get(position % imgesUrl.size())).setImageView(mImageView);
+                mTitle.setText("推荐商品-" + position);
+            }
+        }
     }
 }

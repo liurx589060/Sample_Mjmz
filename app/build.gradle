@@ -16,6 +16,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    productFlavors {
+        kuan {}
+        xiaomi {}
+        qh360 {}
+        baidu {}
+        wandoujia {}
+        wnw {}
+    }
+
+    productFlavors.all {
+        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+    }
 }
 
 dependencies {
@@ -25,5 +38,8 @@ dependencies {
     //轮播xBanner
     compile 'com.xhb:xbanner:1.2.7'
     compile 'com.nineoldandroids:library:2.4.0'
-    compile 'com.github.bumptech.glide:glide:3.7.0'
+    //recyclerView上拉加载
+    compile 'com.github.ybq:Endless-RecyclerView:1.0.3'
+    compile project(':imagewrapper')
+    compile project(':httpwrapper')
 }
