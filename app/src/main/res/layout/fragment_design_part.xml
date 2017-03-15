@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eeeeee">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
+
+        <Button
+            android:id="@+id/space_screen_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="空间"
+            android:textSize="@dimen/design_tab_screenTitleTextSize"
+            android:background="#ffffff"
+            android:drawableRight="@mipmap/ic_launcher"
+            android:gravity="center_vertical|left"
+            android:paddingLeft="10dp"
+            android:paddingRight="2dp"/>
+
+        <Button
+            android:id="@+id/style_screen_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="风格"
+            android:textSize="@dimen/design_tab_screenTitleTextSize"
+            android:background="#ffffff"
+            android:drawableRight="@mipmap/ic_launcher"
+            android:gravity="center_vertical|left"
+            android:paddingLeft="10dp"
+            android:paddingRight="2dp"
+            android:layout_marginLeft="2dp"/>
+
+        <Button
+            android:id="@+id/part_screen_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="局部"
+            android:textSize="@dimen/design_tab_screenTitleTextSize"
+            android:background="#ffffff"
+            android:drawableRight="@mipmap/ic_launcher"
+            android:gravity="center_vertical|left"
+            android:paddingLeft="10dp"
+            android:paddingRight="2dp"
+            android:layout_marginLeft="2dp"/>
+
+        <Button
+            android:id="@+id/screen_screen_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="刷选"
+            android:textSize="@dimen/design_tab_screenTitleTextSize"
+            android:background="#ffffff"
+            android:drawableRight="@mipmap/ic_launcher"
+            android:gravity="center_vertical|left"
+            android:paddingLeft="10dp"
+            android:paddingRight="2dp"
+            android:layout_marginLeft="2dp"/>
+
+    </LinearLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.github.jdsjlzx.recyclerview.LRecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="-1dp"
+            android:clipToPadding="false"
+            android:paddingRight="6dp">
+
+        </com.github.jdsjlzx.recyclerview.LRecyclerView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</LinearLayout>

@@ -2,11 +2,49 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#a4bb48">
+    >
 
-    <TextView
-        android:text="TextView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView" />
+        android:layout_height="@dimen/title_bar_height"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="#ffffff">
+
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
+
+            <RadioButton
+                android:id="@+id/global_radio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="整屋设计"
+                android:textSize="@dimen/Textsize_middle"
+                android:textColor="@color/design_titlecolor_change_selected"
+                android:button="@null"
+                android:checked="true"/>
+
+            <RadioButton
+                android:id="@+id/part_radio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:button="@null"
+                android:textSize="@dimen/Textsize_middle"
+                android:textColor="@color/design_titlecolor_change_selected"
+                android:text="局部设计" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <com.mjmz.lrx.sample_mjmz.customeview.ScrollIsViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </com.mjmz.lrx.sample_mjmz.customeview.ScrollIsViewPager>
 </LinearLayout>

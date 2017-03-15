@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentActivity;
 import com.bumptech.glide.DrawableTypeRequest;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -46,7 +47,7 @@ public class GlideImageLoader extends AbsImageLoader {
         }
 
         if(drawableTypeRequest != null) {
-            drawableTypeRequest.into(params.imageView);
+            drawableTypeRequest.diskCacheStrategy(DiskCacheStrategy.ALL).into(params.imageView);//缓存所有尺寸的图片
         }
     }
 

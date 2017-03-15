@@ -14,13 +14,13 @@
 
     </android.support.design.widget.TabLayout>
 
-    <android.support.v4.view.ViewPager
+    <com.mjmz.lrx.sample_mjmz.customeview.ScrollIsViewPager
         android:id="@+id/tab_viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/tab_tabLayout"
         >
 
-    </android.support.v4.view.ViewPager>
+    </com.mjmz.lrx.sample_mjmz.customeview.ScrollIsViewPager>
 
 </RelativeLayout>

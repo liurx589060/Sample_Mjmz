@@ -13,14 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.ImageHeaderParser;
 import com.example.imagewrapper.ImageWrapper;
-import com.github.ybq.endless.Endless;
+import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
+import com.github.jdsjlzx.recyclerview.LRecyclerView;
+import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.mjmz.lrx.sample_mjmz.R;
-import com.mjmz.lrx.sample_mjmz.base.BaseFragment;
-import com.mjmz.lrx.sample_mjmz.tools.GlobalToolsUtil;
+import com.mjmz.lrx.sample_mjmz.base.BaseFragment;;
 import com.mjmz.lrx.sample_mjmz.tools.RecyclerLoadingMoreUtil;
 import com.mjmz.lrx.sample_mjmz.tools.SystemUtil;
 import com.stx.xhb.xbanner.XBanner;
@@ -36,7 +34,8 @@ import java.util.List;
 public class HomeFragment extends BaseFragment {
     /*控件*/
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private RecyclerView mRecyclerView;
+    private LRecyclerView mRecyclerView;
+    private RecyclerLoadingMoreUtil loadingMoreUtil;
 
       //轮播
     private XBanner mXBanner;
@@ -50,7 +49,8 @@ public class HomeFragment extends BaseFragment {
     private RecomGoodsRecyclerViewAdapter mRecomGoodsRecyclerAdapter;
 
     /*数据类*/
-    private HomeRecyclerViewAdapter mAdapter;
+    private HomeRecyclerViewAdapter mBaseAdapter;
+    private LRecyclerViewAdapter mAdapter;
     private ArrayList<String> mDataList;
     private List<String> imgesUrl;
     private Handler mHandler;
@@ -99,37 +99,36 @@ public class HomeFragment extends BaseFragment {
 
         //找寻控件
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        mRecyclerView = (LRecyclerView) view.findViewById(R.id.recyclerView);
 
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext()));
-        mAdapter = new HomeRecyclerViewAdapter(mDataList);
-        mAdapter.setmBannerView(LayoutInflater.from(mRecyclerView.getContext()).inflate(R.layout.homepage_banner_layout,null));
-        mAdapter.setmHotDesignView(LayoutInflater.from(mRecyclerView.getContext()).inflate(R.layout.homepage_hot_design_layout,null));
-        mAdapter.setmRecomGoodsView(LayoutInflater.from(mRecyclerView.getContext()).inflate(R.layout.homepage_recom_goods_layout,null));
+        mBaseAdapter = new HomeRecyclerViewAdapter(mDataList);
+        mBaseAdapter.setmBannerView(LayoutInflater.from(mRecyclerView.getContext()).inflate(R.layout.homepage_banner_layout,null));
+        mBaseAdapter.setmHotDesignView(LayoutInflater.from(mRecyclerView.getContext()).inflate(R.layout.homepage_hot_design_layout,null));
+        mBaseAdapter.setmRecomGoodsView(LayoutInflater.from(mRecyclerView.getContext()).inflate(R.layout.homepage_recom_goods_layout,null));
+        mAdapter = new LRecyclerViewAdapter(mBaseAdapter);
         mRecyclerView.setAdapter(mAdapter);
 
-        final RecyclerLoadingMoreUtil loadingMoreUtil = new RecyclerLoadingMoreUtil(mRecyclerView.getContext());
-        final Endless endless = Endless.applyTo(mRecyclerView, loadingMoreUtil.getLoadingView());
-        endless.setLoadMoreListener(new Endless.LoadMoreListener() {
+        //加载更多
+        loadingMoreUtil = new RecyclerLoadingMoreUtil(getContext());
+        mAdapter.addFooterView(loadingMoreUtil.getLoadingView());
+        mRecyclerView.setPullRefreshEnabled(false);
+        mRecyclerView.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
-            public void onLoadMore(int page) {
-                Log.e("yy","load=");
-                if(loadingMoreUtil.isLoadingComplete) {
-                    return;
-                }
-
+            public void onLoadMore() {
                 Log.e("yy","size=" + imgesUrl.size());
-                if(mDataList.size() > 40) {
-                    endless.loadMoreComplete();
+                if(mDataList.size() > 40) {//没数据了
                     loadingMoreUtil.setLoadingCompleted();
                     loadingMoreUtil.isLoadingComplete = true;
+                    mRecyclerView.setNoMore(true);
                 }else {
                     mHandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
+                            mRecyclerView.refreshComplete(mDataList.size());
                             mDataList.addAll(mDataList);
-                            endless.loadMoreComplete();
+                            mAdapter.notifyDataSetChanged();
                         }
                     },2000);
                 }
@@ -139,12 +138,13 @@ public class HomeFragment extends BaseFragment {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                loadingMoreUtil.setLoadingState(endless);
+                loadingMoreUtil.setLoadingState();
                 loadingMoreUtil.isLoadingComplete = false;
                 mDataList.clear();
                 mDataList.addAll(imgesUrl);
                 mAdapter.notifyDataSetChanged();
                 mSwipeRefreshLayout.setRefreshing(false);
+                mRecyclerView.setNoMore(false);
             }
         });
 
@@ -157,7 +157,7 @@ public class HomeFragment extends BaseFragment {
      * 设置Banner
      */
     private void initBannerData() {
-        mXBanner = (XBanner) mAdapter.getmBannerView().findViewById(R.id.homepage_banner_Xbanner);
+        mXBanner = (XBanner) mBaseAdapter.getmBannerView().findViewById(R.id.homepage_banner_Xbanner);
         mXBanner.setData(imgesUrl,null);
         mXBanner.setmAdapter(new XBanner.XBannerAdapter() {
             @Override
@@ -172,7 +172,7 @@ public class HomeFragment extends BaseFragment {
      * 设置热门设计
      */
     private void initHotDesignData() {
-        mHotDesignRecycler = (RecyclerView) mAdapter.getmHotDesignView().findViewById(R.id.homepage_hot_design_recyclerView);
+        mHotDesignRecycler = (RecyclerView) mBaseAdapter.getmHotDesignView().findViewById(R.id.homepage_hot_design_recyclerView);
         mHotDesignRecycler.setLayoutManager(new LinearLayoutManager(mHotDesignRecycler.getContext(),LinearLayoutManager.HORIZONTAL,false));//水平
         mHotDesignRecycler.setHasFixedSize(true);
         mHotDesignRecyclerAdapter = new HotRecyclerViewAdapter();
@@ -192,7 +192,7 @@ public class HomeFragment extends BaseFragment {
      * 设置商品推荐
      */
     private void initRecomGoodsData() {
-        mRecomGoodsRecycler = (RecyclerView) mAdapter.getmRecomGoodsView().findViewById(R.id.homepage_recom_goods_recyclerView);
+        mRecomGoodsRecycler = (RecyclerView) mBaseAdapter.getmRecomGoodsView().findViewById(R.id.homepage_recom_goods_recyclerView);
         mRecomGoodsRecycler.setLayoutManager(new LinearLayoutManager(mHotDesignRecycler.getContext(),LinearLayoutManager.HORIZONTAL,false));//水平
         mRecomGoodsRecycler.setHasFixedSize(true);
         mRecomGoodsRecyclerAdapter = new RecomGoodsRecyclerViewAdapter();

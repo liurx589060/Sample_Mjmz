@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mjmz.lrx.sample_mjmz.base.BaseFragmentActivity;
+import com.mjmz.lrx.sample_mjmz.customeview.ScrollIsViewPager;
 import com.mjmz.lrx.sample_mjmz.tab.CartFragment;
 import com.mjmz.lrx.sample_mjmz.tab.DesignFragment;
 import com.mjmz.lrx.sample_mjmz.tab.GoodsFragment;
@@ -25,7 +26,7 @@ import java.util.ArrayList;
 public class TabMainActivity extends BaseFragmentActivity {
     //控件类
     private TabLayout mTabLayout;
-    private ViewPager mViewPager;
+    private ScrollIsViewPager mViewPager;
 
     //数据类
     private int defaltIndex = 0;//默认显示第一页
@@ -47,8 +48,8 @@ public class TabMainActivity extends BaseFragmentActivity {
     private void init() {
         //找寻控件
         mTabLayout = (TabLayout) findViewById(R.id.tab_tabLayout);
-        mViewPager = (ViewPager) findViewById(R.id.tab_viewPager);
-        mViewPager.setOffscreenPageLimit(5);
+        mViewPager = (ScrollIsViewPager) findViewById(R.id.tab_viewPager);
+        mViewPager.setCanScroll(false);//设置不可滑动
 
         //数据
         fragmentList = new ArrayList<>();
@@ -71,6 +72,7 @@ public class TabMainActivity extends BaseFragmentActivity {
 
         //设置适配器
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);//设置tab模式，当前为系统默认模式
+        mViewPager.setOffscreenPageLimit(fragmentList.size());
         pagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(),fragmentList);
         mViewPager.setAdapter(pagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);

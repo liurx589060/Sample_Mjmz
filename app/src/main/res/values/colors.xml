@@ -9,4 +9,8 @@
     <color name="main_tab_textColor">#000000</color>
     <color name="main_tab_textColor_selected">#ffffff</color>
 
+    <!--设计页签标题选中和未选中颜色-->
+    <color name="design_titleColor">#999999</color>
+    <color name="design_titleColor_selected">#ff4444</color>
+
 </resources>

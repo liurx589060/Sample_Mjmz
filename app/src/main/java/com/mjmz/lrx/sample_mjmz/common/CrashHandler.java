@@ -168,13 +168,13 @@ public class CrashHandler implements UncaughtExceptionHandler {
 		// 保存日志文件
 		saveCrashLogToFile(paramThrowable) ;
 		// 重启程序
-		Intent intent = new Intent(mContext.getApplicationContext(), TabMainActivity.class);
-        PendingIntent restartIntent = PendingIntent.getActivity(
-                mContext.getApplicationContext(), 0, intent,0);
-        //退出程序                                          
-        AlarmManager mgr = (AlarmManager)mContext.getSystemService(Context.ALARM_SERVICE);
-        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 1000,
-                restartIntent);
+//		Intent intent = new Intent(mContext.getApplicationContext(), TabMainActivity.class);
+//        PendingIntent restartIntent = PendingIntent.getActivity(
+//                mContext.getApplicationContext(), 0, intent,0);
+//        //退出程序
+//        AlarmManager mgr = (AlarmManager)mContext.getSystemService(Context.ALARM_SERVICE);
+//        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 1000,
+//                restartIntent);
 
         //杀死该进程
         android.os.Process.killProcess(android.os.Process.myPid()) ;

@@ -38,8 +38,9 @@ dependencies {
     //轮播xBanner
     compile 'com.xhb:xbanner:1.2.7'
     compile 'com.nineoldandroids:library:2.4.0'
-    //recyclerView上拉加载
-    compile 'com.github.ybq:Endless-RecyclerView:1.0.3'
+
     compile project(':imagewrapper')
     compile project(':httpwrapper')
+    //recyclerView上拉加载
+    compile 'com.github.jdsjlzx:LRecyclerView:1.3.8'
 }
