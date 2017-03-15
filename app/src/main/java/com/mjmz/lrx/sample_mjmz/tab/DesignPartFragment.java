@@ -16,6 +16,8 @@ import com.example.imagewrapper.ImageWrapper;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;;
+import com.github.jdsjlzx.recyclerview.LuRecyclerView;
+import com.github.jdsjlzx.recyclerview.LuRecyclerViewAdapter;
 import com.mjmz.lrx.sample_mjmz.R;
 import com.mjmz.lrx.sample_mjmz.base.BaseFragment;
 import com.mjmz.lrx.sample_mjmz.tools.RecyclerLoadingMoreUtil;
@@ -32,9 +34,9 @@ import java.util.List;
 public class DesignPartFragment extends BaseFragment {
 
     //控件类
-    private LRecyclerView mRecyclerView;
+    private LuRecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipeRefresh;
-    private LRecyclerViewAdapter mAdapter;
+    private LuRecyclerViewAdapter mAdapter;
     private RecyclerLoadingMoreUtil loadingMoreUtil;
 
     //数据类
@@ -68,26 +70,27 @@ public class DesignPartFragment extends BaseFragment {
         imgesUrl.add("http://img2.cache.netease.com/sports/2008/9/4/20080904085704fdd3a.jpg");
         imgesUrl.add("http://a0.att.hudong.com/17/52/01300000432220131367520438422.jpg");
         imgesUrl.add("http://imglf1.ph.126.net/tU0icGyQKWUd6YCpvE2G5g==/6608503588073788924.jpg");
-        for (int i = 0 ; i < 30 ; i ++) {
+        for (int i = 0 ; i < 3 ; i ++) {
             mDataList.addAll(imgesUrl);
         }
         getRedomHeight(mDataList);
 
         //找寻控件
-        mRecyclerView = (LRecyclerView) view.findViewById(R.id.recyclerView);
+        mRecyclerView = (LuRecyclerView) view.findViewById(R.id.recyclerView);
         mSwipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
 
         //设置数据和监听
-        final StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
         mRecyclerView.setHasFixedSize(true);
         MyRecyclerViewAdapter adapter = new MyRecyclerViewAdapter(mDataList);
-        mAdapter = new LRecyclerViewAdapter(adapter);
+        mAdapter = new LuRecyclerViewAdapter(adapter);
+        //先要setAdapter在添加底视图
+        mRecyclerView.setAdapter(mAdapter);
         //底加载视图
         loadingMoreUtil = new RecyclerLoadingMoreUtil(getActivity());
         mAdapter.addFooterView(loadingMoreUtil.getLoadingView());
-        mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
@@ -100,7 +103,6 @@ public class DesignPartFragment extends BaseFragment {
         });
 
         //加载更多
-        mRecyclerView.setPullRefreshEnabled(false);
         mRecyclerView.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {

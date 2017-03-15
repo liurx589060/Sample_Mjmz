@@ -17,6 +17,8 @@ import com.example.imagewrapper.ImageWrapper;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
+import com.github.jdsjlzx.recyclerview.LuRecyclerView;
+import com.github.jdsjlzx.recyclerview.LuRecyclerViewAdapter;
 import com.mjmz.lrx.sample_mjmz.R;
 import com.mjmz.lrx.sample_mjmz.base.BaseFragment;;
 import com.mjmz.lrx.sample_mjmz.tools.RecyclerLoadingMoreUtil;
@@ -34,7 +36,7 @@ import java.util.List;
 public class HomeFragment extends BaseFragment {
     /*控件*/
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private LRecyclerView mRecyclerView;
+    private LuRecyclerView mRecyclerView;
     private RecyclerLoadingMoreUtil loadingMoreUtil;
 
       //轮播
@@ -50,7 +52,7 @@ public class HomeFragment extends BaseFragment {
 
     /*数据类*/
     private HomeRecyclerViewAdapter mBaseAdapter;
-    private LRecyclerViewAdapter mAdapter;
+    private LuRecyclerViewAdapter mAdapter;
     private ArrayList<String> mDataList;
     private List<String> imgesUrl;
     private Handler mHandler;
@@ -99,7 +101,7 @@ public class HomeFragment extends BaseFragment {
 
         //找寻控件
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
-        mRecyclerView = (LRecyclerView) view.findViewById(R.id.recyclerView);
+        mRecyclerView = (LuRecyclerView) view.findViewById(R.id.recyclerView);
 
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext()));
@@ -107,13 +109,12 @@ public class HomeFragment extends BaseFragment {
         mBaseAdapter.setmBannerView(LayoutInflater.from(mRecyclerView.getContext()).inflate(R.layout.homepage_banner_layout,null));
         mBaseAdapter.setmHotDesignView(LayoutInflater.from(mRecyclerView.getContext()).inflate(R.layout.homepage_hot_design_layout,null));
         mBaseAdapter.setmRecomGoodsView(LayoutInflater.from(mRecyclerView.getContext()).inflate(R.layout.homepage_recom_goods_layout,null));
-        mAdapter = new LRecyclerViewAdapter(mBaseAdapter);
+        mAdapter = new LuRecyclerViewAdapter(mBaseAdapter);
         mRecyclerView.setAdapter(mAdapter);
 
         //加载更多
         loadingMoreUtil = new RecyclerLoadingMoreUtil(getContext());
         mAdapter.addFooterView(loadingMoreUtil.getLoadingView());
-        mRecyclerView.setPullRefreshEnabled(false);
         mRecyclerView.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
