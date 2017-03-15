@@ -1,5 +1,6 @@
 package com.mjmz.lrx.sample_mjmz.tab;
 
+import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+import com.example.imagewrapper.ImageLoadedListener;
 import com.example.imagewrapper.ImageWrapper;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
@@ -70,7 +74,7 @@ public class DesignPartFragment extends BaseFragment {
         imgesUrl.add("http://img2.cache.netease.com/sports/2008/9/4/20080904085704fdd3a.jpg");
         imgesUrl.add("http://a0.att.hudong.com/17/52/01300000432220131367520438422.jpg");
         imgesUrl.add("http://imglf1.ph.126.net/tU0icGyQKWUd6YCpvE2G5g==/6608503588073788924.jpg");
-        for (int i = 0 ; i < 3 ; i ++) {
+        for (int i = 0 ; i < 30 ; i ++) {
             mDataList.addAll(imgesUrl);
         }
         getRedomHeight(mDataList);
@@ -80,7 +84,7 @@ public class DesignPartFragment extends BaseFragment {
         mSwipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
 
         //设置数据和监听
-        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+        final StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
         mRecyclerView.setHasFixedSize(true);
@@ -99,6 +103,14 @@ public class DesignPartFragment extends BaseFragment {
                 outRect.right=0;
                 outRect.bottom=0;
                 outRect.top = space;
+            }
+        });
+
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                staggeredGridLayoutManager.invalidateSpanAssignments();
             }
         });
 
@@ -174,11 +186,24 @@ public class DesignPartFragment extends BaseFragment {
                 mImageView = (ImageView) itemView.findViewById(R.id.imageView);
             }
 
-            public void bindVH(int position) {
-                ViewGroup.LayoutParams params =  this.mImageView.getLayoutParams();//得到item的LayoutParams布局参数
-                params.height = heightList.get(position);//把随机的高度赋予itemView布局
-                this.mImageView.setLayoutParams(params);//把params设置给itemView布局
-                ImageWrapper.getInstance().with(this.itemView.getContext()).setUrl(adapterList.get(position)).setImageView(mImageView);
+            public void bindVH(final int position) {
+                ImageWrapper.getInstance().with(this.itemView.getContext()).downImage(adapterList.get(position), new ImageLoadedListener() {
+                    @Override
+                    public void imageLoaded(Bitmap bitmap, String url) {
+                        Log.e("yy",position + "-->>" + "with=" + bitmap.getWidth() + "--height=" + bitmap.getHeight());
+                        float rate = bitmap.getHeight()*1.0f / bitmap.getWidth()*1.0f;
+                        ViewGroup.LayoutParams params =  mImageView.getLayoutParams();//得到item的LayoutParams布局参数
+                        params.height = (int) (mImageView.getWidth() * rate);//把随机的高度赋予itemView布局
+                        Log.e("zz","height--" + params.height + "[][][]width=" + mImageView.getWidth());
+                        mImageView.setLayoutParams(params);//把params设置给itemView布局
+                        ImageWrapper.getInstance().with(itemView.getContext()).setUrl(adapterList.get(position)).setImageView(mImageView);
+                    }
+                });
+
+//                ViewGroup.LayoutParams params =  this.mImageView.getLayoutParams();//得到item的LayoutParams布局参数
+//                params.height = heightList.get(position);//把随机的高度赋予itemView布局
+//                this.mImageView.setLayoutParams(params);//把params设置给itemView布局
+//                ImageWrapper.getInstance().with(this.itemView.getContext()).setUrl(adapterList.get(position)).setImageView(mImageView);
             }
         }
     }

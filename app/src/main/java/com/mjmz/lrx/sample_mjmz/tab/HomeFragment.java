@@ -93,7 +93,7 @@ public class HomeFragment extends BaseFragment {
 
         //设置其他模块数据
         imgesUrl = new ArrayList<>();
-        imgesUrl.add("http://img3.fengniao.com/forum/attachpics/913/114/36502745.jpg");
+        imgesUrl.add("http://img5.duitang.com/uploads/item/201411/28/20141128195310_VJzuT.thumb.700_0.jpeg");
         imgesUrl.add("http://imageprocess.yitos.net/images/public/20160910/99381473502384338.jpg");
         imgesUrl.add("http://imageprocess.yitos.net/images/public/20160910/77991473496077677.jpg");
         imgesUrl.add("http://imageprocess.yitos.net/images/public/20160906/1291473163104906.jpg");
