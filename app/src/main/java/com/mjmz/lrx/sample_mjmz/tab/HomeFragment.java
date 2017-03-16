@@ -247,6 +247,7 @@ public class HomeFragment extends BaseFragment {
      * 商品推荐的adapter
      */
     private class RecomGoodsRecyclerViewAdapter extends RecyclerView.Adapter {
+
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.homepage_recom_goods_recyclerview_item,parent,false);

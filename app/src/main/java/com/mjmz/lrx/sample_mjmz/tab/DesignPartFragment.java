@@ -24,6 +24,7 @@ import com.github.jdsjlzx.recyclerview.LuRecyclerView;
 import com.github.jdsjlzx.recyclerview.LuRecyclerViewAdapter;
 import com.mjmz.lrx.sample_mjmz.R;
 import com.mjmz.lrx.sample_mjmz.base.BaseFragment;
+import com.mjmz.lrx.sample_mjmz.common.Datas;
 import com.mjmz.lrx.sample_mjmz.tools.RecyclerLoadingMoreUtil;
 import com.mjmz.lrx.sample_mjmz.tools.SystemUtil;
 
@@ -44,11 +45,11 @@ public class DesignPartFragment extends BaseFragment {
     private RecyclerLoadingMoreUtil loadingMoreUtil;
 
     //数据类
-    private List<String> imgesUrl;
     private ArrayList<String> mDataList;
     private Handler mHandler;
 
-    private ArrayList<Integer> heightList;
+    private HashMap<String,Integer> heightList;
+    private int recyclerViewImageWidth;//瀑布流的图片的width
 
     @Nullable
     @Override
@@ -68,16 +69,10 @@ public class DesignPartFragment extends BaseFragment {
         mDataList = new ArrayList<>();
 
         //设置其他模块数据
-        imgesUrl = new ArrayList<>();
-        heightList = new ArrayList<>();
-        imgesUrl.add("http://img1.cache.netease.com/catchpic/6/6B/6B501A4E51E2E5177DC8BD4F97702FE2.jpg");
-        imgesUrl.add("http://img2.cache.netease.com/sports/2008/9/4/20080904085704fdd3a.jpg");
-        imgesUrl.add("http://a0.att.hudong.com/17/52/01300000432220131367520438422.jpg");
-        imgesUrl.add("http://imglf1.ph.126.net/tU0icGyQKWUd6YCpvE2G5g==/6608503588073788924.jpg");
-        for (int i = 0 ; i < 30 ; i ++) {
-            mDataList.addAll(imgesUrl);
+        heightList = new HashMap<>();
+        for (int i = 0 ; i < 20 ; i ++) {
+            mDataList.addAll(Datas.getImagesUrlArray());
         }
-        getRedomHeight(mDataList);
 
         //找寻控件
         mRecyclerView = (LuRecyclerView) view.findViewById(R.id.recyclerView);
@@ -90,7 +85,7 @@ public class DesignPartFragment extends BaseFragment {
         mRecyclerView.setHasFixedSize(true);
         MyRecyclerViewAdapter adapter = new MyRecyclerViewAdapter(mDataList);
         mAdapter = new LuRecyclerViewAdapter(adapter);
-        //先要setAdapter在添加底视图
+        //先要setAdapter再添加底视图
         mRecyclerView.setAdapter(mAdapter);
         //底加载视图
         loadingMoreUtil = new RecyclerLoadingMoreUtil(getActivity());
@@ -106,14 +101,6 @@ public class DesignPartFragment extends BaseFragment {
             }
         });
 
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                staggeredGridLayoutManager.invalidateSpanAssignments();
-            }
-        });
-
         //加载更多
         mRecyclerView.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
@@ -121,10 +108,9 @@ public class DesignPartFragment extends BaseFragment {
                 mHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mDataList.addAll(imgesUrl);
-                        getRedomHeight(imgesUrl);
+                        mDataList.addAll(Datas.getImagesUrlArray());
                         mAdapter.notifyItemInserted(mAdapter.getItemCount() - 1);
-                        mRecyclerView.refreshComplete(imgesUrl.size());
+                        mRecyclerView.refreshComplete(Datas.getImagesUrlArray().size());
                     }
                 },2000);
             }
@@ -136,20 +122,13 @@ public class DesignPartFragment extends BaseFragment {
             public void onRefresh() {
                 mDataList.clear();
                 heightList.clear();
-                mDataList.addAll(imgesUrl);
-                getRedomHeight(mDataList);
+                for (int i = 0 ; i < 5 ; i ++) {
+                    mDataList.addAll(Datas.getImagesUrlArray());
+                }
                 mAdapter.notifyDataSetChanged();
                 mSwipeRefresh.setRefreshing(false);
             }
         });
-    }
-
-    private void getRedomHeight(List l) {
-        ArrayList<Integer> list = new ArrayList<>();
-        for (int i = 0 ; i <l.size() ; i ++) {
-            list.add((int)(200+Math.random()*400));
-        }
-        heightList.addAll(list);
     }
 
     /**
@@ -173,10 +152,12 @@ public class DesignPartFragment extends BaseFragment {
             ((MyViewHolder)holder).bindVH(position);
         }
 
+
         @Override
         public int getItemCount() {
             return adapterList.size();
         }
+
 
         private class MyViewHolder extends RecyclerView.ViewHolder {
             private ImageView mImageView;
@@ -187,23 +168,30 @@ public class DesignPartFragment extends BaseFragment {
             }
 
             public void bindVH(final int position) {
-                ImageWrapper.getInstance().with(this.itemView.getContext()).downImage(adapterList.get(position), new ImageLoadedListener() {
-                    @Override
-                    public void imageLoaded(Bitmap bitmap, String url) {
-                        Log.e("yy",position + "-->>" + "with=" + bitmap.getWidth() + "--height=" + bitmap.getHeight());
-                        float rate = bitmap.getHeight()*1.0f / bitmap.getWidth()*1.0f;
-                        ViewGroup.LayoutParams params =  mImageView.getLayoutParams();//得到item的LayoutParams布局参数
-                        params.height = (int) (mImageView.getWidth() * rate);//把随机的高度赋予itemView布局
-                        Log.e("zz","height--" + params.height + "[][][]width=" + mImageView.getWidth());
-                        mImageView.setLayoutParams(params);//把params设置给itemView布局
-                        ImageWrapper.getInstance().with(itemView.getContext()).setUrl(adapterList.get(position)).setImageView(mImageView);
-                    }
-                });
-
-//                ViewGroup.LayoutParams params =  this.mImageView.getLayoutParams();//得到item的LayoutParams布局参数
-//                params.height = heightList.get(position);//把随机的高度赋予itemView布局
-//                this.mImageView.setLayoutParams(params);//把params设置给itemView布局
-//                ImageWrapper.getInstance().with(this.itemView.getContext()).setUrl(adapterList.get(position)).setImageView(mImageView);
+                if(!heightList.containsKey("" + position)) {
+                    ImageWrapper.getInstance().with(this.itemView.getContext()).downImage(adapterList.get(position), new ImageLoadedListener() {
+                        @Override
+                        public void imageLoaded(Bitmap bitmap, String url) {
+                            float rate = bitmap.getHeight()*1.0f / bitmap.getWidth()*1.0f;
+                            ViewGroup.LayoutParams params =  mImageView.getLayoutParams();//得到item的LayoutParams布局参数
+                            if(recyclerViewImageWidth == 0) {
+                                recyclerViewImageWidth = mImageView.getWidth();
+                            }
+                            params.height = (int) (recyclerViewImageWidth * rate);//把随机的高度赋予itemView布局
+//                            Log.e("yy","height--" + params.height + "[][][]width=" + mImageView.getWidth());
+                            mImageView.setLayoutParams(params);//把params设置给itemView布局
+                            ImageWrapper.getInstance().with(itemView.getContext()).setUrl(adapterList.get(position)).setImageView(mImageView);
+                            heightList.put("" + position,params.height);
+                        }
+                    });
+                }else {
+                    int height = heightList.get("" + position);
+                    ViewGroup.LayoutParams params =  mImageView.getLayoutParams();//得到item的LayoutParams布局参数
+                    params.height = height;//把随机的高度赋予itemView布局
+//                    Log.e("zz","height--" + params.height + "[][][]width=" + mImageView.getWidth());
+                    mImageView.setLayoutParams(params);//把params设置给itemView布局
+                    ImageWrapper.getInstance().with(itemView.getContext()).setUrl(adapterList.get(position)).setImageView(mImageView);
+                }
             }
         }
     }
