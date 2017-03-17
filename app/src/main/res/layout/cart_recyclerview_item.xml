@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="100dp">
+
+    <ImageView
+        android:id="@+id/cart_recyclerView_item_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:scaleType="fitXY"
+        app:srcCompat="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/cart_recyclerView_item_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/cart_recyclerView_item_image"
+        android:layout_toRightOf="@+id/cart_recyclerView_item_image"
+        android:layout_marginLeft="10dp"
+        android:textColor="#333333"
+        android:textSize="15sp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/cart_recyclerView_item_subTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/cart_recyclerView_item_title"
+        android:layout_below="@+id/cart_recyclerView_item_title"
+        android:layout_marginTop="15dp"
+        android:textColor="#aaaaaa"
+        android:textSize="12sp"
+        android:text="TextView" />
+</RelativeLayout>

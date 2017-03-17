@@ -8,7 +8,7 @@ import java.util.List;
  */
 
 public class Datas {
-    public static List<String> getImagesUrlArray() {
+    public static ArrayList<String> getImagesUrlArray() {
         ArrayList<String> imgesUrl = new ArrayList<>();
         imgesUrl.add("http://img1.cache.netease.com/catchpic/6/6B/6B501A4E51E2E5177DC8BD4F97702FE2.jpg");
         imgesUrl.add("http://img2.cache.netease.com/sports/2008/9/4/20080904085704fdd3a.jpg");

@@ -1,12 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#b256c7">
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="购物车"
+            android:textSize="@dimen/main_tab_titleTextSize"/>
+    </RelativeLayout>
 
     <TextView
-        android:text="TextView"
+        android:id="@+id/cart_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textView" />
+        android:text="正在获取您的位置..."/>
+
+    <com.amap.api.maps2d.MapView
+        android:id="@+id/cart_mapView"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        app:layout_scrollFlags="scroll">
+
+    </com.amap.api.maps2d.MapView>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/cart_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <!--<android.support.design.widget.CoordinatorLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--&gt;-->
+
+        <!--<android.support.design.widget.AppBarLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--&gt;-->
+
+            <!--<com.amap.api.maps.MapView-->
+                <!--android:id="@+id/cart_mapView"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="300dp"-->
+                <!--app:layout_scrollFlags="scroll">-->
+
+            <!--</com.amap.api.maps.MapView>-->
+        <!--</android.support.design.widget.AppBarLayout>-->
+
+        <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:id="@+id/cart_recyclerView"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
+
+        <!--</android.support.v7.widget.RecyclerView>-->
+
+    <!--</android.support.design.widget.CoordinatorLayout>-->
+
 </LinearLayout>
