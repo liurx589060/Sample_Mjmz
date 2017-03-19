@@ -1,5 +1,6 @@
 package com.mjmz.lrx.sample_mjmz.tab;
 
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,11 +14,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.imagewrapper.ImageWrapper;
+import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.recyclerview.LuRecyclerView;
 import com.github.jdsjlzx.recyclerview.LuRecyclerViewAdapter;
 import com.mjmz.lrx.sample_mjmz.R;
 import com.mjmz.lrx.sample_mjmz.base.BaseFragment;
 import com.mjmz.lrx.sample_mjmz.common.Datas;
+import com.mjmz.lrx.sample_mjmz.goods.GoodsInfoActivity;
 import com.mjmz.lrx.sample_mjmz.tools.RecyclerLoadingMoreUtil;
 import com.mjmz.lrx.sample_mjmz.tools.SystemUtil;
 
@@ -92,6 +95,14 @@ public class GoodsFragment extends BaseFragment {
             }
         });
 
+        mAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(getContext(), GoodsInfoActivity.class);
+                getActivity().startActivity(intent);
+                Log.e("yy","Clicked=" + position);
+            }
+        });
     }
 
     /**

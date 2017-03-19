@@ -1,5 +1,6 @@
 package com.mjmz.lrx.sample_mjmz.tab;
 
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.imagewrapper.ImageWrapper;
+import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
@@ -21,6 +23,7 @@ import com.github.jdsjlzx.recyclerview.LuRecyclerView;
 import com.github.jdsjlzx.recyclerview.LuRecyclerViewAdapter;
 import com.mjmz.lrx.sample_mjmz.R;
 import com.mjmz.lrx.sample_mjmz.base.BaseFragment;
+import com.mjmz.lrx.sample_mjmz.design.DesignInfoActivity;
 import com.mjmz.lrx.sample_mjmz.tools.RecyclerLoadingMoreUtil;
 import com.mjmz.lrx.sample_mjmz.tools.SystemUtil;
 
@@ -78,6 +81,13 @@ public class DesignGlobalFragment extends BaseFragment {
         MyRecyclerViewAdapter adapter = new MyRecyclerViewAdapter(mDataList);
         mAdapter = new LuRecyclerViewAdapter(adapter);
         mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(getContext(), DesignInfoActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
 
         //加载更多
         loadingMoreUtil = new RecyclerLoadingMoreUtil(getActivity());

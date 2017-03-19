@@ -91,6 +91,11 @@ public class CartFragment extends BaseFragment implements AMapLocationListener,L
         return rootView;
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+    }
+
     /**
      * 初始化
      * @param view
@@ -113,7 +118,7 @@ public class CartFragment extends BaseFragment implements AMapLocationListener,L
         mCloudSearch.setOnCloudSearchListener(this);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
-        mAdapter = new MyRecyclerViewAdapter(Datas.getImagesUrlArray());
+        mAdapter = new MyRecyclerViewAdapter(mCloudItems);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -158,7 +163,9 @@ public class CartFragment extends BaseFragment implements AMapLocationListener,L
      *
      */
     private void searchByLocal() {
-        CloudSearch.SearchBound bound = new CloudSearch.SearchBound(mCurrentCity);
+//        CloudSearch.SearchBound bound = new CloudSearch.SearchBound(mCurrentCity);
+        //圆形搜索50km内
+        CloudSearch.SearchBound bound = new CloudSearch.SearchBound(mCenterPoint,50*1000);
         try {
             mQuery = new CloudSearch.Query(Const.mTableID, "", bound);
             mQuery.setPageSize(50);
@@ -232,7 +239,7 @@ public class CartFragment extends BaseFragment implements AMapLocationListener,L
     }
 
     /**
-     * 添加marker点
+     * 添加定位marker点
      * @param latlng
      */
     private void addMarker(LatLng latlng) {
@@ -273,6 +280,7 @@ public class CartFragment extends BaseFragment implements AMapLocationListener,L
         }else{
             mLocationTextView.setText(location.getCity() + location.getAddress());
             LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
+            mCenterPoint = new LatLonPoint(location.getLatitude(), location.getLongitude());
             if (!mFirstFix) {
                 mFirstFix = true;
                 addCircle(loc, location.getAccuracy());//添加定位精度圆
@@ -328,7 +336,11 @@ public class CartFragment extends BaseFragment implements AMapLocationListener,L
             markerOption.position(new LatLng(mCloudItems.get(i)
                     .getLatLonPoint().getLatitude(), mCloudItems.get(i)
                     .getLatLonPoint().getLongitude()));
+            markerOption.title(mCloudItems.get(i).getTitle());
             Marker marker = aMap.addMarker(markerOption);
+            if(i == 0) {
+                marker.showInfoWindow();
+            }
 
             // 每个marker点上带有一个状态类，来说明这个marker是否是被选中的状态
             // 会根据是否被选中来决定一些事件处理
@@ -459,6 +471,7 @@ public class CartFragment extends BaseFragment implements AMapLocationListener,L
             mCloudItems.clear();
             mCloudItems.addAll(cloudResult.getClouds());
             addMarkersToMap();
+            mAdapter.notifyDataSetChanged();
         }
     }
 
@@ -506,9 +519,9 @@ public class CartFragment extends BaseFragment implements AMapLocationListener,L
      * Adapter
      */
     private class MyRecyclerViewAdapter extends RecyclerView.Adapter {
-        private ArrayList<String> adapterList;
+        private ArrayList<CloudItem> adapterList;
 
-        public MyRecyclerViewAdapter(ArrayList<String> list) {
+        public MyRecyclerViewAdapter(ArrayList<CloudItem> list) {
             this.adapterList = list;
         }
 
@@ -542,9 +555,17 @@ public class CartFragment extends BaseFragment implements AMapLocationListener,L
             }
 
             public void bindVH(int position) {
-                ImageWrapper.getInstance().with(this.itemView.getContext()).setUrl(adapterList.get(position)).setImageView(mImageView);
-                mTitle.setText("商品名称-" + position);
-                mSubTitle.setText("副标题-" + position);
+                CloudItem item = adapterList.get(position);
+                int distance = item.getDistance();
+                String distanceStr;
+                if(distance < 1000) {
+                    distanceStr = distance + "m";
+                }else {
+                    distanceStr = distance /1000.0f + "km";
+                }
+                ImageWrapper.getInstance().with(this.itemView.getContext()).setUrl(Datas.getImagesUrlArray().get(position)).setImageView(mImageView);
+                mTitle.setText(item.getTitle());
+                mSubTitle.setText(item.getSnippet() + "-->" + distanceStr);
             }
         }
     }
