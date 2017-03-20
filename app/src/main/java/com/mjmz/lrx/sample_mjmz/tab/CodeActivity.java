@@ -11,6 +11,7 @@ import com.example.zxingbar.camera.MipcaActivityCapture;
 import com.example.zxingbar.view.ViewfinderView;
 import com.google.zxing.Result;
 import com.mjmz.lrx.sample_mjmz.R;
+import com.mjmz.lrx.sample_mjmz.common.ToastUtil;
 
 /**
  * 继承MipcaActivityCapture 可实现自己定制的扫描界面
@@ -22,13 +23,13 @@ public class CodeActivity extends MipcaActivityCapture {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_capture);
+        setContentView(R.layout.activity_capture_copy);
         super.onCreate(savedInstanceState);
     }
 
     @Override
     public void resultCode(Result result, Bitmap bitmap) {
-        Log.e("yy",result.getText());
+        ToastUtil.setToast(this,result.getText());
         this.finish();
     }
 
@@ -38,11 +39,6 @@ public class CodeActivity extends MipcaActivityCapture {
         //设置上下扫描杆
         viewfinderView.setmScanRod(BitmapFactory.decodeResource(getResources(),R.drawable.code_scan_middle_line));
         return viewfinderView;
-    }
-
-    @Override
-    public View getCodeLimitRectView() {
-        return findViewById(R.id.rect);
     }
 
     @Override

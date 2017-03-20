@@ -25,7 +25,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.example.zxingbar.R;
 import com.example.zxingbar.camera.CameraManager;
@@ -153,106 +155,76 @@ public final class ViewfinderView extends View {
 			slideTop = frame.top;
 			slideBottom = frame.bottom;
 		}
-		
+
 		//获取屏幕的宽和高
 		int width = canvas.getWidth();
 		int height = canvas.getHeight();
 
-		paint.setColor(resultBitmap != null ? resultColor : maskColor);
-		
-		//画出扫描框外面的阴影部分，共四个部分，扫描框的上面到屏幕上面，扫描框的下面到屏幕下面
-		//扫描框的左边面到屏幕左边，扫描框的右边到屏幕右边
-		canvas.drawRect(0, 0, width, frame.top, paint);
-		canvas.drawRect(0, frame.top, frame.left, frame.bottom + 1, paint);
-		canvas.drawRect(frame.right + 1, frame.top, width, frame.bottom + 1,
-				paint);
-		canvas.drawRect(0, frame.bottom + 1, width, height, paint);
-		
-		
+		int rootWidth = this.getRootView().getWidth();
+		int rootHeight = this.getRootView().getHeight();
 
-		if (resultBitmap != null) {
-			// Draw the opaque result bitmap over the scanning rectangle
-			paint.setAlpha(OPAQUE);
-			canvas.drawBitmap(resultBitmap, frame.left, frame.top, paint);
-		} else {
+		//画扫描框边上的角，总共8个部分
+		paint.setColor(Color.parseColor("#2EC7CA"));
+		canvas.drawRect(0, 0, ScreenRate,
+				CORNER_WIDTH, paint);
+		canvas.drawRect(0, 0, CORNER_WIDTH, ScreenRate, paint);
+		canvas.drawRect(width - ScreenRate, 0, width,
+				CORNER_WIDTH, paint);
+		canvas.drawRect(width - CORNER_WIDTH, 0, width,
+				ScreenRate, paint);
+		canvas.drawRect(0, height - CORNER_WIDTH,
+				ScreenRate, height, paint);
+		canvas.drawRect(0, height - ScreenRate,
+				CORNER_WIDTH, height, paint);
+		canvas.drawRect(width - ScreenRate, height - CORNER_WIDTH,
+				width, height, paint);
+		canvas.drawRect(width - CORNER_WIDTH, height - ScreenRate,
+				width, height, paint);
 
-			//画扫描框边上的角，总共8个部分
-			paint.setColor(Color.parseColor("#2EC7CA"));
-			canvas.drawRect(frame.left, frame.top, frame.left + ScreenRate,
-					frame.top + CORNER_WIDTH, paint);
-			canvas.drawRect(frame.left, frame.top, frame.left + CORNER_WIDTH, frame.top
-					+ ScreenRate, paint);
-			canvas.drawRect(frame.right - ScreenRate, frame.top, frame.right,
-					frame.top + CORNER_WIDTH, paint);
-			canvas.drawRect(frame.right - CORNER_WIDTH, frame.top, frame.right, frame.top
-					+ ScreenRate, paint);
-			canvas.drawRect(frame.left, frame.bottom - CORNER_WIDTH, frame.left
-					+ ScreenRate, frame.bottom, paint);
-			canvas.drawRect(frame.left, frame.bottom - ScreenRate,
-					frame.left + CORNER_WIDTH, frame.bottom, paint);
-			canvas.drawRect(frame.right - ScreenRate, frame.bottom - CORNER_WIDTH,
-					frame.right, frame.bottom, paint);
-			canvas.drawRect(frame.right - CORNER_WIDTH, frame.bottom - ScreenRate,
-					frame.right, frame.bottom, paint);
 
-			
-			//绘制中间的线,每次刷新界面，中间的线往下移动SPEEN_DISTANCE
-			slideTop += SPEEN_DISTANCE;
-			if(slideTop >= frame.bottom){
-				slideTop = frame.top;
-			}
-			if(this.mScanRod != null) {
-//				Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.code_scan_middle_line);
-				//canvas.drawRect(frame.left + MIDDLE_LINE_PADDING, slideTop - MIDDLE_LINE_WIDTH/2,
-				//			frame.right - MIDDLE_LINE_PADDING,slideTop + MIDDLE_LINE_WIDTH/2, paint);
-				int bitHeight = mScanRod.getHeight();
-				Rect rect = new Rect(frame.left + MIDDLE_LINE_PADDING, slideTop,
-						frame.right - MIDDLE_LINE_PADDING,bitHeight + slideTop);
-				canvas.drawBitmap(mScanRod, null, rect, null);
-			}
-			
-			//画扫描框下面的字
-			/*paint.setColor(Color.WHITE);
-			paint.setTextSize(TEXT_SIZE * density);
-			paint.setAlpha(0x40);
-			paint.setAntiAlias(true);
-			paint.setTextAlign(Paint.Align.CENTER);
-			paint.setTypeface(Typeface.create("System", Typeface.BOLD));
-			//canvas.drawText(getResources().getString(R.string.scan_text), frame.left, (float) (frame.bottom + (float)TEXT_PADDING_TOP *density), paint);
-			float x = (frame.left + frame.right) / 2;
-			canvas.drawText(getResources().getString(R.string.scan_text), x, 
-					(float) (frame.bottom + (float)TEXT_PADDING_TOP *density), paint);*/
-			
-
-			Collection<ResultPoint> currentPossible = possibleResultPoints;
-			Collection<ResultPoint> currentLast = lastPossibleResultPoints;
-			if (currentPossible.isEmpty()) {
-				lastPossibleResultPoints = null;
-			} else {
-				possibleResultPoints = new HashSet<ResultPoint>(5);
-				lastPossibleResultPoints = currentPossible;
-				paint.setAlpha(OPAQUE);
-				paint.setColor(resultPointColor);
-				for (ResultPoint point : currentPossible) {
-					canvas.drawCircle(frame.left + point.getX(), frame.top
-							+ point.getY(), 6.0f, paint);
-				}
-			}
-			if (currentLast != null) {
-				paint.setAlpha(OPAQUE / 2);
-				paint.setColor(resultPointColor);
-				for (ResultPoint point : currentLast) {
-					canvas.drawCircle(frame.left + point.getX(), frame.top
-							+ point.getY(), 3.0f, paint);
-				}
-			}
-
-			
-			//只刷新扫描框的内容，其他地方不刷新
-			postInvalidateDelayed(ANIMATION_DELAY, frame.left, frame.top,
-					frame.right, frame.bottom);
-			
+		//绘制中间的线,每次刷新界面，中间的线往下移动SPEEN_DISTANCE
+		slideTop += SPEEN_DISTANCE;
+		if(slideTop >= height){
+			slideTop = 0;
 		}
+		if(this.mScanRod != null) {
+//				Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.code_scan_middle_line);
+			//canvas.drawRect(frame.left + MIDDLE_LINE_PADDING, slideTop - MIDDLE_LINE_WIDTH/2,
+			//			frame.right - MIDDLE_LINE_PADDING,slideTop + MIDDLE_LINE_WIDTH/2, paint);
+			int bitHeight = mScanRod.getHeight();
+			Rect rect = new Rect(MIDDLE_LINE_PADDING, slideTop,
+					width - MIDDLE_LINE_PADDING,bitHeight + slideTop);
+			canvas.drawBitmap(mScanRod, null, rect, null);
+		}
+
+		Collection<ResultPoint> currentPossible = possibleResultPoints;
+		Collection<ResultPoint> currentLast = lastPossibleResultPoints;
+		if (currentPossible.isEmpty()) {
+			lastPossibleResultPoints = null;
+		} else {
+			possibleResultPoints = new HashSet<ResultPoint>(5);
+			lastPossibleResultPoints = currentPossible;
+			paint.setAlpha(OPAQUE);
+			paint.setColor(resultPointColor);
+			for (ResultPoint point : currentPossible) {
+				canvas.drawCircle(frame.left + point.getX(), frame.top
+						+ point.getY(), 6.0f, paint);
+			}
+		}
+		if (currentLast != null) {
+			paint.setAlpha(OPAQUE / 2);
+			paint.setColor(resultPointColor);
+			for (ResultPoint point : currentLast) {
+				canvas.drawCircle(frame.left + point.getX(), frame.top
+						+ point.getY(), 3.0f, paint);
+			}
+		}
+
+
+		//只刷新扫描框的内容，其他地方不刷新
+		postInvalidateDelayed(ANIMATION_DELAY, frame.left, frame.top,
+				frame.right, frame.bottom);
+
 	}
 
 	public void drawViewfinder() {

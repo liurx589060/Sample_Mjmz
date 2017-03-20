@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.hardware.Camera;
 import android.media.AudioManager;
@@ -18,6 +19,8 @@ import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -48,6 +51,9 @@ public abstract class MipcaActivityCapture extends Activity implements Callback 
 	private static final float BEEP_VOLUME = 0.10f;
 	private boolean vibrate;
 
+	//扫描框外的阴影颜色，默认颜色
+	private int outShadowColor = Color.parseColor("#5556b3c6");
+
 	/**
 	 * 扫码结果返回
 	 */
@@ -59,14 +65,17 @@ public abstract class MipcaActivityCapture extends Activity implements Callback 
 	public abstract ViewfinderView toSetViewfinderView() ;
 
 	/**
-	 * 返回扫描限定框的view
-	 */
-	public abstract View getCodeLimitRectView();
-
-	/**
 	 * 返回扫描限surfaceView
 	 */
 	public abstract SurfaceView getSurfaceView();
+
+	/**
+	 * 设置扫描框外的阴影颜色
+	 * @param color
+	 */
+	public void setOutShadowColor(int color) {
+		this.outShadowColor = color;
+	}
 
 	/** Called when the activity is first created. */
 	@Override
@@ -100,19 +109,49 @@ public abstract class MipcaActivityCapture extends Activity implements Callback 
 			return;
 		}
 		//CameraManager.init(getApplication());
-		//viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
-		View rectView = getCodeLimitRectView();
-		if(rectView == null) {
-			return;
-		}
-		int originX = rectView.getLeft();
-		int originY = rectView.getTop();
-		int width = rectView.getWidth();
-		int height = rectView.getHeight();
+		int originX = viewfinderView.getLeft();
+		int originY = viewfinderView.getTop();
+		int width = viewfinderView.getWidth();
+		int height = viewfinderView.getHeight();
+
+		int rootWidth = viewfinderView.getRootView().getWidth();
+		int rootHeight = viewfinderView.getRootView().getHeight();
 		
 		Rect rect = new Rect(originX, originY, originX + width, originY + height);
 		CameraManager.get().setFramingRect(rect);
-		viewfinderView.setVisibility(View.VISIBLE);
+		//为周边添加影音
+		//顶部
+		View topShaowdowView = new View(this);
+		FrameLayout.LayoutParams topParams = new FrameLayout.LayoutParams(rootWidth,originY);
+		topParams.topMargin = 0;
+		topParams.leftMargin = 0;
+		topShaowdowView.setBackgroundColor(outShadowColor);
+		this.addContentView(topShaowdowView,topParams);
+
+		//左边
+		View leftShaowdowView = new View(this);
+		FrameLayout.LayoutParams leftParams = new FrameLayout.LayoutParams(originX,height);
+		leftParams.topMargin = originY;
+		leftParams.leftMargin = 0;
+		leftShaowdowView.setBackgroundColor(outShadowColor);
+		this.addContentView(leftShaowdowView,leftParams);
+
+		//底部
+		View bottomShaowdowView = new View(this);
+		FrameLayout.LayoutParams bottomParams = new FrameLayout.LayoutParams(rootWidth,rootHeight - viewfinderView.getBottom());
+		bottomParams.topMargin = viewfinderView.getBottom();
+		bottomParams.leftMargin = 0;
+		bottomShaowdowView.setBackgroundColor(outShadowColor);
+		this.addContentView(bottomShaowdowView,bottomParams);
+
+		//右边
+		View rightShaowdowView = new View(this);
+		FrameLayout.LayoutParams rightParams = new FrameLayout.LayoutParams(rootWidth - viewfinderView.getRight(),height);
+		rightParams.topMargin = viewfinderView.getTop();
+		rightParams.leftMargin = viewfinderView.getRight();
+		rightShaowdowView.setBackgroundColor(outShadowColor);
+		this.addContentView(rightShaowdowView,rightParams);
+
 		hasSurface = false;
 	}
 
