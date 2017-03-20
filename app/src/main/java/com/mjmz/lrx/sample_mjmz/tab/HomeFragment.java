@@ -1,5 +1,6 @@
 package com.mjmz.lrx.sample_mjmz.tab;
 
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,12 +12,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.imagewrapper.ImageWrapper;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
-import com.github.jdsjlzx.recyclerview.LRecyclerView;
-import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.jdsjlzx.recyclerview.LuRecyclerView;
 import com.github.jdsjlzx.recyclerview.LuRecyclerViewAdapter;
 import com.mjmz.lrx.sample_mjmz.R;
@@ -38,6 +38,7 @@ public class HomeFragment extends BaseFragment {
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private LuRecyclerView mRecyclerView;
     private RecyclerLoadingMoreUtil loadingMoreUtil;
+    private Button mCodeBtn;
 
       //轮播
     private XBanner mXBanner;
@@ -102,7 +103,16 @@ public class HomeFragment extends BaseFragment {
         //找寻控件
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
         mRecyclerView = (LuRecyclerView) view.findViewById(R.id.recyclerView);
+        mCodeBtn = (Button) view.findViewById(R.id.code_btn);
 
+
+        mCodeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), CodeActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext()));
         mBaseAdapter = new HomeRecyclerViewAdapter(mDataList);

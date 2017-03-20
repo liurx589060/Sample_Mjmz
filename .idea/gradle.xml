@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/httpwrapper" />
             <option value="$PROJECT_DIR$/imagewrapper" />
+            <option value="$PROJECT_DIR$/zxingbar" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

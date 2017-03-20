@@ -49,4 +49,5 @@ dependencies {
     compile 'com.amap.api:map2d:3.0.0'
     //富文本
     compile 'com.zzhoujay.richtext:richtext:2.2.2'
+    compile project(':zxingbar')
 }
