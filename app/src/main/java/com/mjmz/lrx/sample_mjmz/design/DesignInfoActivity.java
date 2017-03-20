@@ -3,6 +3,7 @@ package com.mjmz.lrx.sample_mjmz.design;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.mjmz.lrx.sample_mjmz.R;
 import com.mjmz.lrx.sample_mjmz.base.BaseActivity;
 import com.mjmz.lrx.sample_mjmz.common.Datas;
 import com.mjmz.lrx.sample_mjmz.common.ToastUtil;
+import com.mjmz.lrx.sample_mjmz.customeview.RecyclerScrollView;
 import com.zzhoujay.richtext.RichText;
 import com.zzhoujay.richtext.callback.OnImageClickListener;
 
@@ -26,6 +28,7 @@ import java.util.List;
 
 public class DesignInfoActivity extends BaseActivity {
     //控件类
+    private RecyclerScrollView mScrollView;
     private TextView mTextView;
     private RecyclerView mRecyclerView;
     private RichText mRichText;
@@ -49,6 +52,8 @@ public class DesignInfoActivity extends BaseActivity {
         //创建数据
 
         //找寻控件
+        mScrollView = (RecyclerScrollView) findViewById(R.id.nestScrollView);
+        mScrollView.setOffsetY(0);
         mTextView = (TextView) findViewById(R.id.designinfo_content_textView);
         mRecyclerView = (RecyclerView) findViewById(R.id.designinfo_recyclerView);
 
@@ -108,6 +113,7 @@ public class DesignInfoActivity extends BaseActivity {
             }
 
             public void bindVH(int position) {
+                Log.e("yy","bind--" + position);
                 ImageWrapper.getInstance().with(this.itemView.getContext()).setUrl(adapterList.get(position)).setImageView(mImageView);
                 mTitle.setText("商品--" + position);
                 mSubTitle.setText("地址--" + position);

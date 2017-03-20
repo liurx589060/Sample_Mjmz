@@ -35,7 +35,7 @@ public class CodeActivity extends MipcaActivityCapture {
     @Override
     public ViewfinderView toSetViewfinderView() {
         ViewfinderView viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
-        //设置上次扫描杆
+        //设置上下扫描杆
         viewfinderView.setmScanRod(BitmapFactory.decodeResource(getResources(),R.drawable.code_scan_middle_line));
         return viewfinderView;
     }
