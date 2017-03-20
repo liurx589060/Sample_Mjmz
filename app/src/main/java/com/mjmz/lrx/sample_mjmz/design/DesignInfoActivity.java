@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.imagewrapper.ImageWrapper;
@@ -16,6 +17,7 @@ import com.mjmz.lrx.sample_mjmz.base.BaseActivity;
 import com.mjmz.lrx.sample_mjmz.common.Datas;
 import com.mjmz.lrx.sample_mjmz.common.ToastUtil;
 import com.mjmz.lrx.sample_mjmz.customeview.RecyclerScrollView;
+import com.mjmz.lrx.sample_mjmz.tools.SystemUtil;
 import com.zzhoujay.richtext.RichText;
 import com.zzhoujay.richtext.callback.OnImageClickListener;
 
@@ -58,6 +60,7 @@ public class DesignInfoActivity extends BaseActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.designinfo_recyclerView);
 
         //设置数据和监听
+        mRecyclerView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, SystemUtil.dip2px(this,300)));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         mAdapter = new MyRecyclerViewAdapter(Datas.getImagesUrlArray());
         mRecyclerView.setAdapter(mAdapter);
@@ -91,6 +94,7 @@ public class DesignInfoActivity extends BaseActivity {
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            Log.e("yy","viewHolder=" + position);
             ((MyViewHolder)holder).bindVH(position);
         }
 

@@ -53,6 +53,18 @@ public abstract class MipcaActivityCapture extends Activity implements Callback 
 
 	//扫描框外的阴影颜色，默认颜色
 	private int outShadowColor = Color.parseColor("#5556b3c6");
+	private View rootView;
+	private View topView;
+
+	/**
+	 * rootView
+	 */
+	public abstract View getRootView();
+
+	/**
+	 * top View
+	 */
+	public abstract View getTopView();
 
 	/**
 	 * 扫码结果返回
@@ -62,12 +74,12 @@ public abstract class MipcaActivityCapture extends Activity implements Callback 
 	/**
 	 * 返回ViewfinderView
 	 */
-	public abstract ViewfinderView toSetViewfinderView() ;
+	public abstract ViewfinderView toSetViewfinderView(View topView) ;
 
 	/**
 	 * 返回扫描限surfaceView
 	 */
-	public abstract SurfaceView getSurfaceView();
+	public abstract SurfaceView getSurfaceView(View rootView);
 
 	/**
 	 * 设置扫描框外的阴影颜色
@@ -81,7 +93,11 @@ public abstract class MipcaActivityCapture extends Activity implements Callback 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//		setContentView(R.layout.activity_capture);
+		rootView = getRootView();
+		topView = getTopView();
+		setContentView(rootView);
+		this.addContentView(topView,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
+				, ViewGroup.LayoutParams.MATCH_PARENT));
 		
 		Camera camera = null;
 		try {
@@ -98,7 +114,7 @@ public abstract class MipcaActivityCapture extends Activity implements Callback 
 		inactivityTimer = new InactivityTimer(this);
 		CameraManager.init(getApplication());
 //		viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
-		viewfinderView = toSetViewfinderView();
+		viewfinderView = toSetViewfinderView(topView);
 	}
 	
 	@Override
@@ -120,13 +136,15 @@ public abstract class MipcaActivityCapture extends Activity implements Callback 
 		Rect rect = new Rect(originX, originY, originX + width, originY + height);
 		CameraManager.get().setFramingRect(rect);
 		//为周边添加影音
+		FrameLayout outShadowView = new FrameLayout(this);
+
 		//顶部
 		View topShaowdowView = new View(this);
 		FrameLayout.LayoutParams topParams = new FrameLayout.LayoutParams(rootWidth,originY);
 		topParams.topMargin = 0;
 		topParams.leftMargin = 0;
 		topShaowdowView.setBackgroundColor(outShadowColor);
-		this.addContentView(topShaowdowView,topParams);
+		outShadowView.addView(topShaowdowView,topParams);
 
 		//左边
 		View leftShaowdowView = new View(this);
@@ -134,7 +152,7 @@ public abstract class MipcaActivityCapture extends Activity implements Callback 
 		leftParams.topMargin = originY;
 		leftParams.leftMargin = 0;
 		leftShaowdowView.setBackgroundColor(outShadowColor);
-		this.addContentView(leftShaowdowView,leftParams);
+		outShadowView.addView(leftShaowdowView,leftParams);
 
 		//底部
 		View bottomShaowdowView = new View(this);
@@ -142,7 +160,7 @@ public abstract class MipcaActivityCapture extends Activity implements Callback 
 		bottomParams.topMargin = viewfinderView.getBottom();
 		bottomParams.leftMargin = 0;
 		bottomShaowdowView.setBackgroundColor(outShadowColor);
-		this.addContentView(bottomShaowdowView,bottomParams);
+		outShadowView.addView(bottomShaowdowView,bottomParams);
 
 		//右边
 		View rightShaowdowView = new View(this);
@@ -150,7 +168,13 @@ public abstract class MipcaActivityCapture extends Activity implements Callback 
 		rightParams.topMargin = viewfinderView.getTop();
 		rightParams.leftMargin = viewfinderView.getRight();
 		rightShaowdowView.setBackgroundColor(outShadowColor);
-		this.addContentView(rightShaowdowView,rightParams);
+		outShadowView.addView(rightShaowdowView,rightParams);
+
+		this.addContentView(outShadowView,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
+				, ViewGroup.LayoutParams.MATCH_PARENT));
+		topView.bringToFront();
+
+
 
 		hasSurface = false;
 	}
@@ -158,7 +182,7 @@ public abstract class MipcaActivityCapture extends Activity implements Callback 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		SurfaceView surfaceView = getSurfaceView();
+		SurfaceView surfaceView = getSurfaceView(rootView);
 		SurfaceHolder surfaceHolder = surfaceView.getHolder();
 		if (hasSurface) {
 			initCamera(surfaceHolder);
