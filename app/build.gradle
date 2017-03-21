@@ -6,7 +6,7 @@ android {
     defaultConfig {
         applicationId "com.mjmz.lrx.sample_mjmz"
         minSdkVersion 15
-        targetSdkVersion 21
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
     }
@@ -50,4 +50,6 @@ dependencies {
     //富文本
     compile 'com.zzhoujay.richtext:richtext:2.2.2'
     compile project(':zxingbar')
+    //Android 6.0申请权限
+    compile 'com.yanzhenjie:permission:1.0.5'
 }

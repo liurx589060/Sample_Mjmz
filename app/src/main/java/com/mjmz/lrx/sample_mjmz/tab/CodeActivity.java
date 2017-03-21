@@ -45,6 +45,8 @@ public class CodeActivity extends MipcaActivityCapture {
         ViewfinderView viewfinderView = (ViewfinderView) rootView.findViewById(R.id.viewfinder_view);
         //设置上下扫描杆
         viewfinderView.setmScanRod(BitmapFactory.decodeResource(getResources(),R.drawable.code_scan_middle_line));
+        //是否使用默认的扫描框绘制背景,默认为true
+        viewfinderView.setDefault(true);
         return viewfinderView;
     }
 
@@ -57,7 +59,7 @@ public class CodeActivity extends MipcaActivityCapture {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //设置外部四周阴影颜色
-        setOutShadowColor(Color.parseColor("#338b008b"));
+//        setOutShadowColor(Color.parseColor("#338b008b"));
         ImageButton btn = (ImageButton) findViewById(R.id.code_scan_back);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override

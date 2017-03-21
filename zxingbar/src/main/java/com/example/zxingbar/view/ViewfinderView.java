@@ -106,6 +106,7 @@ public final class ViewfinderView extends View {
 	 * 将扫描的二维码拍下来，这里没有这个功能，暂时不考虑
 	 */
 	private Bitmap mScanRod;//扫描上下的杆
+	private boolean isDefault = true;//是否使用默认，绘制背景
 
 	private Bitmap resultBitmap;
 	private final int maskColor;
@@ -123,6 +124,15 @@ public final class ViewfinderView extends View {
 	 */
 	public void setmScanRod(Bitmap bitmap) {
 		this.mScanRod = bitmap;
+	}
+
+	/**
+	 * 是否使用默认，绘制背景
+	 * @param isDefault
+	 */
+	public void setDefault(boolean isDefault) {
+		this.isDefault = isDefault;
+		this.invalidate();//刷新本View
 	}
 
 	public ViewfinderView(Context context, AttributeSet attrs) {
@@ -164,22 +174,24 @@ public final class ViewfinderView extends View {
 		int rootHeight = this.getRootView().getHeight();
 
 		//画扫描框边上的角，总共8个部分
-		paint.setColor(Color.parseColor("#2EC7CA"));
-		canvas.drawRect(0, 0, ScreenRate,
-				CORNER_WIDTH, paint);
-		canvas.drawRect(0, 0, CORNER_WIDTH, ScreenRate, paint);
-		canvas.drawRect(width - ScreenRate, 0, width,
-				CORNER_WIDTH, paint);
-		canvas.drawRect(width - CORNER_WIDTH, 0, width,
-				ScreenRate, paint);
-		canvas.drawRect(0, height - CORNER_WIDTH,
-				ScreenRate, height, paint);
-		canvas.drawRect(0, height - ScreenRate,
-				CORNER_WIDTH, height, paint);
-		canvas.drawRect(width - ScreenRate, height - CORNER_WIDTH,
-				width, height, paint);
-		canvas.drawRect(width - CORNER_WIDTH, height - ScreenRate,
-				width, height, paint);
+		if(isDefault) {
+			paint.setColor(Color.parseColor("#2EC7CA"));
+			canvas.drawRect(0, 0, ScreenRate,
+					CORNER_WIDTH, paint);
+			canvas.drawRect(0, 0, CORNER_WIDTH, ScreenRate, paint);
+			canvas.drawRect(width - ScreenRate, 0, width,
+					CORNER_WIDTH, paint);
+			canvas.drawRect(width - CORNER_WIDTH, 0, width,
+					ScreenRate, paint);
+			canvas.drawRect(0, height - CORNER_WIDTH,
+					ScreenRate, height, paint);
+			canvas.drawRect(0, height - ScreenRate,
+					CORNER_WIDTH, height, paint);
+			canvas.drawRect(width - ScreenRate, height - CORNER_WIDTH,
+					width, height, paint);
+			canvas.drawRect(width - CORNER_WIDTH, height - ScreenRate,
+					width, height, paint);
+		}
 
 
 		//绘制中间的线,每次刷新界面，中间的线往下移动SPEEN_DISTANCE

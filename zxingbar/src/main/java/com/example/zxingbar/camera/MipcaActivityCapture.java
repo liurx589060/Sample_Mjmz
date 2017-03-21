@@ -52,7 +52,7 @@ public abstract class MipcaActivityCapture extends Activity implements Callback 
 	private boolean vibrate;
 
 	//扫描框外的阴影颜色，默认颜色
-	private int outShadowColor = Color.parseColor("#5556b3c6");
+	private int outShadowColor = Color.parseColor("#44aaaaaa");
 	private View rootView;
 	private View topView;
 

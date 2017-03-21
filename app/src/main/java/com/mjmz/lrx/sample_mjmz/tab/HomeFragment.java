@@ -1,5 +1,6 @@
 package com.mjmz.lrx.sample_mjmz.tab;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -21,10 +22,12 @@ import com.github.jdsjlzx.recyclerview.LuRecyclerView;
 import com.github.jdsjlzx.recyclerview.LuRecyclerViewAdapter;
 import com.mjmz.lrx.sample_mjmz.R;
 import com.mjmz.lrx.sample_mjmz.base.BaseFragment;;
+import com.mjmz.lrx.sample_mjmz.tools.PermissionUtil;
 import com.mjmz.lrx.sample_mjmz.tools.RecyclerLoadingMoreUtil;
 import com.mjmz.lrx.sample_mjmz.tools.SystemUtil;
 import com.stx.xhb.xbanner.XBanner;
 import com.stx.xhb.xbanner.transformers.Transformer;
+import com.yanzhenjie.permission.PermissionListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,8 +112,8 @@ public class HomeFragment extends BaseFragment {
         mCodeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), CodeActivity.class);
-                getActivity().startActivity(intent);
+                //申请相机权限
+                PermissionUtil.requestPermission(HomeFragment.this,PermissionUtil.REQUEST_CODE_PERMISSION_CAMERA, Manifest.permission.CAMERA);
             }
         });
 
@@ -162,6 +165,15 @@ public class HomeFragment extends BaseFragment {
         initBannerData();
         initHotDesignData();
         initRecomGoodsData();
+    }
+
+    @Override
+    public void onSucceed(int requestCode, List<String> grantPermissions) {
+        super.onSucceed(requestCode, grantPermissions);
+        if(requestCode == PermissionUtil.REQUEST_CODE_PERMISSION_CAMERA) {
+            Intent intent = new Intent(getContext(), CodeActivity.class);
+            getActivity().startActivity(intent);
+        }
     }
 
     /**
