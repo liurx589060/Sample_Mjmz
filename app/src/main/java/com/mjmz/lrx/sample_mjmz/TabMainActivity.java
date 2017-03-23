@@ -1,6 +1,8 @@
 package com.mjmz.lrx.sample_mjmz;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -20,10 +22,18 @@ import com.mjmz.lrx.sample_mjmz.tab.DesignFragment;
 import com.mjmz.lrx.sample_mjmz.tab.GoodsFragment;
 import com.mjmz.lrx.sample_mjmz.tab.HomeFragment;
 import com.mjmz.lrx.sample_mjmz.tab.MyFragment;
+import com.mjmz.lrx.sample_mjmz.tools.PermissionUtil;
+import com.yanzhenjie.permission.AndPermission;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import static com.mjmz.lrx.sample_mjmz.tools.PermissionUtil.REQUEST_CODE_PERMISSION_LOCATION;
+import static com.mjmz.lrx.sample_mjmz.tools.PermissionUtil.REQUEST_CODE_SETTING;
 
 public class TabMainActivity extends BaseFragmentActivity {
+    private boolean isRequestPermission;
+
     //控件类
     private TabLayout mTabLayout;
     private ScrollIsViewPager mViewPager;
@@ -36,11 +46,28 @@ public class TabMainActivity extends BaseFragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if ((getIntent().getFlags()& Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) != 0) { //防止安装点击打开后再次点击图标重新启动程序
+            //结束你的activity
+            finish();
+            return;
+        }
+        PermissionUtil.initDefaultRequstPermission(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab_main);
 
         init();
     }
+
+//    @Override
+//    public void onWindowFocusChanged(boolean hasFocus) {
+//        super.onWindowFocusChanged(hasFocus);
+//        if(!isRequestPermission) {
+//            //申请默认权限
+//            Log.e("yy","here");
+//            PermissionUtil.initDefaultRequstPermission(this);
+//            isRequestPermission = true;
+//        }
+//    }
 
     /**
      * 初始化
@@ -152,6 +179,37 @@ public class TabMainActivity extends BaseFragmentActivity {
             }
             ImageView img = (ImageView) v.findViewById(R.id.main_tab_image);
             return v;
+        }
+    }
+
+    @Override
+    public void onFailed(int requestCode, List<String> deniedPermissions) {
+        super.onFailed(requestCode, deniedPermissions);
+        if(requestCode == REQUEST_CODE_PERMISSION_LOCATION) {
+            failedPermission(requestCode,deniedPermissions,"我们需要定位权限被您拒绝或者系统发生错误申请失败，请您到设置页面手动授权，否则功能无法正常使用！");
+        }
+    }
+
+    private void failedPermission(int requestCode,List<String> deniedPermissions,String permissionTip) {
+        // 用户否勾选了不再提示并且拒绝了权限，那么提示用户到设置中授权。
+        if (AndPermission.hasAlwaysDeniedPermission(this, deniedPermissions)) {
+            // 第一种：用默认的提示语。
+//            AndPermission.defaultSettingDialog(this, PermissionUtil.REQUEST_CODE_SETTING).show();
+
+             //第二种：用自定义的提示语。
+             AndPermission.defaultSettingDialog(this, REQUEST_CODE_SETTING)
+                     .setTitle("权限申请失败")
+                     .setMessage(permissionTip)
+//                     .setMessage("我们需要的一些权限被您拒绝或者系统发生错误申请失败，请您到设置页面手动授权，否则功能无法正常使用！")
+                     .setPositiveButton("好，去设置")
+                     .show();
+
+//            第三种：自定义dialog样式。
+//            SettingService settingService = AndPermission.defineSettingDialog(this, REQUEST_CODE_SETTING);
+//            你的dialog点击了确定调用：
+//            settingService.execute();
+//            你的dialog点击了取消调用：
+//            settingService.cancel();
         }
     }
 }
