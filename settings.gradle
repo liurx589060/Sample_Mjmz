@@ -1,1 +1,1 @@
-include ':app', ':imagewrapper', ':httpwrapper', ':zxingbar'
+include ':app', ':imagewrapper', ':httpwrapper', ':zxingbar', ':animators'

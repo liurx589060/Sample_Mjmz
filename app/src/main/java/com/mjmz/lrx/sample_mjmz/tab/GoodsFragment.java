@@ -13,7 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.example.imagewrapper.ImageWrapper;
+
+import com.example.lrx.imagewrapper.ImageWrapper;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.recyclerview.LuRecyclerView;
 import com.github.jdsjlzx.recyclerview.LuRecyclerViewAdapter;
@@ -25,6 +26,8 @@ import com.mjmz.lrx.sample_mjmz.tools.RecyclerLoadingMoreUtil;
 import com.mjmz.lrx.sample_mjmz.tools.SystemUtil;
 
 import java.util.ArrayList;
+
+import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
 
 /**
  * Created by liurunxiong on 2017/3/10.
@@ -108,7 +111,7 @@ public class GoodsFragment extends BaseFragment {
     /**
      * adapter
      */
-    private class MyRecyclerViewAdapter extends RecyclerView.Adapter {
+    private class MyRecyclerViewAdapter extends SlideInLeftAnimationAdapter {
         private final int TYPE_TITLE = 0x0001;//分类section
         private final int TYPE_ITEM = 0x0002;//item
 
@@ -146,6 +149,7 @@ public class GoodsFragment extends BaseFragment {
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            super.onBindViewHolder(holder,position);
             int type = getItemViewType(position);
             if(type == TYPE_TITLE) {
                 ((TitleViewHolder)holder).bindVH(position);

@@ -37,7 +37,7 @@ import com.amap.api.services.cloud.CloudResult;
 import com.amap.api.services.cloud.CloudSearch;
 import com.amap.api.services.core.AMapException;
 import com.amap.api.services.core.LatLonPoint;
-import com.example.imagewrapper.ImageWrapper;
+import com.example.lrx.imagewrapper.ImageWrapper;
 import com.mjmz.lrx.sample_mjmz.R;
 import com.mjmz.lrx.sample_mjmz.base.BaseFragment;
 import com.mjmz.lrx.sample_mjmz.common.Const;

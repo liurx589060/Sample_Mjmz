@@ -15,8 +15,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.example.imagewrapper.ImageLoadedListener;
-import com.example.imagewrapper.ImageWrapper;
+import com.example.lrx.imagewrapper.ImageLoadedListener;
+import com.example.lrx.imagewrapper.ImageWrapper;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;;
@@ -31,6 +31,11 @@ import com.mjmz.lrx.sample_mjmz.tools.SystemUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.AnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.SlideInRightAnimationAdapter;
 
 /**
  * Created by liurunxiong on 2017/3/15.

@@ -16,7 +16,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.example.imagewrapper.ImageWrapper;
+
+import com.example.lrx.imagewrapper.ImageWrapper;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.github.jdsjlzx.recyclerview.LuRecyclerView;
 import com.github.jdsjlzx.recyclerview.LuRecyclerViewAdapter;
@@ -31,6 +32,8 @@ import com.yanzhenjie.permission.PermissionListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
 
 /**
  * Created by liurunxiong on 2017/3/10.

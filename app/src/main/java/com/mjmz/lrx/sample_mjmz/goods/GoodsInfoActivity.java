@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.imagewrapper.ImageWrapper;
+import com.example.lrx.imagewrapper.ImageWrapper;
 import com.mjmz.lrx.sample_mjmz.R;
 import com.mjmz.lrx.sample_mjmz.base.BaseActivity;
 import com.mjmz.lrx.sample_mjmz.common.Datas;

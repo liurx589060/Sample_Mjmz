@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.imagewrapper.ImageWrapper;
+import com.example.lrx.imagewrapper.ImageWrapper;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
@@ -23,12 +23,15 @@ import com.github.jdsjlzx.recyclerview.LuRecyclerView;
 import com.github.jdsjlzx.recyclerview.LuRecyclerViewAdapter;
 import com.mjmz.lrx.sample_mjmz.R;
 import com.mjmz.lrx.sample_mjmz.base.BaseFragment;
+import com.mjmz.lrx.sample_mjmz.common.Datas;
 import com.mjmz.lrx.sample_mjmz.design.DesignInfoActivity;
 import com.mjmz.lrx.sample_mjmz.tools.RecyclerLoadingMoreUtil;
 import com.mjmz.lrx.sample_mjmz.tools.SystemUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
 
 /**
  * Created by liurunxiong on 2017/3/15.
@@ -42,7 +45,6 @@ public class DesignGlobalFragment extends BaseFragment {
     private RecyclerLoadingMoreUtil loadingMoreUtil;
 
     //数据类
-    private List<String> imgesUrl;
     private ArrayList<String> mDataList;
     private Handler mHandler;
 
@@ -64,12 +66,9 @@ public class DesignGlobalFragment extends BaseFragment {
         mDataList = new ArrayList<>();
 
         //设置其他模块数据
-        imgesUrl = new ArrayList<>();
-        imgesUrl.add("http://img1.cache.netease.com/catchpic/6/6B/6B501A4E51E2E5177DC8BD4F97702FE2.jpg");
-        imgesUrl.add("http://img2.cache.netease.com/sports/2008/9/4/20080904085704fdd3a.jpg");
-        imgesUrl.add("http://a0.att.hudong.com/17/52/01300000432220131367520438422.jpg");
-        imgesUrl.add("http://img4.duitang.com/uploads/item/201307/18/20130718171017_CdByt.jpeg");
-        mDataList.addAll(imgesUrl);
+        for (int i = 0 ; i < 5; i++) {
+            mDataList.addAll(Datas.getImagesUrlArray());
+        }
 
         //找寻控件
         mRecyclerView = (LuRecyclerView) view.findViewById(R.id.recyclerView);
@@ -98,8 +97,9 @@ public class DesignGlobalFragment extends BaseFragment {
                 mHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        mDataList.addAll(imgesUrl);
-                        mRecyclerView.refreshComplete(imgesUrl.size());
+                        mDataList.addAll(Datas.getImagesUrlArray());
+                        mAdapter.notifyDataSetChanged();
+                        mRecyclerView.refreshComplete(Datas.getImagesUrlArray().size());
                     }
                 },2000);
             }
@@ -110,7 +110,7 @@ public class DesignGlobalFragment extends BaseFragment {
             @Override
             public void onRefresh() {
                 mDataList.clear();
-                mDataList.addAll(imgesUrl);
+                mDataList.addAll(Datas.getImagesUrlArray());
                 mAdapter.notifyDataSetChanged();
                 mSwipeRefresh.setRefreshing(false);
             }
@@ -120,7 +120,7 @@ public class DesignGlobalFragment extends BaseFragment {
     /**
      * adapter
      */
-    private class MyRecyclerViewAdapter extends RecyclerView.Adapter {
+    private class MyRecyclerViewAdapter extends SlideInLeftAnimationAdapter {
         private ArrayList<String> adapterList;
 
         public MyRecyclerViewAdapter(ArrayList<String> list) {
@@ -135,6 +135,7 @@ public class DesignGlobalFragment extends BaseFragment {
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            super.onBindViewHolder(holder,position);
             ((MyViewHolder)holder).bindVH(position);
         }
 

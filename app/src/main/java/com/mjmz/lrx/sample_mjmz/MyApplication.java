@@ -2,10 +2,10 @@ package com.mjmz.lrx.sample_mjmz;
 
 import android.app.Application;
 
-import com.example.httpwrapper.HttpRequset;
-import com.example.httpwrapper.OkGoHttpExecute;
-import com.example.imagewrapper.GlideImageLoader;
-import com.example.imagewrapper.ImageWrapper;
+import com.example.lrx.httpwrapper.HttpRequset;
+import com.example.lrx.httpwrapper.OkGoHttpExecute;
+import com.example.lrx.imagewrapper.GlideImageLoader;
+import com.example.lrx.imagewrapper.ImageWrapper;
 import com.mjmz.lrx.sample_mjmz.common.CrashHandler;
 
 /**
