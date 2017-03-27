@@ -1,4 +1,4 @@
-package com.example.httpwrapper;
+package com.example.lrx.httpwrapper;
 
 import android.app.Application;
 

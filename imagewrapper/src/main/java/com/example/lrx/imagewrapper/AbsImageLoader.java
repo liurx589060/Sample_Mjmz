@@ -1,4 +1,6 @@
-package com.example.imagewrapper;
+package com.example.lrx.imagewrapper;
+
+import android.graphics.Bitmap;
 
 /**
  * Created by liurunxiong on 2017/3/7.

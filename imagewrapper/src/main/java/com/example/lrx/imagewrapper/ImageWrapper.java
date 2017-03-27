@@ -1,4 +1,4 @@
-package com.example.imagewrapper;
+package com.example.lrx.imagewrapper;
 
 import android.app.Activity;
 import android.app.Fragment;
