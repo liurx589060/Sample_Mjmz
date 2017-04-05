@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="#33c657b1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="我的消息"
+            android:textSize="@dimen/main_tab_titleTextSize"
+            android:id="@+id/textView3" />
+
+        <Button
+            android:id="@+id/select_all"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:textSize="10sp"
+            android:text="全选"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/textView3"
+            android:layout_toEndOf="@+id/textView3"
+            android:layout_marginLeft="44dp"
+            android:layout_marginStart="44dp" />
+
+        <Button
+            android:id="@+id/delete"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:textSize="10sp"
+            android:text="删除"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="11dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/select_all"
+             />
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>

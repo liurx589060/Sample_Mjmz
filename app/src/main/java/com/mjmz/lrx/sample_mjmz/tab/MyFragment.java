@@ -1,23 +1,51 @@
 package com.mjmz.lrx.sample_mjmz.tab;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.mjmz.lrx.sample_mjmz.R;
 import com.mjmz.lrx.sample_mjmz.base.BaseFragment;
+import com.mjmz.lrx.sample_mjmz.my.MyNotifyActivity;
 
 /**
  * Created by liurunxiong on 2017/3/10.
  */
 
 public class MyFragment extends BaseFragment {
+    //控件类
+    private Button mNotifyBtn;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_my,null);
+
+        //初始化
+        init(rootView);
+
         return rootView;
+    }
+
+    /**
+     * 初始化
+     * @param rootView
+     */
+    private void init(View rootView) {
+        //找寻控件
+        mNotifyBtn = (Button) rootView.findViewById(R.id.notify);
+
+        //设置数据和监听
+        mNotifyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MyNotifyActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

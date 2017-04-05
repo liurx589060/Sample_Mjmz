@@ -48,6 +48,8 @@
         <activity android:name=".design.DesignInfoActivity"></activity>
         
         <activity android:name=".tab.CodeActivity"></activity>
+
+        <activity android:name=".my.MyNotifyActivity"></activity>
     </application>
 
 </manifest>
