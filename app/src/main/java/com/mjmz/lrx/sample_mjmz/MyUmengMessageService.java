@@ -71,7 +71,8 @@ public class MyUmengMessageService extends UmengMessageService {
 				.setAutoCancel(true)
                 .setOngoing(false)
                 .setDefaults(Notification.DEFAULT_VIBRATE)
-                .setSmallIcon(R.mipmap.ic_launcher);
+                .setSmallIcon(R.drawable.icon_sample_mjmz)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.icon_sample_mjmz));
 
         // 指定内容意图
         Notification notification = builder.build();
