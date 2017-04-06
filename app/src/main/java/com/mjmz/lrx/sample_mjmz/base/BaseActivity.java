@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.mjmz.lrx.sample_mjmz.tools.PermissionUtil;
+import com.umeng.message.PushAgent;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionListener;
 import com.yanzhenjie.permission.Rationale;
@@ -22,6 +23,7 @@ public class BaseActivity extends AppCompatActivity implements PermissionListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PushAgent.getInstance(this).onAppStart();
     }
 
     @Override

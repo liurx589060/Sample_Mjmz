@@ -58,10 +58,11 @@ dependencies {
     //扫描
     //    compile project(':zxingbar')
     compile 'com.lrx:zxingbar:1.0.0'
-
     //RecyclerView的动画
     compile project(':animators')
-
     //lite-orm数据库
     compile files('E:/Android/WorkProject/AS_workingSpace/Sample_Mjmz/libs/lite-orm-1.9.2.jar')
+
+    //友盟推送
+    compile project(':PushSDK')
 }

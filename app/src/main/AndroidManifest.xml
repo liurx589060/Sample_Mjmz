@@ -35,6 +35,19 @@
             android:name="com.amap.api.v2.apikey"
             android:value="a656dc8bd0f2d74b5bd9b330e5d2c2ec" />
 
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="58e59c59677baa6397002409">
+        </meta-data>
+        <meta-data
+            android:name="UMENG_MESSAGE_SECRET"
+            android:value="9eb8ce92f212c8e69e963b41375a53e0">
+        </meta-data>
+
+        <!--友盟推送-->
+        <service android:name=".MyUmengMessageService" />
+        <receiver android:name=".NotificationBroadCastReceiver"></receiver>
+
         <activity android:name=".TabMainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import com.mjmz.lrx.sample_mjmz.tools.PermissionUtil;
+import com.umeng.message.PushAgent;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionListener;
 
@@ -20,6 +21,7 @@ public class BaseFragment extends Fragment implements PermissionListener{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PushAgent.getInstance(getContext()).onAppStart();
     }
 
     @Override

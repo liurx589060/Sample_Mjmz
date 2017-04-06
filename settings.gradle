@@ -1,1 +1,1 @@
-include ':app', ':animators', ':imagewrapper', ':zxingbar', ':httpwrapper'
+include ':app', ':animators', ':imagewrapper', ':zxingbar', ':httpwrapper', ':PushSDK'
