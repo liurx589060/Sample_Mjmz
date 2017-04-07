@@ -9,4 +9,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="我的消息" />
+
+    <com.mjmz.lrx.sample_mjmz.language.AppButton
+        android:id="@+id/language"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/language_btn_pre"/>
 </LinearLayout>

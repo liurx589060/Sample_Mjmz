@@ -5,6 +5,7 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -12,10 +13,13 @@ import com.example.lrx.httpwrapper.HttpRequset;
 import com.example.lrx.httpwrapper.OkGoHttpExecute;
 import com.example.lrx.imagewrapper.GlideImageLoader;
 import com.example.lrx.imagewrapper.ImageWrapper;
+import com.mjmz.lrx.sample_mjmz.common.Const;
 import com.mjmz.lrx.sample_mjmz.common.CrashHandler;
 import com.mjmz.lrx.sample_mjmz.common.ToastUtil;
 import com.mjmz.lrx.sample_mjmz.db.NotifyInstance;
+import com.mjmz.lrx.sample_mjmz.language.StringUtil;
 import com.mjmz.lrx.sample_mjmz.my.MyNotifyActivity;
+import com.mjmz.lrx.sample_mjmz.tools.GlobalToolsUtil;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UmengMessageHandler;
@@ -69,5 +73,9 @@ public class MyApplication extends Application {
 
         //自定义点击事件
         mPushAgent.setPushIntentServiceClass(MyUmengMessageService.class);
+
+        //设置语言
+        SharedPreferences sp = GlobalToolsUtil.getSharedPreferences(this);
+        StringUtil.switchLanguage(this,sp.getInt(Const.SP_LANGUAGE,0));
     }
 }

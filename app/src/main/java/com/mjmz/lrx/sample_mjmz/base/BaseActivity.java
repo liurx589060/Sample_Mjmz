@@ -6,12 +6,18 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.mjmz.lrx.sample_mjmz.language.ViewUtil;
 import com.mjmz.lrx.sample_mjmz.tools.PermissionUtil;
 import com.umeng.message.PushAgent;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionListener;
 import com.yanzhenjie.permission.Rationale;
 import com.yanzhenjie.permission.RationaleListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
 /**
@@ -24,6 +30,29 @@ public class BaseActivity extends AppCompatActivity implements PermissionListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         PushAgent.getInstance(this).onAppStart();
+
+        //注册消息总线
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        //反注册消息总线
+        EventBus.getDefault().unregister(this);
+    }
+
+    /**
+     * eventBus的消息响应函数
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void swithLanguage(String event) {
+        if(event.equals("swith language")) {
+            //更新控件
+            ViewUtil.updateViewLanguage(findViewById(android.R.id.content));
+        }
     }
 
     @Override

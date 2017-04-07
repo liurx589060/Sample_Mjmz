@@ -63,6 +63,8 @@
         <activity android:name=".tab.CodeActivity"></activity>
 
         <activity android:name=".my.MyNotifyActivity"></activity>
+
+        <activity android:name=".my.MyLanguageActivity"></activity>
     </application>
 
 </manifest>

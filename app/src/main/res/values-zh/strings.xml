@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Sample_Mjmz</string>
+
+    <!--多语言-->
+    <string name="language_btn_lenglish">语言-英文</string>
+    <string name="language_btn_chinese">语言-中文</string>
+
+    <string name="language_text_current_text">这是一个充满了许多骗子的不同世界</string>
+    <string name="language_btn_pre">切换语言</string>
+</resources>

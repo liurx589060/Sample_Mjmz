@@ -10,4 +10,8 @@ public class Const {
     //lite-orm数据库
     public static final String DB_NAME = "sanmple_Mjmz.db";//数据库名
     public static final int DB_VERSION = 1;//数据库版本
+
+    //SharedPreference
+    public static final String SP_NAME = "SP_Mjmz";//SP的名称
+    public static final String SP_LANGUAGE = "SP_language";//设置的语言
 }

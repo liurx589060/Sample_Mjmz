@@ -65,4 +65,7 @@ dependencies {
 
     //友盟推送
     compile project(':PushSDK')
+
+    //消息总线
+    compile 'org.greenrobot:eventbus:3.0.0'
 }

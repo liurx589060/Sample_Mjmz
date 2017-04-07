@@ -10,6 +10,8 @@ import android.widget.Button;
 
 import com.mjmz.lrx.sample_mjmz.R;
 import com.mjmz.lrx.sample_mjmz.base.BaseFragment;
+import com.mjmz.lrx.sample_mjmz.language.AppButton;
+import com.mjmz.lrx.sample_mjmz.my.MyLanguageActivity;
 import com.mjmz.lrx.sample_mjmz.my.MyNotifyActivity;
 
 /**
@@ -19,6 +21,7 @@ import com.mjmz.lrx.sample_mjmz.my.MyNotifyActivity;
 public class MyFragment extends BaseFragment {
     //控件类
     private Button mNotifyBtn;
+    private AppButton mLanguageBtn;
 
     @Nullable
     @Override
@@ -38,12 +41,21 @@ public class MyFragment extends BaseFragment {
     private void init(View rootView) {
         //找寻控件
         mNotifyBtn = (Button) rootView.findViewById(R.id.notify);
+        mLanguageBtn = (AppButton) rootView.findViewById(R.id.language);
 
         //设置数据和监听
         mNotifyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), MyNotifyActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mLanguageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MyLanguageActivity.class);
                 startActivity(intent);
             }
         });
