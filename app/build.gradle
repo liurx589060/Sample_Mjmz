@@ -61,11 +61,10 @@ dependencies {
     //RecyclerView的动画
     compile project(':animators')
     //lite-orm数据库
-    compile files('E:/Android/WorkProject/AS_workingSpace/Sample_Mjmz/libs/lite-orm-1.9.2.jar')
+    compile files('libs/lite-orm-1.9.2.jar')
 
     //友盟推送
     compile project(':PushSDK')
-
     //消息总线
     compile 'org.greenrobot:eventbus:3.0.0'
 }

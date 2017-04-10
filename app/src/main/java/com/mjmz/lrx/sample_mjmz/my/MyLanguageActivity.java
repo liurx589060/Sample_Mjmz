@@ -1,27 +1,14 @@
 package com.mjmz.lrx.sample_mjmz.my;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
-import android.util.DisplayMetrics;
 import android.view.View;
 
 import com.mjmz.lrx.sample_mjmz.R;
-import com.mjmz.lrx.sample_mjmz.TabMainActivity;
-import com.mjmz.lrx.sample_mjmz.base.BaseActivity;
-import com.mjmz.lrx.sample_mjmz.common.Const;
+import com.mjmz.lrx.sample_mjmz.base.BaseActivity;;
 import com.mjmz.lrx.sample_mjmz.language.AppButton;
 import com.mjmz.lrx.sample_mjmz.language.StringUtil;
-import com.mjmz.lrx.sample_mjmz.tools.GlobalToolsUtil;
-import com.mjmz.lrx.sample_mjmz.tools.SystemUtil;
 
 import org.greenrobot.eventbus.EventBus;
-
-import java.util.Locale;
 
 /**
  * Created by liurunxiong on 2017/4/7.
