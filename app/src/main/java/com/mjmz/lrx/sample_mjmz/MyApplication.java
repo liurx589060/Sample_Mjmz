@@ -20,6 +20,7 @@ import com.mjmz.lrx.sample_mjmz.db.NotifyInstance;
 import com.mjmz.lrx.sample_mjmz.language.StringUtil;
 import com.mjmz.lrx.sample_mjmz.my.MyNotifyActivity;
 import com.mjmz.lrx.sample_mjmz.tools.GlobalToolsUtil;
+import com.squareup.leakcanary.LeakCanary;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UmengMessageHandler;
@@ -48,9 +49,17 @@ public class MyApplication extends Application {
 
         //友盟推送设置
         uMengPush();
+
+        //内存泄漏tiaos调试检测
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);
     }
 
-    /**
+      /**
      * 友盟推送设置
      */
     private void uMengPush() {
