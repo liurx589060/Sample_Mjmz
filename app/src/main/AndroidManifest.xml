@@ -65,6 +65,8 @@
         <activity android:name=".my.MyNotifyActivity"></activity>
 
         <activity android:name=".my.MyLanguageActivity"></activity>
+
+        <activity android:name=".design.DesignHomeBanClickActivity"></activity>
     </application>
 
 </manifest>

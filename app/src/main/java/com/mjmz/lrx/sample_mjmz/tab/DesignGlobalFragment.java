@@ -26,7 +26,6 @@ import com.mjmz.lrx.sample_mjmz.base.BaseFragment;
 import com.mjmz.lrx.sample_mjmz.common.Datas;
 import com.mjmz.lrx.sample_mjmz.design.DesignInfoActivity;
 import com.mjmz.lrx.sample_mjmz.tools.RecyclerLoadingMoreUtil;
-import com.mjmz.lrx.sample_mjmz.tools.SystemUtil;
 
 import java.util.ArrayList;
 import java.util.List;

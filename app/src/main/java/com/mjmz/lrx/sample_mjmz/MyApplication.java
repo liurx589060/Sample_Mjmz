@@ -19,6 +19,7 @@ import com.mjmz.lrx.sample_mjmz.common.ToastUtil;
 import com.mjmz.lrx.sample_mjmz.db.NotifyInstance;
 import com.mjmz.lrx.sample_mjmz.language.StringUtil;
 import com.mjmz.lrx.sample_mjmz.my.MyNotifyActivity;
+import com.mjmz.lrx.sample_mjmz.tools.DisplayUtils;
 import com.mjmz.lrx.sample_mjmz.tools.GlobalToolsUtil;
 import com.squareup.leakcanary.LeakCanary;
 import com.umeng.message.IUmengRegisterCallback;

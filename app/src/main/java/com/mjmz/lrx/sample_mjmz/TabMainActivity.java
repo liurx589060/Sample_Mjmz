@@ -18,6 +18,7 @@ import com.mjmz.lrx.sample_mjmz.tab.DesignFragment;
 import com.mjmz.lrx.sample_mjmz.tab.GoodsFragment;
 import com.mjmz.lrx.sample_mjmz.tab.HomeFragment;
 import com.mjmz.lrx.sample_mjmz.tab.MyFragment;
+import com.mjmz.lrx.sample_mjmz.tools.DisplayUtils;
 import com.mjmz.lrx.sample_mjmz.tools.PermissionUtil;
 import com.yanzhenjie.permission.AndPermission;
 
@@ -52,6 +53,9 @@ public class TabMainActivity extends BaseFragmentActivity {
         setContentView(R.layout.activity_tab_main);
 
         init();
+
+        //获取屏幕分辨率之类的信息
+        DisplayUtils.initScreen(this);
     }
 
 //    @Override

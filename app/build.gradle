@@ -62,14 +62,15 @@ dependencies {
     compile project(':animators')
     //lite-orm数据库
     compile files('libs/lite-orm-1.9.2.jar')
-
     //友盟推送
     compile project(':PushSDK')
     //消息总线
     compile 'org.greenrobot:eventbus:3.0.0'
-
     //内存泄漏检测
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+
+    //视差的刷新库
+    compile project(':ptr-refresh')
 }

@@ -15,11 +15,7 @@ import com.mjmz.lrx.sample_mjmz.R;
 import com.mjmz.lrx.sample_mjmz.base.BaseActivity;
 import com.mjmz.lrx.sample_mjmz.common.Datas;
 import com.mjmz.lrx.sample_mjmz.common.ToastUtil;
-import com.mjmz.lrx.sample_mjmz.design.DesignInfoActivity;
-import com.mjmz.lrx.sample_mjmz.tools.SystemUtil;
-import com.zzhoujay.richtext.ImageHolder;
 import com.zzhoujay.richtext.RichText;
-import com.zzhoujay.richtext.callback.ImageFixCallback;
 import com.zzhoujay.richtext.callback.OnImageClickListener;
 
 import java.util.ArrayList;

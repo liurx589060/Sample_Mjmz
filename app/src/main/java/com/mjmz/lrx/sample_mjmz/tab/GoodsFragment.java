@@ -22,8 +22,8 @@ import com.mjmz.lrx.sample_mjmz.R;
 import com.mjmz.lrx.sample_mjmz.base.BaseFragment;
 import com.mjmz.lrx.sample_mjmz.common.Datas;
 import com.mjmz.lrx.sample_mjmz.goods.GoodsInfoActivity;
+import com.mjmz.lrx.sample_mjmz.tools.DisplayUtils;
 import com.mjmz.lrx.sample_mjmz.tools.RecyclerLoadingMoreUtil;
-import com.mjmz.lrx.sample_mjmz.tools.SystemUtil;
 
 import java.util.ArrayList;
 
@@ -88,12 +88,12 @@ public class GoodsFragment extends BaseFragment {
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
                 if(parent.getChildLayoutPosition(view) == firstDataList.size() + 1) {
-                    outRect.top = SystemUtil.dip2px(getActivity(),40);
+                    outRect.top = DisplayUtils.dip2px(40);
                 }else {
-                    outRect.top = SystemUtil.dip2px(getActivity(),8);
+                    outRect.top = DisplayUtils.dip2px(8);
                 }
-                outRect.left = -SystemUtil.dip2px(getActivity(),4);
-                outRect.right = SystemUtil.dip2px(getActivity(),12);
+                outRect.left = -DisplayUtils.dip2px(4);
+                outRect.right = DisplayUtils.dip2px(12);
                 outRect.bottom = 0;
             }
         });

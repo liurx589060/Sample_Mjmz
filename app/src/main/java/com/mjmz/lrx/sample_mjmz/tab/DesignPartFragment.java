@@ -25,8 +25,8 @@ import com.github.jdsjlzx.recyclerview.LuRecyclerViewAdapter;
 import com.mjmz.lrx.sample_mjmz.R;
 import com.mjmz.lrx.sample_mjmz.base.BaseFragment;
 import com.mjmz.lrx.sample_mjmz.common.Datas;
+import com.mjmz.lrx.sample_mjmz.tools.DisplayUtils;
 import com.mjmz.lrx.sample_mjmz.tools.RecyclerLoadingMoreUtil;
-import com.mjmz.lrx.sample_mjmz.tools.SystemUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -98,7 +98,7 @@ public class DesignPartFragment extends BaseFragment {
         mRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-                int space = SystemUtil.dip2px(getContext(),6);
+                int space = DisplayUtils.dip2px(6);
                 outRect.left=space;
                 outRect.right=0;
                 outRect.bottom=0;

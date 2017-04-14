@@ -1,1 +1,1 @@
-include ':app', ':animators', ':imagewrapper', ':zxingbar', ':httpwrapper', ':PushSDK'
+include ':app', ':animators', ':imagewrapper', ':zxingbar', ':httpwrapper', ':PushSDK', ':ptr-refresh'
