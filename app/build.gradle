@@ -73,4 +73,6 @@ dependencies {
 
     //视差的刷新库
     compile project(':ptr-refresh')
+
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.6'
 }

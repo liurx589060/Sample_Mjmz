@@ -23,18 +23,16 @@ import com.github.jdsjlzx.recyclerview.LuRecyclerView;
 import com.github.jdsjlzx.recyclerview.LuRecyclerViewAdapter;
 import com.mjmz.lrx.sample_mjmz.R;
 import com.mjmz.lrx.sample_mjmz.base.BaseFragment;;
+import com.mjmz.lrx.sample_mjmz.design.DesignGifActivity;
 import com.mjmz.lrx.sample_mjmz.design.DesignHomeBanClickActivity;
 import com.mjmz.lrx.sample_mjmz.tools.DisplayUtils;
 import com.mjmz.lrx.sample_mjmz.tools.PermissionUtil;
 import com.mjmz.lrx.sample_mjmz.tools.RecyclerLoadingMoreUtil;
 import com.stx.xhb.xbanner.XBanner;
 import com.stx.xhb.xbanner.transformers.Transformer;
-import com.yanzhenjie.permission.PermissionListener;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
 
 /**
  * Created by liurunxiong on 2017/3/10.
@@ -272,6 +270,13 @@ public class HomeFragment extends BaseFragment {
 
             public void bindVH(int position) {
                 ImageWrapper.getInstance().with(this.itemView.getContext()).setUrl(imgesUrl.get(position % imgesUrl.size())).setImageView(mImageView);
+                this.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getActivity(), DesignGifActivity.class);
+                        startActivity(intent);
+                    }
+                });
             }
         }
     }

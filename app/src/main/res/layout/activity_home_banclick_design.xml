@@ -37,7 +37,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         >
 
-        <com.mjmz.lrx.sample_mjmz.design.widget.ParallaxPtrFrameLayout
+        <in.srain.cube.views.ptr.PtrFrameLayout
             android:id="@+id/refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -47,6 +47,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-        </com.mjmz.lrx.sample_mjmz.design.widget.ParallaxPtrFrameLayout>
+        </in.srain.cube.views.ptr.PtrFrameLayout>
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

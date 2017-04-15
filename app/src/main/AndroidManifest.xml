@@ -67,6 +67,9 @@
         <activity android:name=".my.MyLanguageActivity"></activity>
 
         <activity android:name=".design.DesignHomeBanClickActivity"></activity>
+
+        <activity android:name=".design.DesignGifActivity"></activity>
+
     </application>
 
 </manifest>

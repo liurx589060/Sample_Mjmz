@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import com.mjmz.lrx.sample_mjmz.R;
+import com.mjmz.lrx.sample_mjmz.design.widget.ParallaxHeader;
 import com.mjmz.lrx.sample_mjmz.tools.DisplayUtils;
 
 import java.util.ArrayList;
@@ -29,6 +30,9 @@ public class DesignHomeBanClickActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home_banclick_design);
 
         mPtrFrameLayout = (PtrFrameLayout) findViewById(R.id.refresh_layout);
+        ParallaxHeader header = new ParallaxHeader(this);
+        mPtrFrameLayout.setHeaderView(header);
+        mPtrFrameLayout.addPtrUIHandler(header);
         mPtrFrameLayout.setPtrHandler(mPtrHandler);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
