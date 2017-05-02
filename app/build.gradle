@@ -74,5 +74,6 @@ dependencies {
     //视差的刷新库
     compile project(':ptr-refresh')
 
+    //可运行gif的ImageView
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.6'
 }

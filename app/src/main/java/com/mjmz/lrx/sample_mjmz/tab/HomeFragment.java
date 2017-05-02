@@ -169,6 +169,11 @@ public class HomeFragment extends BaseFragment {
         initRecomGoodsData();
     }
 
+    /**
+     * 申请相机权限回调
+     * @param requestCode
+     * @param grantPermissions
+     */
     @Override
     public void onSucceed(int requestCode, List<String> grantPermissions) {
         super.onSucceed(requestCode, grantPermissions);

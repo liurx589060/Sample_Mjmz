@@ -1,0 +1,39 @@
+技术说明：
+整体框架采用ViewPager+TabLayout实现，ViewPager实现5个主页签，TabLayout实现底部5个菜单。
+列表刷新--SwipeRefreshLayout,列表使用-LuRecyclerView，可实现刷新和上拉加载
+总体使用了:nineoldandroids(轮播动画),LuRecyclerView（下拉刷新和上拉加载）,xbanne（轮播），ormLite（数据库），EventBus（消息通知），zxingbar（扫码）
+        language（语言切换），ptr-refresh（下拉动画），android-gif-drawable（gif）,animators(RecyclerView的动画)，PushSDK(友盟推送)，httpwrapper(网络加载，默认OKGo)
+        imagewrapper(图片加载，默认Glide)
+
+一.首页HomeFragment--整个页面使用一个LuRecyclerView的LinearLayout布局，其中共4个Item：
+    1.顶部轮播--采用第三方库xbanne,动画采用的是第三方库nineoldandroids。此轮播框架，可实现多种动画效果和无限轮播
+    2.热门设计--使用的是RecyclerView的horizontal布局
+    3.多布局的Adapter为HomeRecyclerViewAdapter
+
+二.设计页面DesignFragment--使用Viewpager和RadioButton实现可切换的两页：
+    1.整屋页面DesignGlobalFragment--顶部为3个Button,其余为LuRecyclerView,图片加载使用了我自己封装的ImageWrapper利用Glide实现
+    2.局部设计DesignPartFragment--顶部为4个Button,其余为LuRecyclerView,使用了瀑布流布局StaggeredGridLayoutManager，有上拉加载更多和使用SwipeRefreshLayout下拉刷新功能
+      Item的间距使用了RecyclerView.ItemDecoration,圆角采用了CardView
+
+三.购物车CartFragment--使用了高德地图的table标记,其余为Recyclerview
+    1.高德地图可使用自定义的弹窗和标记符号
+
+四.商品页面GoodsFragment--多个Section的RecyclerView，使用了一个LuRecyclerView实现，计算什么时候显示section，总共2中item
+
+五.我的MyFragment--有我的消息和语言切换
+
+六.我的消息MyNotifyActivity--使用了ormLite数据库
+
+七.语言切换MyLanguageActivity--使用了几个自定义的View，AppButton，AppTextView...在language包中，使用了EventBus来进行消息通知切换语言
+
+八.扫码CodeActivity--使用了自己封装的第三方库com.lrx:zxingbar:1.0.0，可自定义扫描界面
+
+九.顶部轮播点击DesignHomeBanClickActivity--使用了ptr-refresh，可实现下拉有动画视差特效，自行代码绘制动画效果
+
+十.热门推荐点击DesignGifActivity--使用了ptr-refresh，可实现下拉有动画视差特效，其中还使用了第三方库android-gif-drawable,可获取gif图片的每帧图片，从而实现使用gif图片实现下拉动画效果
+
+十一.整屋设计item点击DesignInfoActivity--使用了RecyclerScrollView(NestedScrollView),使用NestedScrolling实现ScrollView和RecyclerView的嵌套协调滑动
+    1.上部--富文本，com.zzhoujay.richtext:richtext可实现富文本
+    2.总体使用了NestedScrolling实现嵌套滑动，参考RecyclerScrollView文件
+
+十二.商品item点击GoodsInfoActivity--RecyclerView实现2中item,上部为富文本com.zzhoujay.richtext:richtext，下部为正常的item
