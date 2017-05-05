@@ -39,6 +39,7 @@ public class DesignInfoActivity extends BaseActivity {
     private static final String IMAGE1 = "<h1>RichText</h1><p>Android平台下的富文本解析器</p><img title=\"\" src=\"http://image.tianjimedia.com/uploadImages/2015/129/56/J63MI042Z4P8.jpg\"  style=\"cursor: pointer;\"><br><br>" +
             "<h3>点击菜单查看更多Demo</h3><img src=\"http://ww2.sinaimg.cn/bmiddle/813a1fc7jw1ee4xpejq4lj20g00o0gnu.jpg\" /><p><a href=\"http://www.baidu.com\">baidu</a>" +
             "hello asdkjfgsduk <a href=\"http://www.jd.com\">jd</a></p>";
+
     private MyRecyclerViewAdapter mAdapter;
 
     @Override

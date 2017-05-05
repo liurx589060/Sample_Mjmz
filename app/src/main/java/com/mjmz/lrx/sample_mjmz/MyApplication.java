@@ -1,16 +1,11 @@
 package com.mjmz.lrx.sample_mjmz;
 
 import android.app.Application;
-import android.app.Notification;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.RemoteViews;
 
 import com.example.lrx.httpwrapper.HttpRequset;
-import com.example.lrx.httpwrapper.OkGoHttpExecute;
+import com.example.lrx.httpwrapper.httpexecute.DefaultHttpExecute;
 import com.example.lrx.imagewrapper.GlideImageLoader;
 import com.example.lrx.imagewrapper.ImageWrapper;
 import com.mjmz.lrx.sample_mjmz.common.Const;
@@ -40,7 +35,7 @@ public class MyApplication extends Application {
         //初始化图片加载器
         ImageWrapper.init(new GlideImageLoader());
         //初始化http加载
-        HttpRequset.init(new OkGoHttpExecute(this));
+        HttpRequset.init(new DefaultHttpExecute(this));
 
         /**
          * 获取日志

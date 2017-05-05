@@ -13,6 +13,7 @@ import com.mjmz.lrx.sample_mjmz.base.BaseFragment;
 import com.mjmz.lrx.sample_mjmz.language.AppButton;
 import com.mjmz.lrx.sample_mjmz.my.MyLanguageActivity;
 import com.mjmz.lrx.sample_mjmz.my.MyNotifyActivity;
+import com.mjmz.lrx.sample_mjmz.my.RxAndroidActivity;
 
 /**
  * Created by liurunxiong on 2017/3/10.
@@ -22,6 +23,7 @@ public class MyFragment extends BaseFragment {
     //控件类
     private Button mNotifyBtn;
     private AppButton mLanguageBtn;
+    private Button mRxAndroidBtn;
 
     @Nullable
     @Override
@@ -42,6 +44,7 @@ public class MyFragment extends BaseFragment {
         //找寻控件
         mNotifyBtn = (Button) rootView.findViewById(R.id.notify);
         mLanguageBtn = (AppButton) rootView.findViewById(R.id.language);
+        mRxAndroidBtn = (Button) rootView.findViewById(R.id.RxAndroid);
 
         //设置数据和监听
         mNotifyBtn.setOnClickListener(new View.OnClickListener() {
@@ -59,5 +62,14 @@ public class MyFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
+
+        mRxAndroidBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), RxAndroidActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }

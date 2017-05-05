@@ -14,5 +14,11 @@
         android:id="@+id/language"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/language_btn_pre"/>
+        android:text="@string/language_btn_pre" />
+
+    <Button
+        android:id="@+id/RxAndroid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="RxAndroid" />
 </LinearLayout>
