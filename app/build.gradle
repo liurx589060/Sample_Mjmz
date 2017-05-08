@@ -40,7 +40,7 @@ dependencies {
     compile 'com.nineoldandroids:library:2.4.0'
     //图片加载
     //    compile project(':imagewrapper')
-    compile 'com.lrx:imagewrapper:1.0.0'
+    compile 'com.lrx:imagewrapper:1.0.1'
     //网络加载
     //    compile project(':httpwrapper')
     compile 'com.lrx:httpwrapper:1.0.1'

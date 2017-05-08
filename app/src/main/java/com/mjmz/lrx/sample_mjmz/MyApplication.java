@@ -6,7 +6,7 @@ import android.util.Log;
 
 import com.example.lrx.httpwrapper.HttpRequset;
 import com.example.lrx.httpwrapper.httpexecute.DefaultHttpExecute;
-import com.example.lrx.imagewrapper.GlideImageLoader;
+import com.example.lrx.imagewrapper.DefaultImageLoader;
 import com.example.lrx.imagewrapper.ImageWrapper;
 import com.mjmz.lrx.sample_mjmz.common.Const;
 import com.mjmz.lrx.sample_mjmz.common.CrashHandler;
@@ -33,7 +33,7 @@ public class MyApplication extends Application {
         super.onCreate();
 
         //初始化图片加载器
-        ImageWrapper.init(new GlideImageLoader());
+        ImageWrapper.init(new DefaultImageLoader());
         //初始化http加载
         HttpRequset.init(new DefaultHttpExecute(this));
 
