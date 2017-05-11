@@ -21,4 +21,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="RxAndroid" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:layout_alignParentBottom="true"
+            android:text="盛世古月" />
+    </RelativeLayout>
 </LinearLayout>

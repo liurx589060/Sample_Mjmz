@@ -10,18 +10,11 @@ import com.example.lrx.imagewrapper.DefaultImageLoader;
 import com.example.lrx.imagewrapper.ImageWrapper;
 import com.mjmz.lrx.sample_mjmz.common.Const;
 import com.mjmz.lrx.sample_mjmz.common.CrashHandler;
-import com.mjmz.lrx.sample_mjmz.common.ToastUtil;
-import com.mjmz.lrx.sample_mjmz.db.NotifyInstance;
 import com.mjmz.lrx.sample_mjmz.language.StringUtil;
-import com.mjmz.lrx.sample_mjmz.my.MyNotifyActivity;
-import com.mjmz.lrx.sample_mjmz.tools.DisplayUtils;
 import com.mjmz.lrx.sample_mjmz.tools.GlobalToolsUtil;
 import com.squareup.leakcanary.LeakCanary;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
-import com.umeng.message.UmengMessageHandler;
-import com.umeng.message.UmengNotificationClickHandler;
-import com.umeng.message.entity.UMessage;
 
 /**
  * Created by liurunxiong on 2017/3/10.
