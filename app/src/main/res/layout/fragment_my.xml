@@ -32,8 +32,19 @@
             android:id="@+id/editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
+            android:inputType="text"
+            android:text="盛世古月"
             android:layout_alignParentBottom="true"
-            android:text="盛世古月" />
+            android:layout_toLeftOf="@+id/swichToPassword"
+            android:layout_alignParentLeft="true" />
+
+        <Button
+            android:id="@+id/swichToPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="Button" />
     </RelativeLayout>
 </LinearLayout>

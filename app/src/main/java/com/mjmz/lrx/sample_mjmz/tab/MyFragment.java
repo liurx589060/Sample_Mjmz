@@ -3,10 +3,15 @@ package com.mjmz.lrx.sample_mjmz.tab;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Selection;
+import android.text.Spannable;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.mjmz.lrx.sample_mjmz.R;
 import com.mjmz.lrx.sample_mjmz.base.BaseFragment;
@@ -24,6 +29,11 @@ public class MyFragment extends BaseFragment {
     private Button mNotifyBtn;
     private AppButton mLanguageBtn;
     private Button mRxAndroidBtn;
+    private EditText mEditText;
+    private Button mSwitchToPasswordBtn;
+
+    //数据类
+    private boolean isHidden;
 
     @Nullable
     @Override
@@ -45,6 +55,8 @@ public class MyFragment extends BaseFragment {
         mNotifyBtn = (Button) rootView.findViewById(R.id.notify);
         mLanguageBtn = (AppButton) rootView.findViewById(R.id.language);
         mRxAndroidBtn = (Button) rootView.findViewById(R.id.RxAndroid);
+        mEditText = (EditText) rootView.findViewById(R.id.editText);
+        mSwitchToPasswordBtn = (Button) rootView.findViewById(R.id.swichToPassword);
 
         //设置数据和监听
         mNotifyBtn.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +80,27 @@ public class MyFragment extends BaseFragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), RxAndroidActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        mSwitchToPasswordBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isHidden) {
+                    //设置EditText文本为可见的
+                    mEditText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                } else {
+                    //设置EditText文本为隐藏的
+                    mEditText.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+                isHidden = !isHidden;
+                mEditText.postInvalidate();
+                //切换后将EditText光标置于末尾
+                CharSequence charSequence = mEditText.getText();
+                if (charSequence instanceof Spannable) {
+                    Spannable spanText = (Spannable) charSequence;
+                    Selection.setSelection(spanText, charSequence.length());
+                }
             }
         });
 
