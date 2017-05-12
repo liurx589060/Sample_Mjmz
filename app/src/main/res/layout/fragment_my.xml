@@ -22,6 +22,12 @@
         android:layout_height="wrap_content"
         android:text="RxAndroid" />
 
+    <Button
+        android:id="@+id/webviewBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="webview_Scheme调取App" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

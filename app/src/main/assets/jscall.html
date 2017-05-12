@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>webview调起app</title>
+    <script type="application/javascript">
+        function jumpapp() {
+            window.location.href = "daven://my_switch_language";
+        }
+
+        function jumpapp2() {
+            window.location.href = "daven://my_notification?data=我的消息"
+        }
+    </script>
+</head>
+<body>
+
+<p></p>
+<input type="button" onclick="jumpapp()" value="语言切换"/>
+<p></p>
+
+<input type="button" onclick="jumpapp2()" value="我的消息"/>
+<p></p>
+
+</body>
+</html>

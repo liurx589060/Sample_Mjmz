@@ -1,6 +1,7 @@
 package com.mjmz.lrx.sample_mjmz.my;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -53,6 +54,15 @@ public class MyNotifyActivity extends BaseActivity {
 
         //初始化
         init();
+
+        Intent intent = getIntent();
+        String data = "";
+
+        Uri uri = intent.getData();
+        if(uri != null) {
+            data = uri.getQueryParameter("data");
+        }
+        ToastUtil.setToast(this,data);
     }
 
     /**

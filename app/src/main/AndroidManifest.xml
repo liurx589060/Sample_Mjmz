@@ -49,7 +49,8 @@
         <receiver android:name=".NotificationBroadCastReceiver"></receiver>
 
         <activity android:name=".TabMainActivity"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -63,15 +64,40 @@
         
         <activity android:name=".tab.CodeActivity"></activity>
 
-        <activity android:name=".my.MyNotifyActivity"></activity>
+        <activity android:name=".my.MyNotifyActivity"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"></action>
+                <category android:name="android.intent.category.DEFAULT"></category>
+                <category android:name="android.intent.category.BROWSABLE"></category>
 
-        <activity android:name=".my.MyLanguageActivity"></activity>
+                <data
+                    android:scheme="daven"
+                    android:host="my_notification">
+                </data>
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".my.MyLanguageActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"></action>
+                <category android:name="android.intent.category.DEFAULT"></category>
+                <category android:name="android.intent.category.BROWSABLE"></category>
+
+                <data
+                    android:scheme="daven"
+                    android:host="my_switch_language">
+                </data>
+            </intent-filter>
+        </activity>
 
         <activity android:name=".design.DesignHomeBanClickActivity"></activity>
 
         <activity android:name=".design.DesignGifActivity"></activity>
 
         <activity android:name=".my.RxAndroidActivity"></activity>
+
+        <activity android:name=".my.TransformWebViewActivity"></activity>
 
     </application>
 
