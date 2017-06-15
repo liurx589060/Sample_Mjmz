@@ -7,20 +7,53 @@
         android:id="@+id/rxAndroid_netRequest_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="34dp"
+        android:text="单个请求"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="37dp"
-        android:text="Button" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="29dp"
+        android:text="TextView"
+        android:layout_below="@+id/zipRequest"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp" />
+
+    <Button
+        android:id="@+id/chainRequset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/rxAndroid_netRequest_btn"
+        android:layout_marginLeft="36dp"
+        android:layout_marginStart="36dp"
+        android:layout_toEndOf="@+id/rxAndroid_netRequest_btn"
+        android:layout_toRightOf="@+id/rxAndroid_netRequest_btn"
+        android:text="链式请求" />
+
+    <Button
+        android:id="@+id/mergeBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/chainRequset"
+        android:layout_marginLeft="38dp"
+        android:layout_marginStart="38dp"
+        android:layout_toEndOf="@+id/chainRequset"
+        android:layout_toRightOf="@+id/chainRequset"
+        android:text="合并" />
+
+    <Button
+        android:id="@+id/zipRequest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/rxAndroid_netRequest_btn"
-        android:layout_marginLeft="28dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="33dp"
-        android:text="TextView" />
+        android:layout_marginTop="31dp"
+        android:text="zip" />
 </RelativeLayout>
