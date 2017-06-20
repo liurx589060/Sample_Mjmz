@@ -9,6 +9,8 @@ import android.widget.TextView;
 import com.example.lrx.httpwrapper.HttpParams;
 import com.example.lrx.httpwrapper.HttpRequset;
 import com.example.lrx.httpwrapper.httpexecute.DefaultGetResultListener;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.mjmz.lrx.sample_mjmz.R;
 import com.mjmz.lrx.sample_mjmz.base.BaseActivity;
 
@@ -18,6 +20,11 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
+import retrofit2.http.GET;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -87,6 +94,29 @@ public class RxAndroidActivity extends BaseActivity {
                                 mResultTextView.setText(originStr + jsonObject.toString());
                             }
                         });
+
+//                getWeather().subscribeOn(Schedulers.io())
+//                        .observeOn(AndroidSchedulers.mainThread())
+//                        .subscribe(new Subscriber<Weather<Info>>() {
+//                            @Override
+//                            public void onCompleted() {
+//                                Log.e("yy","RxAndroid--onCompleted");
+//                            }
+//
+//                            @Override
+//                            public void onError(Throwable e) {
+//                                Log.e("yy","RxAndroid--onError--" + e.toString());
+//                            }
+//
+//                            @Override
+//                            public void onNext(Weather<Info> jsonObject) {
+//                                Log.e("yy","RxAndroid--onNext");
+////                                String originStr = mResultTextView.getText().toString();
+////                                mResultTextView.setText(originStr + jsonObject.toString());
+//                                String radar = jsonObject.weatherinfo.city;
+//                                mResultTextView.setText(radar);
+//                            }
+//                        });
             }
         });
 
@@ -259,4 +289,60 @@ public class RxAndroidActivity extends BaseActivity {
         });
         return object;
     }
+
+    public Observable<Weather<Info>> getWeather() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://www.weather.com.cn/adat/sk/")
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
+        RequestApi api = retrofit.create(RequestApi.class);
+        return api.getWeatherInterface();
+    }
+
+    public Observable<String> getModelInfo() {
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url2 )
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
+        RequestApi api = retrofit.create(RequestApi.class);
+        return api.getModelInfoInterface();
+    }
+
+
+
+    public interface RequestApi {
+        @GET("http://www.weather.com.cn/adat/sk/101010100.html")
+        Observable<Weather<Info>> getWeatherInterface();
+
+        @GET("https://www.wnwapi.com/wnwapi/index.php/Api/Index/getGoodsInfo?equipment=mobile&product_type=4&product_version=0.6.0" +
+                "&client_type=5&client_version=10.2.1&user_city=shenzhen&channel_id=wnw&type=2&&goods_id=13903&partner_id=86")
+        Observable<String> getModelInfoInterface();
+    }
+
+    public class Weather<T> {
+        public T weatherinfo;
+    }
+
+    public class Info {
+        public String city;
+        public String cityid;
+        public String temp;
+        public String WD;
+        public String WS;
+        public String SD;
+        public String WSE;
+        public String time;
+        public String isRadar;
+        public String Radar;
+        public String njd;
+        public String qy;
+    }
+
 }
