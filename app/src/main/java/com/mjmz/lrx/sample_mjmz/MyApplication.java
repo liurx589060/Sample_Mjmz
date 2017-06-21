@@ -1,7 +1,9 @@
 package com.mjmz.lrx.sample_mjmz;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.example.lrx.httpwrapper.HttpRequset;
@@ -75,5 +77,11 @@ public class MyApplication extends Application {
         //设置语言
         SharedPreferences sp = GlobalToolsUtil.getSharedPreferences(this);
         StringUtil.switchLanguage(this,sp.getInt(Const.SP_LANGUAGE,0));
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 }

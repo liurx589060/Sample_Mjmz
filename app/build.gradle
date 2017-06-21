@@ -2,6 +2,10 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
+    packagingOptions{
+        exclude 'META-INF/LICENSE'
+    }
+
     compileSdkVersion 25
     buildToolsVersion "25.0.1"
     defaultConfig {
@@ -10,6 +14,7 @@ android {
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -33,6 +38,9 @@ android {
 }
 
 dependencies {
+    //分包库
+    compile 'com.android.support:multidex:'
+
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:25.2.0'
     compile 'com.android.support:design:25.2.0'
@@ -86,6 +94,7 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.0.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0'
     compile "com.squareup.retrofit2:converter-scalars:2.0.0"
+    compile "com.squareup.retrofit2:converter-jackson:2.0.0"
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }

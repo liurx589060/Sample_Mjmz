@@ -18,8 +18,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -74,7 +79,28 @@ public class RxAndroidActivity extends BaseActivity {
         mNetRequestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getNetRequestByRxAndroid("单个请求",url).subscribeOn(Schedulers.io())
+//                getNetRequestByRxAndroid("单个请求",url).subscribeOn(Schedulers.io())
+//                        .observeOn(AndroidSchedulers.mainThread())
+//                        .subscribe(new Subscriber<JSONObject>() {
+//                            @Override
+//                            public void onCompleted() {
+//                                Log.e("yy","RxAndroid--onCompleted");
+//                            }
+//
+//                            @Override
+//                            public void onError(Throwable e) {
+//                                Log.e("yy","RxAndroid--onError--" + e.toString());
+//                            }
+//
+//                            @Override
+//                            public void onNext(JSONObject jsonObject) {
+//                                Log.e("yy","RxAndroid--onNext");
+//                                String originStr = mResultTextView.getText().toString();
+//                                mResultTextView.setText(originStr + jsonObject.toString());
+//                            }
+//                        });
+
+                getWeather().subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Subscriber<JSONObject>() {
                             @Override
@@ -92,31 +118,10 @@ public class RxAndroidActivity extends BaseActivity {
                                 Log.e("yy","RxAndroid--onNext");
                                 String originStr = mResultTextView.getText().toString();
                                 mResultTextView.setText(originStr + jsonObject.toString());
-                            }
-                        });
-
-//                getWeather().subscribeOn(Schedulers.io())
-//                        .observeOn(AndroidSchedulers.mainThread())
-//                        .subscribe(new Subscriber<Weather<Info>>() {
-//                            @Override
-//                            public void onCompleted() {
-//                                Log.e("yy","RxAndroid--onCompleted");
-//                            }
-//
-//                            @Override
-//                            public void onError(Throwable e) {
-//                                Log.e("yy","RxAndroid--onError--" + e.toString());
-//                            }
-//
-//                            @Override
-//                            public void onNext(Weather<Info> jsonObject) {
-//                                Log.e("yy","RxAndroid--onNext");
-////                                String originStr = mResultTextView.getText().toString();
-////                                mResultTextView.setText(originStr + jsonObject.toString());
 //                                String radar = jsonObject.weatherinfo.city;
 //                                mResultTextView.setText(radar);
-//                            }
-//                        });
+                            }
+                        });
             }
         });
 
@@ -290,11 +295,12 @@ public class RxAndroidActivity extends BaseActivity {
         return object;
     }
 
-    public Observable<Weather<Info>> getWeather() {
+    public Observable<JSONObject> getWeather() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://www.weather.com.cn/adat/sk/")
                 .addConverterFactory(ScalarsConverterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
+//                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(new JsonConverterFactory())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
         RequestApi api = retrofit.create(RequestApi.class);
@@ -319,7 +325,7 @@ public class RxAndroidActivity extends BaseActivity {
 
     public interface RequestApi {
         @GET("http://www.weather.com.cn/adat/sk/101010100.html")
-        Observable<Weather<Info>> getWeatherInterface();
+        Observable<JSONObject> getWeatherInterface();
 
         @GET("https://www.wnwapi.com/wnwapi/index.php/Api/Index/getGoodsInfo?equipment=mobile&product_type=4&product_version=0.6.0" +
                 "&client_type=5&client_version=10.2.1&user_city=shenzhen&channel_id=wnw&type=2&&goods_id=13903&partner_id=86")
@@ -345,4 +351,44 @@ public class RxAndroidActivity extends BaseActivity {
         public String qy;
     }
 
+    /**
+     * 自定义转换器
+     */
+    public class JsonConverterFactory extends Converter.Factory {
+
+        public JsonConverterFactory create() {
+            return new JsonConverterFactory ();
+        }
+
+        @Override
+        public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
+            return new JsonResponseBodyConverter<JSONObject>();
+        }
+
+//        @Override
+//        public Converter<?, RequestBody> requestBodyConverter(Type type, Annotation[] parameterAnnotations, Annotation[] methodAnnotations, Retrofit retrofit) {
+//            return  new JsonResponseBodyConverter<JSONObject>();
+//        }
+
+
+    }
+
+
+    public class JsonResponseBodyConverter<T> implements Converter<ResponseBody, T> {
+
+        public  JsonResponseBodyConverter() {
+
+        }
+
+        @Override
+        public T convert(ResponseBody value) throws IOException {
+            JSONObject jsonObj;
+            try {
+                jsonObj = new JSONObject(value.string());
+                return (T) jsonObj;
+            } catch(JSONException e) {
+                return null;
+            }
+        }
+    }
 }
