@@ -79,28 +79,7 @@ public class RxAndroidActivity extends BaseActivity {
         mNetRequestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                getNetRequestByRxAndroid("单个请求",url).subscribeOn(Schedulers.io())
-//                        .observeOn(AndroidSchedulers.mainThread())
-//                        .subscribe(new Subscriber<JSONObject>() {
-//                            @Override
-//                            public void onCompleted() {
-//                                Log.e("yy","RxAndroid--onCompleted");
-//                            }
-//
-//                            @Override
-//                            public void onError(Throwable e) {
-//                                Log.e("yy","RxAndroid--onError--" + e.toString());
-//                            }
-//
-//                            @Override
-//                            public void onNext(JSONObject jsonObject) {
-//                                Log.e("yy","RxAndroid--onNext");
-//                                String originStr = mResultTextView.getText().toString();
-//                                mResultTextView.setText(originStr + jsonObject.toString());
-//                            }
-//                        });
-
-                getWeather().subscribeOn(Schedulers.io())
+                getNetRequestByRxAndroid("单个请求",url).subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Subscriber<JSONObject>() {
                             @Override
@@ -118,10 +97,68 @@ public class RxAndroidActivity extends BaseActivity {
                                 Log.e("yy","RxAndroid--onNext");
                                 String originStr = mResultTextView.getText().toString();
                                 mResultTextView.setText(originStr + jsonObject.toString());
-//                                String radar = jsonObject.weatherinfo.city;
-//                                mResultTextView.setText(radar);
                             }
                         });
+
+//                getWeather().subscribeOn(Schedulers.io())
+//                        .observeOn(AndroidSchedulers.mainThread())
+//                        .subscribe(new Subscriber<JSONObject>() {
+//                            @Override
+//                            public void onCompleted() {
+//                                Log.e("yy","RxAndroid--onCompleted");
+//                            }
+//
+//                            @Override
+//                            public void onError(Throwable e) {
+//                                Log.e("yy","RxAndroid--onError--" + e.toString());
+//                            }
+//
+//                            @Override
+//                            public void onNext(JSONObject jsonObject) {
+//                                Log.e("yy","RxAndroid--onNext");
+//                                String originStr = mResultTextView.getText().toString();
+//                                mResultTextView.setText(originStr + jsonObject.toString());
+////                                String radar = jsonObject.weatherinfo.city;
+////                                mResultTextView.setText(radar);
+//                            }
+//                        });
+
+                //错误重试
+//                getWeather().subscribeOn(Schedulers.io())
+//                        .retryWhen(new Func1<Observable<? extends Throwable>, Observable<?>>() {
+//                            @Override
+//                            public Observable<?> call(Observable<? extends Throwable> observable) {
+//                                return observable.flatMap(new Func1<Throwable, Observable<?>>() {
+//                                    @Override
+//                                    public Observable<?> call(Throwable throwable) {
+//                                        Log.e("yy","retryWhen=" + throwable.toString());
+//                                        return Observable.just(1);
+//                                    }
+//                                });
+//                            }
+//                        })
+//                        .observeOn(AndroidSchedulers.mainThread())
+//                        .subscribe(new Subscriber<JSONObject>() {
+//                            @Override
+//                            public void onCompleted() {
+//                                Log.e("yy","RxAndroid--onCompleted");
+//                            }
+//
+//                            @Override
+//                            public void onError(Throwable e) {
+//                                Log.e("yy","RxAndroid--onError--" + e.toString());
+//                            }
+//
+//                            @Override
+//                            public void onNext(JSONObject jsonObject) {
+//                                Log.e("yy","RxAndroid--onNext");
+//                                String originStr = mResultTextView.getText().toString();
+//                                mResultTextView.setText(originStr + jsonObject.toString());
+////                                String radar = jsonObject.weatherinfo.city;
+////                                mResultTextView.setText(radar);
+//                            }
+//                        });
+
             }
         });
 
@@ -137,13 +174,30 @@ public class RxAndroidActivity extends BaseActivity {
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<JSONObject>() {
-                    @Override
-                    public void call(JSONObject jsonObject) {
-                        String originStr = mResultTextView.getText().toString();
-                        mResultTextView.setText(originStr + jsonObject.toString());
-                    }
-                });
+//                .subscribe(new Action1<JSONObject>() {
+//                    @Override
+//                    public void call(JSONObject jsonObject) {
+//                        String originStr = mResultTextView.getText().toString();
+//                        mResultTextView.setText(originStr + jsonObject.toString());
+//                    }
+//                });
+               .subscribe(new Subscriber<JSONObject>() {
+                   @Override
+                   public void onCompleted() {
+
+                   }
+
+                   @Override
+                   public void onError(Throwable e) {
+                       Log.e("yy","RxAndroid--onError--" + e.toString());
+                   }
+
+                   @Override
+                   public void onNext(JSONObject jsonObject) {
+                       String originStr = mResultTextView.getText().toString();
+                       mResultTextView.setText(originStr + jsonObject.toString());
+                   }
+               });
             }
         });
 
@@ -197,7 +251,7 @@ public class RxAndroidActivity extends BaseActivity {
 
                             @Override
                             public void onError(Throwable e) {
-
+                                Log.e("yy",e.toString());
                             }
 
                             @Override
@@ -231,7 +285,7 @@ public class RxAndroidActivity extends BaseActivity {
 
                     @Override
                     public void onFailure(String failMessage) {
-                        subscriber.onError(new IOException());
+                        subscriber.onError(new Throwable(failMessage));
                     }
                 });
 
@@ -287,7 +341,7 @@ public class RxAndroidActivity extends BaseActivity {
 
                     @Override
                     public void onFailure(String failMessage) {
-                        subscriber.onError(new IOException());
+                        subscriber.onError(new Throwable(failMessage));
                     }
                 });
             }

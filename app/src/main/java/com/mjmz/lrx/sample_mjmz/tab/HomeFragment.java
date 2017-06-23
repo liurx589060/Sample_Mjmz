@@ -274,7 +274,10 @@ public class HomeFragment extends BaseFragment {
             }
 
             public void bindVH(int position) {
-                ImageWrapper.getInstance().with(this.itemView.getContext()).setUrl(imgesUrl.get(position % imgesUrl.size())).setImageView(mImageView);
+                ImageWrapper.getInstance()
+                        .with(this.itemView.getContext())
+                        .setUrl(imgesUrl.get(position % imgesUrl.size()))
+                        .setImageView(mImageView);
                 this.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
