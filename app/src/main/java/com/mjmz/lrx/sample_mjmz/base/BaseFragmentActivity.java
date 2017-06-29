@@ -19,11 +19,28 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+
 /**
  * Created by liurunxiong on 2017/3/10.
  */
 
 public class BaseFragmentActivity extends FragmentActivity implements PermissionListener{
+    private CompositeDisposable compositeDisposable;
+
+    public void addDisposeable(Disposable disposable) {
+        if(compositeDisposable == null) {
+            compositeDisposable = new CompositeDisposable();
+        }
+        compositeDisposable.add(disposable);
+    }
+
+    public void dispose() {
+        if(compositeDisposable != null) {
+            compositeDisposable.dispose();
+        }
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,6 +56,8 @@ public class BaseFragmentActivity extends FragmentActivity implements Permission
         super.onDestroy();
         //反注册消息总线
         EventBus.getDefault().unregister(this);
+
+        dispose();
     }
 
     /**

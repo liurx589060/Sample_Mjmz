@@ -25,7 +25,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/MyTheme"
-        android:name=".MyApplication">
+        android:name=".MyApplication"
+        >
 
         <meta-data
             android:name="UMENG_CHANNEL"
@@ -49,6 +50,7 @@
         <receiver android:name=".NotificationBroadCastReceiver"></receiver>
 
         <activity android:name=".TabMainActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="adjustPan"
             >
             <intent-filter>
@@ -58,13 +60,17 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".goods.GoodsInfoActivity"></activity>
+        <activity android:name=".goods.GoodsInfoActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
 
-        <activity android:name=".design.DesignInfoActivity"></activity>
+        <activity android:name=".design.DesignInfoActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
         
-        <activity android:name=".tab.CodeActivity"></activity>
+        <activity android:name=".tab.CodeActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
 
         <activity android:name=".my.MyNotifyActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"></action>
@@ -78,7 +84,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".my.MyLanguageActivity">
+        <activity android:name=".my.MyLanguageActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"></action>
                 <category android:name="android.intent.category.DEFAULT"></category>
@@ -91,13 +98,29 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".design.DesignHomeBanClickActivity"></activity>
+        <activity android:name=".design.DesignHomeBanClickActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
 
-        <activity android:name=".design.DesignGifActivity"></activity>
+        <activity android:name=".design.DesignGifActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
 
-        <activity android:name=".my.RxAndroidActivity"></activity>
+        <activity android:name=".my.RxAndroidActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
 
-        <activity android:name=".my.TransformWebViewActivity"></activity>
+        <activity android:name=".my.OkGoRxjavaActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
+
+        <activity android:name=".my.TransformWebViewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
+
+        <activity android:name=".my.AnimateActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
+
+        <activity android:name=".my.ValueAnimateActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
+
+        <activity android:name=".my.ObjectAnimateActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
 
     </application>
 

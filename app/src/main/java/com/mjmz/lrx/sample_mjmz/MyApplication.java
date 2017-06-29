@@ -10,6 +10,7 @@ import com.example.lrx.httpwrapper.HttpRequset;
 import com.example.lrx.httpwrapper.httpexecute.DefaultHttpExecute;
 import com.example.lrx.imagewrapper.DefaultImageLoader;
 import com.example.lrx.imagewrapper.ImageWrapper;
+import com.lzy.okgo.OkGo;
 import com.mjmz.lrx.sample_mjmz.common.Const;
 import com.mjmz.lrx.sample_mjmz.common.CrashHandler;
 import com.mjmz.lrx.sample_mjmz.language.StringUtil;
@@ -17,6 +18,8 @@ import com.mjmz.lrx.sample_mjmz.tools.GlobalToolsUtil;
 import com.squareup.leakcanary.LeakCanary;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
+
+import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * Created by liurunxiong on 2017/3/10.
@@ -30,7 +33,7 @@ public class MyApplication extends Application {
         //初始化图片加载器
         ImageWrapper.init(new DefaultImageLoader());
         //初始化http加载
-        HttpRequset.init(new DefaultHttpExecute(this));
+        HttpRequset.init(new HttpExecute(this));
 
         /**
          * 获取日志

@@ -13,31 +13,42 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mjmz.lrx.sample_mjmz.R;
 import com.mjmz.lrx.sample_mjmz.base.BaseActivity;
+import com.mjmz.lrx.sample_mjmz.tools.GlobalToolsUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
+import okhttp3.Cache;
+import okhttp3.CacheControl;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import retrofit2.http.GET;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.functions.Func2;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by liurunxiong on 2017/5/5.
@@ -50,6 +61,7 @@ public class RxAndroidActivity extends BaseActivity {
     private Button mChainRequestBtn;
     private Button mMergeRequestBtn;
     private Button mZipRequestBtn;
+    private Button mCacheRequestBtn;
     private TextView mResultTextView;
 
     //数据类
@@ -74,33 +86,13 @@ public class RxAndroidActivity extends BaseActivity {
         mChainRequestBtn = (Button) findViewById(R.id.chainRequset);
         mMergeRequestBtn = (Button) findViewById(R.id.mergeBtn);
         mZipRequestBtn = (Button) findViewById(R.id.zipRequest);
+        mCacheRequestBtn = (Button) findViewById(R.id.cacheRequestBtn);
         mResultTextView = (TextView) findViewById(R.id.result);
 
         mNetRequestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getNetRequestByRxAndroid("单个请求",url).subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Subscriber<JSONObject>() {
-                            @Override
-                            public void onCompleted() {
-                                Log.e("yy","RxAndroid--onCompleted");
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-                                Log.e("yy","RxAndroid--onError--" + e.toString());
-                            }
-
-                            @Override
-                            public void onNext(JSONObject jsonObject) {
-                                Log.e("yy","RxAndroid--onNext");
-                                String originStr = mResultTextView.getText().toString();
-                                mResultTextView.setText(originStr + jsonObject.toString());
-                            }
-                        });
-
-//                getWeather().subscribeOn(Schedulers.io())
+//                getNetRequestByRxAndroid("单个请求",url).subscribeOn(Schedulers.io())
 //                        .observeOn(AndroidSchedulers.mainThread())
 //                        .subscribe(new Subscriber<JSONObject>() {
 //                            @Override
@@ -118,10 +110,36 @@ public class RxAndroidActivity extends BaseActivity {
 //                                Log.e("yy","RxAndroid--onNext");
 //                                String originStr = mResultTextView.getText().toString();
 //                                mResultTextView.setText(originStr + jsonObject.toString());
-////                                String radar = jsonObject.weatherinfo.city;
-////                                mResultTextView.setText(radar);
 //                            }
 //                        });
+
+                getWeather().subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Observer<JSONObject>() {
+                            @Override
+                            public void onSubscribe(@NonNull Disposable d) {
+                                addDisposeable(d);
+                            }
+
+                            @Override
+                            public void onNext(@NonNull JSONObject jsonObject) {
+                                Log.e("yy","RxAndroid--onNext");
+                                String originStr = mResultTextView.getText().toString();
+                                mResultTextView.setText(originStr + jsonObject.toString());
+//                                String radar = jsonObject.weatherinfo.city;
+//                                mResultTextView.setText(radar);
+                            }
+
+                            @Override
+                            public void onError(@NonNull Throwable e) {
+                                Log.e("yy","RxAndroid--onError--" + e.toString());
+                            }
+
+                            @Override
+                            public void onComplete() {
+                                Log.e("yy","RxAndroid--onCompleted");
+                            }
+                        });
 
                 //错误重试
 //                getWeather().subscribeOn(Schedulers.io())
@@ -166,38 +184,35 @@ public class RxAndroidActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 getNetRequestByRxAndroid2("链式调用1--getNetRequestByRxAndroid2",url).subscribeOn(Schedulers.io())
-                .flatMap(new Func1<String, Observable<JSONObject>>() {
+                .flatMap(new Function<String, ObservableSource<JSONObject>>() {
                     @Override
-                    public Observable<JSONObject> call(String s) {
+                    public ObservableSource<JSONObject> apply(@NonNull String s) throws Exception {
                         return getNetRequestByRxAndroid(s,url2);
                     }
                 })
-                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Action1<JSONObject>() {
-//                    @Override
-//                    public void call(JSONObject jsonObject) {
-//                        String originStr = mResultTextView.getText().toString();
-//                        mResultTextView.setText(originStr + jsonObject.toString());
-//                    }
-//                });
-               .subscribe(new Subscriber<JSONObject>() {
-                   @Override
-                   public void onCompleted() {
+                .subscribe(new Observer<JSONObject>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
 
-                   }
+                    }
 
-                   @Override
-                   public void onError(Throwable e) {
-                       Log.e("yy","RxAndroid--onError--" + e.toString());
-                   }
+                    @Override
+                    public void onNext(@NonNull JSONObject o) {
+                        String originStr = mResultTextView.getText().toString();
+                        mResultTextView.setText(originStr + o.toString());
+                    }
 
-                   @Override
-                   public void onNext(JSONObject jsonObject) {
-                       String originStr = mResultTextView.getText().toString();
-                       mResultTextView.setText(originStr + jsonObject.toString());
-                   }
-               });
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
             }
         });
 
@@ -207,25 +222,30 @@ public class RxAndroidActivity extends BaseActivity {
                 Observable.merge(getNetRequestByRxAndroid("天气",url),getNetRequestByRxAndroid2("wnw",url2))
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Subscriber<Object>() {
+                        .subscribe(new Observer<Object>() {
                             @Override
-                            public void onCompleted() {
+                            public void onSubscribe(@NonNull Disposable d) {
 
                             }
 
                             @Override
-                            public void onError(Throwable e) {
-
-                            }
-
-                            @Override
-                            public void onNext(Object o) {
+                            public void onNext(@NonNull Object o) {
                                 String str = mResultTextView.getText().toString();
                                 if(o instanceof JSONObject) {
                                     mResultTextView.setText(str + "\n\n" + "天气" + "\n" + o.toString());
                                 }else if (o instanceof String) {
                                     mResultTextView.setText(str + "\n\n" + "wnw" + "\n" + o);
                                 }
+                            }
+
+                            @Override
+                            public void onError(@NonNull Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onComplete() {
+
                             }
                         });
             }
@@ -235,28 +255,64 @@ public class RxAndroidActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 getNetRequestByRxAndroid("天气",url)
-                        .zipWith(getNetRequestByRxAndroid2("wnw", url2), new Func2<JSONObject, String, String>() {
+                        .zipWith(getNetRequestByRxAndroid2("wnw", url2), new BiFunction<JSONObject, String, String>() {
                             @Override
-                            public String call(JSONObject jsonObject, String s) {
+                            public String apply(@NonNull JSONObject jsonObject, @NonNull String s) throws Exception {
                                 return new String(jsonObject.toString() + "\n\n" + s);
                             }
-                        })
+                        } )
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Subscriber<String>() {
+                        .subscribe(new Observer<String>() {
                             @Override
-                            public void onCompleted() {
+                            public void onSubscribe(@NonNull Disposable d) {
 
                             }
 
                             @Override
-                            public void onError(Throwable e) {
+                            public void onNext(@NonNull String s) {
+                                if(s instanceof String) {
+                                    mResultTextView.setText((String)s);
+                                }
+                            }
+
+                            @Override
+                            public void onError(@NonNull Throwable e) {
                                 Log.e("yy",e.toString());
                             }
 
                             @Override
-                            public void onNext(String s) {
+                            public void onComplete() {
+
+                            }
+                        });
+            }
+        });
+
+        mCacheRequestBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getModelInfo().subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Observer<String>() {
+                            @Override
+                            public void onSubscribe(@NonNull Disposable d) {
+
+                            }
+
+                            @Override
+                            public void onNext(@NonNull String s) {
                                 mResultTextView.setText(s);
+                            }
+
+                            @Override
+                            public void onError(@NonNull Throwable e) {
+                                Log.e("yy",e.toString());
+                            }
+
+                            @Override
+                            public void onComplete() {
+
                             }
                         });
             }
@@ -264,9 +320,9 @@ public class RxAndroidActivity extends BaseActivity {
     }
 
     private Observable<JSONObject> getNetRequestByRxAndroid(final String str,final String url) {
-        Observable<JSONObject> object = Observable.create(new Observable.OnSubscribe<JSONObject>() {
+        Observable<JSONObject> object = Observable.create(new ObservableOnSubscribe<JSONObject>() {
             @Override
-            public void call(final Subscriber<? super JSONObject> subscriber) {
+            public void subscribe(@NonNull final ObservableEmitter<JSONObject> e) throws Exception {
                 HttpParams params = new HttpParams();
                 params.setMethod(HttpParams.Method.NOMAL_GET);
                 params.setUrl(url);
@@ -275,9 +331,9 @@ public class RxAndroidActivity extends BaseActivity {
                     public void onSuccess(String response) {
                         try {
                             JSONObject json = new JSONObject(response);
-                            subscriber.onNext(json);
+                            e.onNext(json);
                             mResultTextView.setText(str + "\n");
-                            subscriber.onCompleted();
+                            e.onComplete();
                         } catch (JSONException e1) {
                             e1.printStackTrace();
                         }
@@ -285,9 +341,10 @@ public class RxAndroidActivity extends BaseActivity {
 
                     @Override
                     public void onFailure(String failMessage) {
-                        subscriber.onError(new Throwable(failMessage));
+                        e.onError(new Throwable(failMessage));
                     }
                 });
+            }
 
                 //轮询
 //                Schedulers.newThread().createWorker()
@@ -316,15 +373,14 @@ public class RxAndroidActivity extends BaseActivity {
 //                                });
 //                            }
 //                        },100,3000,TimeUnit.MILLISECONDS);
-            }
         });
         return object;
     }
 
     private Observable<String> getNetRequestByRxAndroid2(final String str,final String url) {
-        Observable<String> object = Observable.create(new Observable.OnSubscribe<String>() {
+        Observable<String> object = Observable.create(new ObservableOnSubscribe<String>() {
             @Override
-            public void call(final Subscriber<? super String> subscriber) {
+            public void subscribe(@NonNull final ObservableEmitter<String> e) throws Exception {
                 HttpParams params = new HttpParams();
                 params.setMethod(HttpParams.Method.NOMAL_GET);
                 params.setUrl(url);
@@ -332,8 +388,8 @@ public class RxAndroidActivity extends BaseActivity {
                     @Override
                     public void onSuccess(String response) {
                         try {
-                            subscriber.onNext(response);
-                            subscriber.onCompleted();
+                            e.onNext(response);
+                            e.onComplete();
                         } catch (Exception e1) {
                             e1.printStackTrace();
                         }
@@ -341,7 +397,7 @@ public class RxAndroidActivity extends BaseActivity {
 
                     @Override
                     public void onFailure(String failMessage) {
-                        subscriber.onError(new Throwable(failMessage));
+                        e.onError(new Throwable(failMessage));
                     }
                 });
             }
@@ -350,12 +406,21 @@ public class RxAndroidActivity extends BaseActivity {
     }
 
     public Observable<JSONObject> getWeather() {
+        File cacheFile = this.getExternalCacheDir();
+        Cache cache = new Cache(cacheFile, 1024 * 1024 * 10);//缓存文件为10MB
+
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.cache(cache);
+        builder.addNetworkInterceptor(new CacheInterceptor(1*60,3*60));
+        builder.addInterceptor(new CacheInterceptor(1*60,3*60));
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://www.weather.com.cn/adat/sk/")
                 .addConverterFactory(ScalarsConverterFactory.create())
 //                .addConverterFactory(GsonConverterFactory.create())
                 .addConverterFactory(new JsonConverterFactory())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .client(builder.build())
                 .build();
         RequestApi api = retrofit.create(RequestApi.class);
         return api.getWeatherInterface();
@@ -366,10 +431,20 @@ public class RxAndroidActivity extends BaseActivity {
                 .setLenient()
                 .create();
 
+        File cacheFile = this.getExternalCacheDir();
+        Cache cache = new Cache(cacheFile, 1024 * 1024 * 10);//缓存文件为10MB
+
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.cache(cache);
+        builder.addNetworkInterceptor(new CacheInterceptor(0,60));
+        builder.addInterceptor(new CacheInterceptor(0,60));
+
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url2 )
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .baseUrl("http://www.weather.com.cn/adat/sk/")
+//                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .client(builder.build())
                 .build();
         RequestApi api = retrofit.create(RequestApi.class);
         return api.getModelInfoInterface();
@@ -443,6 +518,46 @@ public class RxAndroidActivity extends BaseActivity {
             } catch(JSONException e) {
                 return null;
             }
+        }
+    }
+
+    //缓存用
+    public class CacheInterceptor implements Interceptor {
+        private int maxAge;
+        private int maxStale;
+
+        public CacheInterceptor(int maxAge,int maxStale) {
+            this.maxAge = maxAge;
+            this.maxStale = maxStale;
+        }
+
+        @Override
+        public Response intercept(Chain chain) throws IOException {
+            Request request = chain.request();
+
+            if (!GlobalToolsUtil.isConnect(RxAndroidActivity.this)) {//没网强制从缓存读取(必须得写，不然断网状态下，退出应用，或者等待一分钟后，就获取不到缓存）
+                request = request.newBuilder()
+                        .cacheControl(CacheControl.FORCE_CACHE)
+                        .build();
+            }
+            Response response = chain.proceed(request);
+            Response responseLatest;
+            if (GlobalToolsUtil.isConnect(RxAndroidActivity.this)) {
+                int maxAge = this.maxAge; //有网失效一分钟
+                responseLatest = response.newBuilder()
+                        .removeHeader("Pragma")
+                        .removeHeader("Cache-Control")
+                        .header("Cache-Control", "public, max-age=" + maxAge)
+                        .build();
+            } else {
+                int maxStale = this.maxStale; // 没网失效6小时
+                responseLatest= response.newBuilder()
+                        .removeHeader("Pragma")
+                        .removeHeader("Cache-Control")
+                        .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
+                        .build();
+            }
+            return  responseLatest;
         }
     }
 }

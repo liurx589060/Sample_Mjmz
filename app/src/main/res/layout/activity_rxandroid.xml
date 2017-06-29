@@ -56,4 +56,14 @@
         android:layout_below="@+id/rxAndroid_netRequest_btn"
         android:layout_marginTop="31dp"
         android:text="zip" />
+
+    <Button
+        android:id="@+id/cacheRequestBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="cache"
+        android:layout_alignBaseline="@+id/zipRequest"
+        android:layout_alignBottom="@+id/zipRequest"
+        android:layout_alignLeft="@+id/chainRequset"
+        android:layout_alignStart="@+id/chainRequset" />
 </RelativeLayout>

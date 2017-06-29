@@ -16,8 +16,10 @@ import android.widget.EditText;
 import com.mjmz.lrx.sample_mjmz.R;
 import com.mjmz.lrx.sample_mjmz.base.BaseFragment;
 import com.mjmz.lrx.sample_mjmz.language.AppButton;
+import com.mjmz.lrx.sample_mjmz.my.AnimateActivity;
 import com.mjmz.lrx.sample_mjmz.my.MyLanguageActivity;
 import com.mjmz.lrx.sample_mjmz.my.MyNotifyActivity;
+import com.mjmz.lrx.sample_mjmz.my.OkGoRxjavaActivity;
 import com.mjmz.lrx.sample_mjmz.my.RxAndroidActivity;
 import com.mjmz.lrx.sample_mjmz.my.TransformWebViewActivity;
 
@@ -30,9 +32,11 @@ public class MyFragment extends BaseFragment {
     private Button mNotifyBtn;
     private AppButton mLanguageBtn;
     private Button mRxAndroidBtn;
+    private Button mOkGoRxjavaBtn;
     private EditText mEditText;
     private Button mSwitchToPasswordBtn;
     private Button mWebViewBtn;
+    private Button mAnimateBtn;
 
     //数据类
     private boolean isHidden;
@@ -57,9 +61,11 @@ public class MyFragment extends BaseFragment {
         mNotifyBtn = (Button) rootView.findViewById(R.id.notify);
         mLanguageBtn = (AppButton) rootView.findViewById(R.id.language);
         mRxAndroidBtn = (Button) rootView.findViewById(R.id.RxAndroid);
+        mOkGoRxjavaBtn = (Button) rootView.findViewById(R.id.okGo_Rxjava);
         mEditText = (EditText) rootView.findViewById(R.id.editText);
         mSwitchToPasswordBtn = (Button) rootView.findViewById(R.id.swichToPassword);
         mWebViewBtn = (Button) rootView.findViewById(R.id.webviewBtn);
+        mAnimateBtn = (Button) rootView.findViewById(R.id.animateBtn);
 
         //设置数据和监听
         mNotifyBtn.setOnClickListener(new View.OnClickListener() {
@@ -86,10 +92,26 @@ public class MyFragment extends BaseFragment {
             }
         });
 
+        mOkGoRxjavaBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), OkGoRxjavaActivity.class);
+                startActivity(intent);
+            }
+        });
+
         mWebViewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), TransformWebViewActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mAnimateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AnimateActivity.class);
                 startActivity(intent);
             }
         });

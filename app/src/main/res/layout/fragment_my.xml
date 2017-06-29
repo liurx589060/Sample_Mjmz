@@ -23,10 +23,22 @@
         android:text="RxAndroid" />
 
     <Button
+        android:id="@+id/okGo_Rxjava"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Okgo_Rxjava" />
+
+    <Button
         android:id="@+id/webviewBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="webview_Scheme调取App" />
+
+    <Button
+        android:id="@+id/animateBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="动画" />
 
     <RelativeLayout
         android:layout_width="match_parent"
