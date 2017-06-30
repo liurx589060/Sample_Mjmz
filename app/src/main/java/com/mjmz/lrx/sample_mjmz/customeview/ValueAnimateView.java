@@ -57,7 +57,7 @@ public class ValueAnimateView extends View {
             }
         });
         anim.setDuration(5000);
-        anim.setRepeatMode(ValueAnimator.INFINITE);
+        anim.setRepeatMode(ValueAnimator.INFINITE);//无限重复
 //        anim.setRepeatCount(ValueAnimator.INFINITE);
         anim.start();
     }

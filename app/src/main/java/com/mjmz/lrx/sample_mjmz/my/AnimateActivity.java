@@ -15,6 +15,7 @@ import com.mjmz.lrx.sample_mjmz.base.BaseActivity;
 public class AnimateActivity extends BaseActivity {
     private Button mValueAnimateBtn;
     private Button mObjectAnimateBtn;
+    private Button mPathAnimateBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,7 @@ public class AnimateActivity extends BaseActivity {
     private void init() {
         mValueAnimateBtn = (Button) findViewById(R.id.valueAnimateBtn);
         mObjectAnimateBtn = (Button) findViewById(R.id.objectAnimateBtn);
+        mPathAnimateBtn = (Button) findViewById(R.id.pathAnimateBtn);
 
         mValueAnimateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,6 +42,14 @@ public class AnimateActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AnimateActivity.this,ObjectAnimateActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mPathAnimateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AnimateActivity.this,PathAnimateActivity.class);
                 startActivity(intent);
             }
         });

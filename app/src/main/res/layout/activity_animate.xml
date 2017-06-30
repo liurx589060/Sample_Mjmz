@@ -26,4 +26,14 @@
         android:layout_alignLeft="@+id/valueAnimateBtn"
         android:layout_alignStart="@+id/valueAnimateBtn" />
 
+    <Button
+        android:id="@+id/pathAnimateBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="47dp"
+        android:text="pathAnimateBtn"
+        android:layout_below="@+id/objectAnimateBtn"
+        android:layout_alignLeft="@+id/objectAnimateBtn"
+        android:layout_alignStart="@+id/objectAnimateBtn" />
+
 </RelativeLayout>

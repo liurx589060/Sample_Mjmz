@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import com.nineoldandroids.animation.Animator;
@@ -71,9 +72,25 @@ public class ObjectAnimateView extends View {
                 invalidate();
             }
         });
-//        anim.setRepeatMode(-1);
-        ObjectAnimator anim2 = ObjectAnimator.ofObject(this, "color", new ColorEvaluator(),
+        anim.setRepeatCount(ValueAnimator.INFINITE);
+        final ColorEvaluator evaluator = new ColorEvaluator();
+        ObjectAnimator anim2 = ObjectAnimator.ofObject(this, "color", evaluator,
                 "#0000FF", "#FF0000");
+        anim2.setRepeatCount(ObjectAnimator.INFINITE);
+        anim2.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+                super.onAnimationRepeat(animation);
+                evaluator.mCurrentRed = -1;
+                evaluator.mCurrentGreen = -1;
+                evaluator.mCurrentBlue = -1;
+            }
+        });
         AnimatorSet animSet = new AnimatorSet();
         animSet.play(anim).with(anim2);
         animSet.setDuration(5000);
@@ -115,11 +132,11 @@ public class ObjectAnimateView extends View {
 
     public class ColorEvaluator implements TypeEvaluator {
 
-        private int mCurrentRed = -1;
+        public int mCurrentRed = -1;
 
-        private int mCurrentGreen = -1;
+        public int mCurrentGreen = -1;
 
-        private int mCurrentBlue = -1;
+        public int mCurrentBlue = -1;
 
         @Override
         public Object evaluate(float fraction, Object startValue, Object endValue) {
@@ -156,6 +173,7 @@ public class ObjectAnimateView extends View {
                 mCurrentBlue = getCurrentColor(startBlue, endBlue, colorDiff,
                         redDiff + greenDiff, fraction);
             }
+
             // 将计算出的当前颜色的值组装返回
             String currentColor = "#" + getHexString(mCurrentRed)
                     + getHexString(mCurrentGreen) + getHexString(mCurrentBlue);

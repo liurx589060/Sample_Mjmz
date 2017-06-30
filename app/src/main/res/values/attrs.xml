@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PathAnimateView">
+        <attr name="repeat" format="integer"></attr>
+        <attr name="type">
+            <enum name="right" value="1"></enum>
+            <enum name="wrong" value="0"></enum>
+        </attr>
+    </declare-styleable>
+</resources>
