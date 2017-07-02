@@ -2,25 +2,55 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app = "http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <com.mjmz.lrx.sample_mjmz.customeview.PathAnimateView
         android:id="@+id/wrong"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_centerInParent="true"
         app:repeat="4"
         app:type="wrong"/>
 
     <com.mjmz.lrx.sample_mjmz.customeview.PathAnimateView
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_toRightOf="@+id/wrong"
+        android:layout_marginLeft="30dp"
         app:repeat="2"
         app:type="right"
-        android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/wrong"
-        android:layout_marginRight="80dp"/>
+        android:id="@+id/pathAnimateView" />
 
+    <ImageView
+        android:id="@+id/image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/vector_drawable_anim"
+        android:layout_marginTop="17dp"
+        android:layout_below="@+id/wrong"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
+    <ImageView
+        android:id="@+id/image_business"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/vector_drawable_business_anim"
+        android:layout_marginTop="25dp"
+        android:layout_alignTop="@+id/image_view"
+        android:layout_alignLeft="@+id/pathAnimateView"
+        android:layout_alignStart="@+id/pathAnimateView"
+        android:layout_marginLeft="97dp"
+        android:layout_marginStart="97dp" />
+
+    <ImageView
+        android:id="@+id/image_bar33"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/vector_drawable_bar33_anim"
+        android:layout_marginTop="49dp"
+        android:layout_below="@+id/image_business"
+        android:layout_alignRight="@+id/pathAnimateView"
+        android:layout_alignEnd="@+id/pathAnimateView" />
 
 </RelativeLayout>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/vector_drawable_business"
+    >
+    <target
+        android:name="first"
+        android:animation="@animator/star_anim" />
+
+    <target
+        android:name="second"
+        android:animation="@animator/star_anim2" />
+
+    <target
+        android:name="third"
+        android:animation="@animator/star_anim2" />
+
+    <target
+        android:name="fourth"
+        android:animation="@animator/star_anim2" />
+</animated-vector>
