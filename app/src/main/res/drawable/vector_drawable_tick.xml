@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="100dp"
+    android:height="100dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <group android:name="tickGroup">
+
+    <path
+        android:name="circle"
+        android:strokeColor="#0C60F4"
+        android:strokeWidth="4"
+        android:strokeMiterLimit="10"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M 50 4 C 74.8528137424 4 95 24.1471862576 95 49 C 95 73.8528137424 74.8528137424 94 50 94 C 25.1471862576 94 5 73.8528137424 5 49 C 5 24.1471862576 25.1471862576 4 50 4 Z" />
+    <path
+        android:name="tick"
+        android:strokeColor="#32b7b9"
+        android:strokeWidth="4"
+        android:strokeMiterLimit="10"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M 23.782 51.395 L 46.019 69.386 L 76.688 31.825 " />
+
+    </group>
+</vector>

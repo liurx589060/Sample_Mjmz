@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/vector_drawable_only_circle"
+    >
+
+    <!--<target-->
+        <!--android:name="only_circle"-->
+        <!--android:animation="@animator/only_circle_rotation" />-->
+
+    <target
+        android:name="circle_path"
+        android:animation="@animator/only_circle_trimpath" />
+
+</animated-vector>

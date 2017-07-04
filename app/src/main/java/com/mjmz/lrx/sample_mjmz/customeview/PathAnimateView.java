@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -164,7 +166,7 @@ public class PathAnimateView extends View implements ValueAnimator.AnimatorUpdat
         //画圆
         mPathCircle.addCircle(getWidth() / 2, getWidth() / 2, getWidth() / 2 - mLineWidth, Path.Direction.CW);
         mPathMeasure.setPath(mPathCircle, false);
-        Log.e("yy","" + mCirclePercent + "---Length=" + mPathMeasure.getLength());
+//        Log.e("yy","" + mCirclePercent + "---Length=" + mPathMeasure.getLength());
         mPathCircleDst.reset();
         mPathMeasure.getSegment(0, mCirclePercent * mPathMeasure.getLength(), mPathCircleDst, true);
         canvas.drawPath(mPathCircleDst, mPaint);
@@ -219,7 +221,7 @@ public class PathAnimateView extends View implements ValueAnimator.AnimatorUpdat
         //圆形动画
         if (animation.equals(mCircleAnimator)) {
             mCirclePercent = (float) animation.getAnimatedValue();
-            Log.e("zz","更新中=" + mCirclePercent);
+//            Log.e("zz","更新中=" + mCirclePercent);
             invalidate();
             if (mCirclePercent == 1) {
                 if (mResultType == RESULT_RIGHT)

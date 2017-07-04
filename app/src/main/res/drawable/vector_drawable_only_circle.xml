@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="100dp"
+    android:height="100dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <group android:name="only_circle"
+        android:pivotY="50"
+        android:pivotX="50"
+        >
+
+    <path
+        android:name="circle_path"
+        android:strokeColor="#0C60F4"
+        android:strokeWidth="4"
+        android:strokeMiterLimit="10"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
+        android:pathData="M91.911,66.382C93.897,61.304,95,55.782,95,50
+C95,25.147,74.854,5,50,5C25.148,5,5,25.147,5,50c0,24.854,20.147,45,45,45c12.507,0,23.819-5.105,31.974-13.342" />
+    </group>
+</vector>

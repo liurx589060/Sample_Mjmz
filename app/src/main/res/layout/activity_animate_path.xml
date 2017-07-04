@@ -53,4 +53,13 @@
         android:layout_alignRight="@+id/pathAnimateView"
         android:layout_alignEnd="@+id/pathAnimateView" />
 
+    <ImageView
+        android:id="@+id/image_tick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/vector_drawable_only_circle_anim"
+        android:layout_alignTop="@+id/image_bar33"
+        android:layout_alignLeft="@+id/image_business"
+        android:layout_alignStart="@+id/image_business" />
+
 </RelativeLayout>
