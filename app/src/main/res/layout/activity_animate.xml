@@ -36,4 +36,14 @@
         android:layout_alignLeft="@+id/objectAnimateBtn"
         android:layout_alignStart="@+id/objectAnimateBtn" />
 
+    <Button
+        android:id="@+id/xfermodeBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="42dp"
+        android:text="Xfermode"
+        android:layout_below="@+id/pathAnimateBtn"
+        android:layout_alignLeft="@+id/pathAnimateBtn"
+        android:layout_alignStart="@+id/pathAnimateBtn" />
+
 </RelativeLayout>

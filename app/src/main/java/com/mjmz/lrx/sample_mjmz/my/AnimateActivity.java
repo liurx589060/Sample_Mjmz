@@ -16,6 +16,7 @@ public class AnimateActivity extends BaseActivity {
     private Button mValueAnimateBtn;
     private Button mObjectAnimateBtn;
     private Button mPathAnimateBtn;
+    private Button mXfermodeBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,7 @@ public class AnimateActivity extends BaseActivity {
         mValueAnimateBtn = (Button) findViewById(R.id.valueAnimateBtn);
         mObjectAnimateBtn = (Button) findViewById(R.id.objectAnimateBtn);
         mPathAnimateBtn = (Button) findViewById(R.id.pathAnimateBtn);
+        mXfermodeBtn = (Button) findViewById(R.id.xfermodeBtn);
 
         mValueAnimateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +52,14 @@ public class AnimateActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AnimateActivity.this,PathAnimateActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mXfermodeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AnimateActivity.this,XfermodeActivity.class);
                 startActivity(intent);
             }
         });

@@ -3,12 +3,12 @@
     android:drawable="@drawable/vector_drawable_only_circle"
     >
 
-    <!--<target-->
-        <!--android:name="only_circle"-->
-        <!--android:animation="@animator/only_circle_rotation" />-->
-
     <target
-        android:name="circle_path"
-        android:animation="@animator/only_circle_trimpath" />
+        android:name="only_circle"
+        android:animation="@animator/only_circle_rotation" />
+
+    <!--<target-->
+        <!--android:name="circle_path"-->
+        <!--android:animation="@animator/only_circle_trimpath" />-->
 
 </animated-vector>
