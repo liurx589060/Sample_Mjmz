@@ -17,6 +17,7 @@ import com.mjmz.lrx.sample_mjmz.R;
 import com.mjmz.lrx.sample_mjmz.base.BaseFragment;
 import com.mjmz.lrx.sample_mjmz.language.AppButton;
 import com.mjmz.lrx.sample_mjmz.my.AnimateActivity;
+import com.mjmz.lrx.sample_mjmz.my.EncryptionActivity;
 import com.mjmz.lrx.sample_mjmz.my.MyLanguageActivity;
 import com.mjmz.lrx.sample_mjmz.my.MyNotifyActivity;
 import com.mjmz.lrx.sample_mjmz.my.OkGoRxjavaActivity;
@@ -37,6 +38,7 @@ public class MyFragment extends BaseFragment {
     private Button mSwitchToPasswordBtn;
     private Button mWebViewBtn;
     private Button mAnimateBtn;
+    private Button mEncyptionBtn;
 
     //数据类
     private boolean isHidden;
@@ -66,6 +68,7 @@ public class MyFragment extends BaseFragment {
         mSwitchToPasswordBtn = (Button) rootView.findViewById(R.id.swichToPassword);
         mWebViewBtn = (Button) rootView.findViewById(R.id.webviewBtn);
         mAnimateBtn = (Button) rootView.findViewById(R.id.animateBtn);
+        mEncyptionBtn = (Button) rootView.findViewById(R.id.encryptionBtn);
 
         //设置数据和监听
         mNotifyBtn.setOnClickListener(new View.OnClickListener() {
@@ -115,6 +118,15 @@ public class MyFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
+
+        mEncyptionBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), EncryptionActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         mSwitchToPasswordBtn.setOnClickListener(new View.OnClickListener() {
             @Override

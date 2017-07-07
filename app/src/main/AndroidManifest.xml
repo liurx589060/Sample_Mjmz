@@ -125,6 +125,9 @@
         <activity android:name=".my.PathAnimateActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"></activity>
 
+        <activity android:name=".my.EncryptionActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
+
     </application>
 
 </manifest>

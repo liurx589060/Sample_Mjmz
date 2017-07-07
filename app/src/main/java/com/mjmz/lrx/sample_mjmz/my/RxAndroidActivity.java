@@ -194,7 +194,7 @@ public class RxAndroidActivity extends BaseActivity {
                 .subscribe(new Observer<JSONObject>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-
+                        addDisposeable(d);
                     }
 
                     @Override
@@ -225,7 +225,7 @@ public class RxAndroidActivity extends BaseActivity {
                         .subscribe(new Observer<Object>() {
                             @Override
                             public void onSubscribe(@NonNull Disposable d) {
-
+                                addDisposeable(d);
                             }
 
                             @Override
@@ -266,13 +266,13 @@ public class RxAndroidActivity extends BaseActivity {
                         .subscribe(new Observer<String>() {
                             @Override
                             public void onSubscribe(@NonNull Disposable d) {
-
+                                addDisposeable(d);
                             }
 
                             @Override
                             public void onNext(@NonNull String s) {
                                 if(s instanceof String) {
-                                    mResultTextView.setText((String)s);
+                                    mResultTextView.setText(s);
                                 }
                             }
 
@@ -297,7 +297,7 @@ public class RxAndroidActivity extends BaseActivity {
                         .subscribe(new Observer<String>() {
                             @Override
                             public void onSubscribe(@NonNull Disposable d) {
-
+                                addDisposeable(d);
                             }
 
                             @Override
