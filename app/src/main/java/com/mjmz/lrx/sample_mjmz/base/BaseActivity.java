@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.mjmz.lrx.sample_mjmz.language.ViewUtil;
+import com.mjmz.lrx.sample_mjmz.tools.GlobalToolsUtil;
 import com.mjmz.lrx.sample_mjmz.tools.PermissionUtil;
 import com.umeng.message.PushAgent;
 import com.yanzhenjie.permission.AndPermission;
@@ -43,6 +44,8 @@ public class BaseActivity extends AppCompatActivity implements PermissionListene
     protected void onDestroy() {
         super.onDestroy();
 
+        //防止InputMethodManager造成内存泄漏
+        GlobalToolsUtil.fixInputMethodManagerLeak(this);
         //反注册消息总线
         EventBus.getDefault().unregister(this);
 

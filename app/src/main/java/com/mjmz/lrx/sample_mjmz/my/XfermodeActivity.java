@@ -15,5 +15,4 @@ public class XfermodeActivity extends Activity {
         // setContentView(new PorterDuffXfermodeView(getApplicationContext()));
         setContentView(R.layout.activity_xfermode);
     }
-
 }

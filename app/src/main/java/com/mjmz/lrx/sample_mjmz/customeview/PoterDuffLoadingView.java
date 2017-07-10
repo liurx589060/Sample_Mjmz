@@ -13,6 +13,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
@@ -99,7 +100,44 @@ public class PoterDuffLoadingView extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+//        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        setMeasuredDimension(measureWidth(widthMeasureSpec),measureHeight(heightMeasureSpec));
+    }
+
+    private int measureWidth(int measureSpec) {
+        int result = 0;
+        int specMode = MeasureSpec.getMode(measureSpec);
+        int specSize = MeasureSpec.getSize(measureSpec);
+
+        if (specMode == MeasureSpec.EXACTLY) {
+            result = specSize;
+        } else {
+            result = mBitWidth;
+            if (specMode == MeasureSpec.AT_MOST) {
+                result = Math.min(result, specSize);
+            }
+        }
+
+        Log.e("yy","width=" + result);
+        return result;
+    }
+
+    private int measureHeight(int measureSpec) {
+        int result = 0;
+        int specMode = MeasureSpec.getMode(measureSpec);
+        int specSize = MeasureSpec.getSize(measureSpec);
+
+        if (specMode == MeasureSpec.EXACTLY) {
+            result = specSize;
+        } else {
+            result = mBitHeight;
+            if (specMode == MeasureSpec.AT_MOST) {
+                result = Math.min(result, specSize);
+            }
+        }
+
+        Log.e("yy","height=" + result);
+        return result;
     }
 
     @Override
