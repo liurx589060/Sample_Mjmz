@@ -29,6 +29,7 @@ public class TransformWebViewActivity extends BaseActivity {
     private void init() {
         //动态添加Webview，防止持有activity导致无法回收
         mContainer = (FrameLayout) findViewById(R.id.container);
+//        mWebView = (WebView) findViewById(R.id.webview);
         mWebView = new WebView(this);
         mContainer.addView(mWebView,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         mWebView.loadUrl("file:///android_asset/jscall.html");

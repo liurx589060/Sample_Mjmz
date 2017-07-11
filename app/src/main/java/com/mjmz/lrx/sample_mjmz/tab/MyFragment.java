@@ -3,6 +3,7 @@ package com.mjmz.lrx.sample_mjmz.tab;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.InputType;
 import android.text.Selection;
 import android.text.Spannable;
 import android.text.method.HideReturnsTransformationMethod;
@@ -133,10 +134,12 @@ public class MyFragment extends BaseFragment {
             public void onClick(View v) {
                 if (isHidden) {
                     //设置EditText文本为可见的
-                    mEditText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+//                    mEditText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    mEditText.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD|InputType.TYPE_CLASS_TEXT);
                 } else {
                     //设置EditText文本为隐藏的
-                    mEditText.setTransformationMethod(PasswordTransformationMethod.getInstance());
+//                    mEditText.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    mEditText.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                 }
                 isHidden = !isHidden;
                 mEditText.postInvalidate();

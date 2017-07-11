@@ -52,37 +52,7 @@ public class EncryptionActivity extends BaseActivity {
         mResultTextView = (TextView) findViewById(R.id.resultText);
 
         //请求网络数据
-//        getWeather().subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<String>() {
-//                    @Override
-//                    public void onSubscribe(@NonNull Disposable d) {
-//                        addDisposeable(d);
-//                    }
-//
-//                    @Override
-//                    public void onNext(@NonNull String s) {
-//                        try {
-//                            mEncryptionText = GlobalToolsUtil.encrypt("weather",s);
-//                            mResultTextView.setText(mEncryptionText);
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                            Log.e("yy",e.toString());
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onError(@NonNull Throwable e) {
-//                        Log.e("yy",e.toString());
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//
-//                    }
-//                });
-
-        getModelInfo().subscribeOn(Schedulers.io())
+        getWeather().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<String>() {
                     @Override
@@ -93,7 +63,7 @@ public class EncryptionActivity extends BaseActivity {
                     @Override
                     public void onNext(@NonNull String s) {
                         try {
-                            mEncryptionKey = "modelInfo";
+                            mEncryptionKey = "weather";
                             mEncryptionText = GlobalToolsUtil.encrypt(mEncryptionKey,s);
                             mResultTextView.setText(mEncryptionText);
                         } catch (Exception e) {
@@ -112,6 +82,37 @@ public class EncryptionActivity extends BaseActivity {
 
                     }
                 });
+
+//        getModelInfo().subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Observer<String>() {
+//                    @Override
+//                    public void onSubscribe(@NonNull Disposable d) {
+//                        addDisposeable(d);
+//                    }
+//
+//                    @Override
+//                    public void onNext(@NonNull String s) {
+//                        try {
+//                            mEncryptionKey = "modelInfo";
+//                            mEncryptionText = GlobalToolsUtil.encrypt(mEncryptionKey,s);
+//                            mResultTextView.setText(mEncryptionText);
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                            Log.e("yy",e.toString());
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(@NonNull Throwable e) {
+//                        Log.e("yy",e.toString());
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//
+//                    }
+//                });
 
         mDecryptionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,7 +158,7 @@ public class EncryptionActivity extends BaseActivity {
     private Observable<String> getModelInfo() {
         return OkGo.<String>get(url2)
                 .cacheMode(CacheMode.REQUEST_FAILED_READ_CACHE)
-                .cacheKey("encryption_weather")
+                .cacheKey("encryption_modelInfo")
                 .cacheTime(3*60*60*1000)
                 .tag(this)
                 .converter(new StringConvert())

@@ -118,7 +118,6 @@ public class PoterDuffLoadingView extends View {
             }
         }
 
-        Log.e("yy","width=" + result);
         return result;
     }
 
@@ -136,7 +135,6 @@ public class PoterDuffLoadingView extends View {
             }
         }
 
-        Log.e("yy","height=" + result);
         return result;
     }
 
