@@ -131,6 +131,9 @@
         <activity android:name=".my.XfermodeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"></activity>
 
+        <activity android:name=".my.HotPicActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
+
     </application>
 
 </manifest>

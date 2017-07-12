@@ -19,6 +19,7 @@ import com.mjmz.lrx.sample_mjmz.base.BaseFragment;
 import com.mjmz.lrx.sample_mjmz.language.AppButton;
 import com.mjmz.lrx.sample_mjmz.my.AnimateActivity;
 import com.mjmz.lrx.sample_mjmz.my.EncryptionActivity;
+import com.mjmz.lrx.sample_mjmz.my.HotPicActivity;
 import com.mjmz.lrx.sample_mjmz.my.MyLanguageActivity;
 import com.mjmz.lrx.sample_mjmz.my.MyNotifyActivity;
 import com.mjmz.lrx.sample_mjmz.my.OkGoRxjavaActivity;
@@ -40,6 +41,7 @@ public class MyFragment extends BaseFragment {
     private Button mWebViewBtn;
     private Button mAnimateBtn;
     private Button mEncyptionBtn;
+    private Button mHotPicBtn;
 
     //数据类
     private boolean isHidden;
@@ -70,6 +72,7 @@ public class MyFragment extends BaseFragment {
         mWebViewBtn = (Button) rootView.findViewById(R.id.webviewBtn);
         mAnimateBtn = (Button) rootView.findViewById(R.id.animateBtn);
         mEncyptionBtn = (Button) rootView.findViewById(R.id.encryptionBtn);
+        mHotPicBtn = (Button) rootView.findViewById(R.id.hotPicBtn);
 
         //设置数据和监听
         mNotifyBtn.setOnClickListener(new View.OnClickListener() {
@@ -108,6 +111,14 @@ public class MyFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), TransformWebViewActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mHotPicBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),HotPicActivity.class);
                 startActivity(intent);
             }
         });

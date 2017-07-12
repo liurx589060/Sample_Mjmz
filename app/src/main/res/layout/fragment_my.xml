@@ -35,6 +35,12 @@
         android:text="webview_Scheme调取App" />
 
     <Button
+        android:id="@+id/hotPicBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="前往图片热点Activity" />
+
+    <Button
         android:id="@+id/animateBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
