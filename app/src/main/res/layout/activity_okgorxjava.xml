@@ -19,12 +19,25 @@
         android:id="@+id/cacheRequest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        android:text="缓存请求"
+        android:layout_alignBaseline="@+id/normalRequest"
         android:layout_alignBottom="@+id/normalRequest"
-        android:layout_marginLeft="57dp"
-        android:layout_marginStart="57dp"
-        android:layout_toEndOf="@+id/normalRequest"
         android:layout_toRightOf="@+id/normalRequest"
-        android:text="缓存请求" />
+        android:layout_toEndOf="@+id/normalRequest" />
+
+    <Button
+        android:id="@+id/localAddRequest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="本地Add方法请求"
+        android:layout_alignBaseline="@+id/cacheRequest"
+        android:layout_alignBottom="@+id/cacheRequest"
+        android:layout_toRightOf="@+id/cacheRequest"
+        android:layout_toEndOf="@+id/cacheRequest"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp" />
 
     <TextView
         android:id="@+id/resultText"

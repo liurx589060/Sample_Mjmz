@@ -21,6 +21,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.Subject;
 import okhttp3.Response;
 
 /**
@@ -31,10 +32,12 @@ public class OkGoRxjavaActivity extends BaseActivity {
     String url = "http://www.weather.com.cn/adat/sk/101010100.html";
     String url2 = "https://www.wnwapi.com/wnwapi/index.php/Api/Index/getGoodsInfo?equipment=mobile&product_type=4&product_version=0.6.0" +
             "&client_type=5&client_version=10.2.1&user_city=shenzhen&channel_id=wnw&type=2&&goods_id=13903&partner_id=86";
+    String url3 = "http://10.0.2.2/api/index.php/test/add?x=20";
 
     //控件
     private Button mNormalRequestBtn;
     private Button mCacheReuqestBtn;
+    private Button mLocalAddRequestBtn;
     private TextView mResultTextView;
 
     private InterfaceApi mApi;
@@ -54,6 +57,7 @@ public class OkGoRxjavaActivity extends BaseActivity {
         //找寻控件
         mNormalRequestBtn = (Button) findViewById(R.id.normalRequest);
         mCacheReuqestBtn = (Button) findViewById(R.id.cacheRequest);
+        mLocalAddRequestBtn = (Button) findViewById(R.id.localAddRequest);
         mResultTextView = (TextView) findViewById(R.id.resultText);
 
         mNormalRequestBtn.setOnClickListener(new View.OnClickListener() {
@@ -113,6 +117,35 @@ public class OkGoRxjavaActivity extends BaseActivity {
                         });
             }
         });
+
+        mLocalAddRequestBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mApi.getLocalAdd().subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Observer<String>() {
+                            @Override
+                            public void onSubscribe(@NonNull Disposable d) {
+                                addDisposeable(d);
+                            }
+
+                            @Override
+                            public void onNext(@NonNull String s) {
+                                mResultTextView.setText(s);
+                            }
+
+                            @Override
+                            public void onError(@NonNull Throwable e) {
+                                Log.e("yy",e.toString());
+                            }
+
+                            @Override
+                            public void onComplete() {
+
+                            }
+                        });
+            }
+        });
     }
 
     public class InterfaceApi {
@@ -128,6 +161,20 @@ public class OkGoRxjavaActivity extends BaseActivity {
             return OkGo.<String>get(url2)
                     .cacheMode(CacheMode.REQUEST_FAILED_READ_CACHE)
                     .cacheKey("modelInfo")
+                    .tag(this)
+                    .cacheTime(60*1000)
+                    .converter(new StringConvert())
+                    .adapt(new ObservableBody<String>());
+        }
+
+        /**
+         * 本地搭建服务器Add方法
+         * @return
+         */
+        public Observable<String> getLocalAdd() {
+            return OkGo.<String>get(url3)
+                    .cacheMode(CacheMode.REQUEST_FAILED_READ_CACHE)
+                    .cacheKey("LocalAdd")
                     .tag(this)
                     .cacheTime(60*1000)
                     .converter(new StringConvert())
