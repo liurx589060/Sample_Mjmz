@@ -19,6 +19,7 @@ import com.lzy.okgo.convert.StringConvert;
 import com.lzy.okrx2.adapter.ObservableBody;
 import com.mjmz.lrx.sample_mjmz.R;
 import com.mjmz.lrx.sample_mjmz.base.BaseActivity;
+import com.mjmz.lrx.sample_mjmz.common.BossUrl;
 import com.mjmz.lrx.sample_mjmz.common.Datas;
 import com.mjmz.lrx.sample_mjmz.common.ToastUtil;
 import com.mjmz.lrx.sample_mjmz.customeview.RecyclerScrollView;
@@ -84,14 +85,14 @@ public class DesignInfoActivity extends BaseActivity {
         mAdapter = new MyRecyclerViewAdapter(Datas.getImagesUrlArray());
         mRecyclerView.setAdapter(mAdapter);
 
-        mRichText = RichText.from(IMAGE1);
-        mRichText.imageClick(new OnImageClickListener() {
-            @Override
-            public void imageClicked(List<String> imageUrls, int position) {
-                ToastUtil.setToast(getApplicationContext(),position + "-->>" + imageUrls.get(position));
-            }
-        });
-        mRichText.into(mTextView);
+//        mRichText = RichText.from(IMAGE1);
+//        mRichText.imageClick(new OnImageClickListener() {
+//            @Override
+//            public void imageClicked(List<String> imageUrls, int position) {
+//                ToastUtil.setToast(getApplicationContext(),position + "-->>" + imageUrls.get(position));
+//            }
+//        });
+//        mRichText.into(mTextView);
 
         //获取本地服务器getHtml方法
         mApi.getHtml().subscribeOn(Schedulers.io())
@@ -199,7 +200,7 @@ public class DesignInfoActivity extends BaseActivity {
          * @return
          */
         public Observable<String> getHtml() {
-            return OkGo.<String>get("http://192.168.1.101/thinkphp/Sample_Mjmz/test/getHtml?id=1&type=1")
+            return OkGo.<String>get(BossUrl.getServiceBossUrl() + "test/getHtml?id=1&type=1")
                     .cacheMode(CacheMode.REQUEST_FAILED_READ_CACHE)
                     .cacheKey("getHtml")
                     .tag(this)

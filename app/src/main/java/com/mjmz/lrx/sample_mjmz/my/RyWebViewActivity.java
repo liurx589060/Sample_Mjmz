@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.lrx.imagewrapper.ImageWrapper;
 import com.mjmz.lrx.sample_mjmz.R;
 import com.mjmz.lrx.sample_mjmz.base.BaseActivity;
+import com.mjmz.lrx.sample_mjmz.common.BossUrl;
 import com.mjmz.lrx.sample_mjmz.common.Datas;
 import com.mjmz.lrx.sample_mjmz.common.ToastUtil;
 import com.mjmz.lrx.sample_mjmz.tools.DisplayUtils;
@@ -46,7 +47,7 @@ public class RyWebViewActivity extends BaseActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         mWebView = (WebView) LayoutInflater.from(this).inflate(R.layout.rsweb_web_layout,null);
 
-        mWebView.loadUrl("http://192.168.1.101/thinkphp/Sample_Mjmz/web/madridNews?id=1");
+        mWebView.loadUrl(BossUrl.getServiceBossUrl() + "web/madridNews?id=1");
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.addJavascriptInterface(new JavaInterface(),"rsWeb");
 

@@ -13,6 +13,8 @@ import com.lzy.okgo.convert.StringConvert;
 import com.lzy.okrx2.adapter.ObservableBody;
 import com.mjmz.lrx.sample_mjmz.R;
 import com.mjmz.lrx.sample_mjmz.base.BaseActivity;
+import com.mjmz.lrx.sample_mjmz.common.BossUrl;
+
 import org.json.JSONObject;
 
 import io.reactivex.Observable;
@@ -32,7 +34,7 @@ public class OkGoRxjavaActivity extends BaseActivity {
     String url = "http://www.weather.com.cn/adat/sk/101010100.html";
     String url2 = "https://www.wnwapi.com/wnwapi/index.php/Api/Index/getGoodsInfo?equipment=mobile&product_type=4&product_version=0.6.0" +
             "&client_type=5&client_version=10.2.1&user_city=shenzhen&channel_id=wnw&type=2&&goods_id=13903&partner_id=86";
-    String url3 = "http://10.0.2.2/api/index.php/test/add?x=20";
+    String url3 = BossUrl.getServiceBossUrl() + "test/getUserData";
 
     //控件
     private Button mNormalRequestBtn;
