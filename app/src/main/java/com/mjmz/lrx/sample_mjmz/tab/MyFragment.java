@@ -18,12 +18,14 @@ import com.mjmz.lrx.sample_mjmz.R;
 import com.mjmz.lrx.sample_mjmz.base.BaseFragment;
 import com.mjmz.lrx.sample_mjmz.language.AppButton;
 import com.mjmz.lrx.sample_mjmz.my.AnimateActivity;
+import com.mjmz.lrx.sample_mjmz.my.CustomViewGroupActivity;
 import com.mjmz.lrx.sample_mjmz.my.EncryptionActivity;
 import com.mjmz.lrx.sample_mjmz.my.HotPicActivity;
 import com.mjmz.lrx.sample_mjmz.my.MyLanguageActivity;
 import com.mjmz.lrx.sample_mjmz.my.MyNotifyActivity;
 import com.mjmz.lrx.sample_mjmz.my.OkGoRxjavaActivity;
 import com.mjmz.lrx.sample_mjmz.my.RxAndroidActivity;
+import com.mjmz.lrx.sample_mjmz.my.RyWebViewActivity;
 import com.mjmz.lrx.sample_mjmz.my.TransformWebViewActivity;
 
 /**
@@ -42,6 +44,8 @@ public class MyFragment extends BaseFragment {
     private Button mAnimateBtn;
     private Button mEncyptionBtn;
     private Button mHotPicBtn;
+    private Button mCustomViewGroupBtn;
+    private Button mRyWebViewBtn;
 
     //数据类
     private boolean isHidden;
@@ -73,6 +77,8 @@ public class MyFragment extends BaseFragment {
         mAnimateBtn = (Button) rootView.findViewById(R.id.animateBtn);
         mEncyptionBtn = (Button) rootView.findViewById(R.id.encryptionBtn);
         mHotPicBtn = (Button) rootView.findViewById(R.id.hotPicBtn);
+        mCustomViewGroupBtn = (Button) rootView.findViewById(R.id.customViewGroupBtn);
+        mWebViewBtn = (Button) rootView.findViewById(R.id.ryWebBtn);
 
         //设置数据和监听
         mNotifyBtn.setOnClickListener(new View.OnClickListener() {
@@ -131,10 +137,26 @@ public class MyFragment extends BaseFragment {
             }
         });
 
+        mCustomViewGroupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CustomViewGroupActivity.class);
+                startActivity(intent);
+            }
+        });
+
         mEncyptionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), EncryptionActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mWebViewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), RyWebViewActivity.class);
                 startActivity(intent);
             }
         });

@@ -134,6 +134,12 @@
         <activity android:name=".my.HotPicActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"></activity>
 
+        <activity android:name=".my.CustomViewGroupActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
+
+        <activity android:name=".my.RyWebViewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"></activity>
+
     </application>
 
 </manifest>

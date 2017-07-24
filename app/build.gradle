@@ -39,7 +39,7 @@ android {
 
 dependencies {
     //分包库
-    compile 'com.android.support:multidex:'
+    compile 'com.android.support:multidex:1.0.1'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:25.2.0'
     compile 'com.android.support:design:25.2.0'

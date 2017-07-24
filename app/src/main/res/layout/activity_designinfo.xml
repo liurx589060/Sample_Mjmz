@@ -18,6 +18,7 @@
                 android:id="@+id/designinfo_content_textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textIsSelectable="true"
                 android:text="TextView" />
 
             <android.support.v7.widget.RecyclerView

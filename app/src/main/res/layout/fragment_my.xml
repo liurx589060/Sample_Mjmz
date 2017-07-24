@@ -52,6 +52,18 @@
         android:layout_height="wrap_content"
         android:text="加密" />
 
+    <Button
+        android:id="@+id/customViewGroupBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="自定义viewGroup" />
+
+    <Button
+        android:id="@+id/ryWebBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="recyclerView嵌套webView" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

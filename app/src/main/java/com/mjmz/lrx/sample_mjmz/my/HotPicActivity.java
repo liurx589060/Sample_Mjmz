@@ -34,7 +34,18 @@ public class HotPicActivity extends BaseActivity {
         mContainer.addView(mWebView,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 //        mWebView.loadUrl("file:///android_asset/hotHtml/index.html");
         mWebView.loadUrl("https://yun.kujiale.com/design/3FO4IHKNL8N6/show");
+//        mWebView.loadUrl("http://192.168.1.101/thinkphp/Sample_Mjmz/web/madridNews?id=1");
         mWebView.getSettings().setJavaScriptEnabled(true);
 //        mWebView.addJavascriptInterface(this,"android");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mWebView.onPause();
+        mWebView.removeAllViews();
+        mWebView.destroy();
+        mWebView = null;
+        mContainer.removeView(mWebView);
     }
 }
