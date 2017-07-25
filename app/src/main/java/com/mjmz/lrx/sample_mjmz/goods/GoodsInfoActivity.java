@@ -148,6 +148,9 @@ public class GoodsInfoActivity extends BaseActivity {
             }
 
             public void bindVH(int position) {
+                if(mRichText != null) {
+                    mRichText.clear();
+                }
                 mRichText = RichText.from(IMAGE1);
                 mRichText.imageClick(new OnImageClickListener() {
                     @Override

@@ -7,45 +7,42 @@
         android:id="@+id/normalRequest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_marginLeft="11dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="15dp"
+        android:text="普通请求"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="25dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="17dp"
-        android:text="普通请求" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:id="@+id/cacheRequest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp"
         android:text="缓存请求"
-        android:layout_alignBaseline="@+id/normalRequest"
-        android:layout_alignBottom="@+id/normalRequest"
-        android:layout_toRightOf="@+id/normalRequest"
-        android:layout_toEndOf="@+id/normalRequest" />
+        android:layout_above="@+id/localAddRequest"
+        android:layout_alignRight="@+id/localAddRequest"
+        android:layout_alignEnd="@+id/localAddRequest"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp" />
 
     <Button
         android:id="@+id/localAddRequest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="本地Add方法请求"
-        android:layout_alignBaseline="@+id/cacheRequest"
-        android:layout_alignBottom="@+id/cacheRequest"
-        android:layout_toRightOf="@+id/cacheRequest"
-        android:layout_toEndOf="@+id/cacheRequest"
-        android:layout_marginLeft="12dp"
-        android:layout_marginStart="12dp" />
+        android:text="本地getUserDataSg方法请求"
+        android:layout_below="@+id/normalRequest"
+        android:layout_alignLeft="@+id/resultText"
+        android:layout_alignStart="@+id/resultText"
+        android:layout_marginTop="13dp" />
 
     <TextView
         android:id="@+id/resultText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="TextView"
+        android:layout_below="@+id/localAddRequest"
         android:layout_alignLeft="@+id/normalRequest"
-        android:layout_alignStart="@+id/normalRequest"
-        android:layout_below="@+id/normalRequest"
-        android:layout_marginTop="49dp"
-        android:text="TextView" />
+        android:layout_alignStart="@+id/normalRequest" />
 </RelativeLayout>

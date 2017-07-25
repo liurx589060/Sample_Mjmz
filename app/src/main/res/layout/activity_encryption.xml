@@ -15,7 +15,7 @@
         android:id="@+id/encryptionBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="加密"
+        android:text="AES加密"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/decryptionBtn"
         android:layout_toEndOf="@+id/decryptionBtn"

@@ -78,7 +78,7 @@ public class MyFragment extends BaseFragment {
         mEncyptionBtn = (Button) rootView.findViewById(R.id.encryptionBtn);
         mHotPicBtn = (Button) rootView.findViewById(R.id.hotPicBtn);
         mCustomViewGroupBtn = (Button) rootView.findViewById(R.id.customViewGroupBtn);
-        mWebViewBtn = (Button) rootView.findViewById(R.id.ryWebBtn);
+        mRyWebViewBtn = (Button) rootView.findViewById(R.id.ryWebBtn);
 
         //设置数据和监听
         mNotifyBtn.setOnClickListener(new View.OnClickListener() {
@@ -153,7 +153,7 @@ public class MyFragment extends BaseFragment {
             }
         });
 
-        mWebViewBtn.setOnClickListener(new View.OnClickListener() {
+        mRyWebViewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), RyWebViewActivity.class);

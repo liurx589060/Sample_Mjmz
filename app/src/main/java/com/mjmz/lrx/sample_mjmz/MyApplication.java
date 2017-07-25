@@ -11,6 +11,7 @@ import com.example.lrx.httpwrapper.httpexecute.DefaultHttpExecute;
 import com.example.lrx.imagewrapper.DefaultImageLoader;
 import com.example.lrx.imagewrapper.ImageWrapper;
 import com.lzy.okgo.OkGo;
+import com.mjmz.lrx.sample_mjmz.common.BossUrl;
 import com.mjmz.lrx.sample_mjmz.common.Const;
 import com.mjmz.lrx.sample_mjmz.common.CrashHandler;
 import com.mjmz.lrx.sample_mjmz.language.StringUtil;
@@ -30,6 +31,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        BossUrl.init(this);
         //初始化图片加载器
         ImageWrapper.init(new DefaultImageLoader());
         //初始化http加载
@@ -79,7 +81,7 @@ public class MyApplication extends Application {
 
         //设置语言
         SharedPreferences sp = GlobalToolsUtil.getSharedPreferences(this);
-        StringUtil.switchLanguage(this,sp.getInt(Const.SP_LANGUAGE,0));
+        StringUtil.switchLanguage(this,sp.getInt(Const.SP.SP_LANGUAGE,0));
     }
 
     @Override

@@ -190,8 +190,10 @@ public class DesignInfoActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mRichText.clear();
-        mRichText = null;
+        if(mRichText != null) {
+            mRichText.clear();
+            mRichText = null;
+        }
     }
 
     public class InterfaceApi {

@@ -12,6 +12,9 @@ public class Const {
     public static final int DB_VERSION = 1;//数据库版本
 
     //SharedPreference
-    public static final String SP_NAME = "SP_Mjmz";//SP的名称
-    public static final String SP_LANGUAGE = "SP_language";//设置的语言
+    public static class SP {
+        public static final String SP_NAME = "SP_Mjmz";//SP的名称
+        public static final String SP_LANGUAGE = "SP_language";//设置的语言
+        public static final String SP_TOKEN = "SP_token";//token
+    }
 }

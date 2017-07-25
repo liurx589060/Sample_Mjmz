@@ -1,5 +1,6 @@
 package com.mjmz.lrx.sample_mjmz.my;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,8 @@ import com.lzy.okrx2.adapter.ObservableBody;
 import com.mjmz.lrx.sample_mjmz.R;
 import com.mjmz.lrx.sample_mjmz.base.BaseActivity;
 import com.mjmz.lrx.sample_mjmz.common.BossUrl;
+import com.mjmz.lrx.sample_mjmz.common.Const;
+import com.mjmz.lrx.sample_mjmz.tools.GlobalToolsUtil;
 
 import org.json.JSONObject;
 
@@ -34,7 +37,6 @@ public class OkGoRxjavaActivity extends BaseActivity {
     String url = "http://www.weather.com.cn/adat/sk/101010100.html";
     String url2 = "https://www.wnwapi.com/wnwapi/index.php/Api/Index/getGoodsInfo?equipment=mobile&product_type=4&product_version=0.6.0" +
             "&client_type=5&client_version=10.2.1&user_city=shenzhen&channel_id=wnw&type=2&&goods_id=13903&partner_id=86";
-    String url3 = BossUrl.getServiceBossUrl() + "test/getUserData";
 
     //控件
     private Button mNormalRequestBtn;
@@ -133,7 +135,19 @@ public class OkGoRxjavaActivity extends BaseActivity {
 
                             @Override
                             public void onNext(@NonNull String s) {
-                                mResultTextView.setText(s);
+                                try {
+                                    mResultTextView.setText(s);
+                                    JSONObject object = new JSONObject(s);
+                                    SharedPreferences sp = GlobalToolsUtil.getSharedPreferences(getApplicationContext());
+                                    if(object.has("token")) {
+                                        SharedPreferences.Editor editor = sp.edit();
+                                        editor.putString(Const.SP.SP_TOKEN,object.getString("token"));
+                                        editor.commit();
+                                    }
+                                }catch (Exception e) {
+                                    e.toString();
+                                    Log.e("yy",e.toString());
+                                }
                             }
 
                             @Override
@@ -174,6 +188,11 @@ public class OkGoRxjavaActivity extends BaseActivity {
          * @return
          */
         public Observable<String> getLocalAdd() {
+            String method = "getUserDataSg";
+//            String method = "getHtml";
+//            String url3 = BossUrl.getServiceBossUrl() + "test/" + method + "?id=1&" + BossUrl.getParamsStr(method) + "&type=1";
+            String url3 = BossUrl.getServiceBossUrl() + "test/" + method + "?" + BossUrl.getParamsStr(method) + "&type=1";
+            Log.e("yy",url3);
             return OkGo.<String>get(url3)
                     .cacheMode(CacheMode.REQUEST_FAILED_READ_CACHE)
                     .cacheKey("LocalAdd")

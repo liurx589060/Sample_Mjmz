@@ -53,7 +53,7 @@ public class StringUtil {
         resources.updateConfiguration(config, dm);
 
         SharedPreferences.Editor editor = GlobalToolsUtil.getSharedPreferences(context).edit();
-        editor.putInt(Const.SP_LANGUAGE,language);
+        editor.putInt(Const.SP.SP_LANGUAGE,language);
         editor.commit();
     }
 }
