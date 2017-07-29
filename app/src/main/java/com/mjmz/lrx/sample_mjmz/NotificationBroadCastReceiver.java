@@ -1,5 +1,6 @@
 package com.mjmz.lrx.sample_mjmz;
 
+import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +12,8 @@ import com.umeng.message.entity.UMessage;
 
 import org.android.agoo.common.AgooConstants;
 import org.json.JSONObject;
+
+import java.util.List;
 
 /**
  * Created by liurunxiong on 2017/4/6.
@@ -29,7 +32,24 @@ public class NotificationBroadCastReceiver extends BroadcastReceiver {
 
             Intent intent1 = new Intent(context, MyNotifyActivity.class);
             intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent1);
+
+            ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+            List<ActivityManager.RunningTaskInfo> taskList = manager.getRunningTasks(1);
+            String str = taskList.get(0).baseActivity.getClassName();
+            Log.e("yy",TabMainActivity.class.getName());
+            if(!str.equals(TabMainActivity.class.getName())) {
+                Log.e("yy","多个");
+                Intent intent2 = new Intent(context,TabMainActivity.class);
+                intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Intent[] intents = {intent2,intent1};
+                context.startActivities(intents);
+            }else {
+                Log.e("yy","单个");
+                context.startActivity(intent1);
+            }
+
+//            context.startActivities(intents);
+//            context.startActivity(intent1);
 
             UTrack.getInstance(context.getApplicationContext()).trackMsgClick(msg);
 
