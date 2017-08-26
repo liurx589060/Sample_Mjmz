@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.convert.Converter;
@@ -16,6 +18,9 @@ import com.mjmz.lrx.sample_mjmz.R;
 import com.mjmz.lrx.sample_mjmz.base.BaseActivity;
 import com.mjmz.lrx.sample_mjmz.common.BossUrl;
 import com.mjmz.lrx.sample_mjmz.common.Const;
+import com.mjmz.lrx.sample_mjmz.netBeans.EntryUtil;
+import com.mjmz.lrx.sample_mjmz.netBeans.JsonRootBean;
+import com.mjmz.lrx.sample_mjmz.tools.FileUtil;
 import com.mjmz.lrx.sample_mjmz.tools.GlobalToolsUtil;
 
 import org.json.JSONObject;
@@ -106,6 +111,19 @@ public class OkGoRxjavaActivity extends BaseActivity {
 
                             @Override
                             public void onNext(@NonNull String s) {
+                                Gson gson = new GsonBuilder().serializeNulls().create();
+                                String temp = FileUtil.readAssertResource(OkGoRxjavaActivity.this,
+                                        "model.txt");
+                                Log.e("yy","原始=" + s);
+                                Log.e("yy","本地=" + temp);
+                                JsonRootBean bean = gson.fromJson(temp,JsonRootBean.class);
+                                Log.e("yy","goods_properties=" + bean.getModel().getGoods_properties());
+                                Log.e("yy","转换=" + gson.toJson(bean));
+//                                Log.e("yy","---" + EntryUtil.getInstance().createInstance(bean.getModel().getGoods_reference_unit_name(), JsonRootBean.Model.class));
+//                                Log.e("yy","---" + EntryUtil.getInstance().test(bean.getModel().getGoods_reference_unit_name()));
+//                                Log.e("yy","goods_reference_unit_name=" + bean.getModel().getGoods_reference_unit_name());
+//                                Log.e("yy","goods_reference_price=" + bean.getModel().getGoods_reference_price());
+
                                 mResultTextView.setText(s);
                             }
 
@@ -191,7 +209,7 @@ public class OkGoRxjavaActivity extends BaseActivity {
             String method = "getUserDataSg";
 //            String method = "getHtml";
 //            String url3 = BossUrl.getServiceBossUrl() + "test/" + method + "?id=1&" + BossUrl.getParamsStr(method) + "&type=1";
-            String url3 = BossUrl.getServiceBossUrl() + "test/" + method + "?" + BossUrl.getParamsStr(method) + "&type=1";
+            String url3 = BossUrl.getServiceBossUrl() + "test/" + method + "?" + BossUrl.getParamsStr(method) + "&type=0";
             Log.e("yy",url3);
             return OkGo.<String>get(url3)
                     .cacheMode(CacheMode.REQUEST_FAILED_READ_CACHE)

@@ -1,0 +1,74 @@
+{
+    "status": "0",
+    "model": {
+        "partner_goods_id": "902",
+        "browse_num": "0",
+        "shopping_num": "0",
+        "goods_id": "13903",
+        "goods_brand_id": "377",
+        "goods_brand_name": "美好家",
+        "goods_series": "美好家",
+        "goods_type_id": "290",
+        "goods_type_name": "双人床",
+        "goods_name": "次卧暖系列床",
+        "goods_spec": "ZQB-09ZBY6-150CF",
+        "goods_style": "62",
+        "goods_style_name": "现代",
+        "goods_dimension": "1568*2181*976 ",
+        "goods_reference_price": "4092.00",
+        "goods_reference_unit_name": null,
+        "is_goods_group": "0",
+        "goods_visiable": null,
+        "goods_color": null,
+        "goods_create_time": "2017-04-28 14:36:22",
+        "goods_description": "",
+        "goods_active_type": "0",
+        "model_id": "14541",
+        "model_code": "687_BP_Fur_M_C_XLJJ_15.mdlh",
+        "model_url": "/000/000/628/F5151885-9349-3D95-A222-28D092C8489E.mdlh",
+        "goods_img1": "https://file.wnwapi.com/group1/M00/01/04/CqnlBVkDV0mAUTB9AAMVt0mCl00082.jpg",
+        "goods_img2": "",
+        "goods_img3": "",
+        "goods_img4": "",
+        "goods_img5": "",
+        "goods_version": null,
+        "goods_barcode": null,
+        "goods_unique_code": "",
+        "goods_price_lowest": 4092,
+        "goods_price_highest": 4092,
+        "goods_properties": [
+            {
+                "goods_property_id": "1045",
+                "goods_id": "13903",
+                "goods_prop_template_id": "1045",
+                "goods_custom_property": "风格",
+                "goods_property_value": "风格不限",
+                "goods_property_sort_num": "1"
+            },
+            {
+                "goods_property_id": "1046",
+                "goods_id": "13903",
+                "goods_prop_template_id": "1046",
+                "goods_custom_property": "类型",
+                "goods_property_value": "单人床",
+                "goods_property_sort_num": "2"
+            },
+            {
+                "goods_property_id": "1177",
+                "goods_id": "13903",
+                "goods_prop_template_id": "1177",
+                "goods_custom_property": "规格",
+                "goods_property_value": "",
+                "goods_property_sort_num": "3"
+            },
+            {
+                "goods_property_id": "1178",
+                "goods_id": "13903",
+                "goods_prop_template_id": "1178",
+                "goods_custom_property": "单位",
+                "goods_property_value": "张",
+                "goods_property_sort_num": "4"
+            }
+        ]
+    }
+}

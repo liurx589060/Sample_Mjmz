@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.RemoteViews;
@@ -78,4 +79,17 @@ public class MyUmengMessageService extends UmengMessageService {
         Notification notification = builder.build();
         return notification;
     }
+
+//    @Override
+//    public int onStartCommand(@Nullable Intent intent, int flags, int startId) {
+////        return super.onStartCommand(intent, flags, startId);
+//        return START_STICKY;
+//    }
+
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        Intent intent = new Intent(this,MyUmengMessageService.class);
+//        startService(intent);
+//    }
 }

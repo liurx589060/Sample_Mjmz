@@ -47,6 +47,7 @@ public class BossUrl {
         String signature = GlobalToolsUtil.md5(Method + token + time);
         paramsMap.put("time",time);
         paramsMap.put("signature",signature);
+        Log.e("yy",token);
         return paramsMap;
     }
 
