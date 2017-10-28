@@ -24,8 +24,8 @@ public class BossUrl {
     private static final int SERVER_PUBLIC_LOCAL = 0x0001;//自己电脑配置Xampp公网服务器地址
     private static final int SERVER_NATIVE_LOCAL = 0x0002;//自己电脑配置Xampp局域网服务器地址
 
-//    private static int type = SERVER_NATIVE_LOCAL;
-    private static int type = SERVER_PUBLIC_LOCAL;
+    private static int type = SERVER_NATIVE_LOCAL;
+//    private static int type = SERVER_PUBLIC_LOCAL;
 
     private static Application application;
     /**网络请求的公共参数*/
@@ -45,6 +45,8 @@ public class BossUrl {
         String token = sp.getString(Const.SP.SP_TOKEN,"");
         String time = String.valueOf(System.currentTimeMillis()/1000);
         String signature = GlobalToolsUtil.md5(Method + token + time);
+//        String signature2 = GlobalToolsUtil.md5("测试");
+//        Log.e("yy",signature2);
         paramsMap.put("time",time);
         paramsMap.put("signature",signature);
         Log.e("yy",token);
@@ -77,7 +79,7 @@ public class BossUrl {
                 break;
 
             case SERVER_NATIVE_LOCAL:
-                url = "http://192.168.1.101/thinkphp/Sample_Mjmz/";
+                url = "http://192.168.1.102/thinkphp/Sample_Mjmz/";
                 break;
         }
         return url;

@@ -209,7 +209,8 @@ public class OkGoRxjavaActivity extends BaseActivity {
             String method = "getUserDataSg";
 //            String method = "getHtml";
 //            String url3 = BossUrl.getServiceBossUrl() + "test/" + method + "?id=1&" + BossUrl.getParamsStr(method) + "&type=1";
-            String url3 = BossUrl.getServiceBossUrl() + "test/" + method + "?" + BossUrl.getParamsStr(method) + "&type=0";
+//            String url3 = BossUrl.getServiceBossUrl() + "test/" + method + "?" + BossUrl.getParamsStr(method) + "&type=0";
+              String url3 = BossUrl.getServiceBossUrl() + "test/"  + "getUserData" + "?type=0";
             Log.e("yy",url3);
             return OkGo.<String>get(url3)
                     .cacheMode(CacheMode.REQUEST_FAILED_READ_CACHE)

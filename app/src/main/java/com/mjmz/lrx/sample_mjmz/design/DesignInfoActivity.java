@@ -21,6 +21,7 @@ import com.mjmz.lrx.sample_mjmz.R;
 import com.mjmz.lrx.sample_mjmz.base.BaseActivity;
 import com.mjmz.lrx.sample_mjmz.common.BossUrl;
 import com.mjmz.lrx.sample_mjmz.common.Datas;
+import com.mjmz.lrx.sample_mjmz.common.PointDataImp;
 import com.mjmz.lrx.sample_mjmz.common.ToastUtil;
 import com.mjmz.lrx.sample_mjmz.customeview.RecyclerScrollView;
 import com.mjmz.lrx.sample_mjmz.my.OkGoRxjavaActivity;
@@ -67,6 +68,8 @@ public class DesignInfoActivity extends BaseActivity {
 
         //初始化
         init();
+
+        PointDataImp.getInstance().pointOnDesignInfo(this,"Sy","1314");
     }
 
     private void init() {

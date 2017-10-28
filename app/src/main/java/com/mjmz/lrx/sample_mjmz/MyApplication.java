@@ -14,6 +14,7 @@ import com.lzy.okgo.OkGo;
 import com.mjmz.lrx.sample_mjmz.common.BossUrl;
 import com.mjmz.lrx.sample_mjmz.common.Const;
 import com.mjmz.lrx.sample_mjmz.common.CrashHandler;
+import com.mjmz.lrx.sample_mjmz.common.PointDataImp;
 import com.mjmz.lrx.sample_mjmz.language.StringUtil;
 import com.mjmz.lrx.sample_mjmz.tools.GlobalToolsUtil;
 import com.squareup.leakcanary.LeakCanary;

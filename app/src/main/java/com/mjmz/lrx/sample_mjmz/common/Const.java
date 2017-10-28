@@ -6,6 +6,7 @@ package com.mjmz.lrx.sample_mjmz.common;
 
 public class Const {
     public static final String mTableID = "5865f375afdf520ea8b9f1aa"; // 申请的tableID填写到此处
+    public static final String APPSFLYER_DEV_KEY = "SmRgUEyKG4VhbHXHeJTTyh";
 
     //lite-orm数据库
     public static final String DB_NAME = "sanmple_Mjmz.db";//数据库名

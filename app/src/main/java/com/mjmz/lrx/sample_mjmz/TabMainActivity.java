@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mjmz.lrx.sample_mjmz.base.BaseFragmentActivity;
+import com.mjmz.lrx.sample_mjmz.common.PointDataImp;
 import com.mjmz.lrx.sample_mjmz.customeview.ScrollIsViewPager;
 import com.mjmz.lrx.sample_mjmz.tab.CartFragment;
 import com.mjmz.lrx.sample_mjmz.tab.DesignFragment;
@@ -58,6 +59,10 @@ public class TabMainActivity extends BaseFragmentActivity {
 
         //获取屏幕分辨率之类的信息
         DisplayUtils.initScreen(this);
+
+        //打点类初始化
+        PointDataImp.getInstance().pointOnInit(this);
+        PointDataImp.getInstance().pointOnStart(this,System.currentTimeMillis());
     }
 
 //    @Override

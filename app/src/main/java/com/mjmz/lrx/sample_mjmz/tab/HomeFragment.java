@@ -23,6 +23,7 @@ import com.github.jdsjlzx.recyclerview.LuRecyclerView;
 import com.github.jdsjlzx.recyclerview.LuRecyclerViewAdapter;
 import com.mjmz.lrx.sample_mjmz.R;
 import com.mjmz.lrx.sample_mjmz.base.BaseFragment;;
+import com.mjmz.lrx.sample_mjmz.common.PointDataImp;
 import com.mjmz.lrx.sample_mjmz.design.DesignGifActivity;
 import com.mjmz.lrx.sample_mjmz.design.DesignHomeBanClickActivity;
 import com.mjmz.lrx.sample_mjmz.tools.DisplayUtils;
@@ -116,6 +117,7 @@ public class HomeFragment extends BaseFragment {
             public void onClick(View v) {
                 //申请相机权限
                 PermissionUtil.requestPermission(HomeFragment.this,PermissionUtil.REQUEST_CODE_PERMISSION_CAMERA, Manifest.permission.CAMERA);
+                PointDataImp.getInstance().pointOnPay(getActivity(),"Liu","13",System.currentTimeMillis(),13.14f);
             }
         });
 

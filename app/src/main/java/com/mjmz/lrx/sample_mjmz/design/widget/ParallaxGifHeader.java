@@ -96,6 +96,22 @@ public class ParallaxGifHeader extends FrameLayout implements PtrUIHandler {
     private void startAnimation() {
         if (!isRunAnimation) {
             isRunAnimation = true;
+            mBackAnim1.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                    Log.e("yy","onAnimationStart");
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    Log.e("yy","onAnimationEnd");
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+                    Log.e("yy","onAnimationRepeat");
+                }
+            });
             mIvBack1.startAnimation(mBackAnim1);
             mIvBack2.startAnimation(mBackAnim2);
 //            mIvIcon.setImageDrawable(mAnimationDrawable);
