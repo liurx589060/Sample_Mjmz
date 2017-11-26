@@ -20,6 +20,7 @@ import com.mjmz.lrx.sample_mjmz.language.AppButton;
 import com.mjmz.lrx.sample_mjmz.my.AnimateActivity;
 import com.mjmz.lrx.sample_mjmz.my.CustomViewGroupActivity;
 import com.mjmz.lrx.sample_mjmz.my.EncryptionActivity;
+import com.mjmz.lrx.sample_mjmz.my.HeadSetActivity;
 import com.mjmz.lrx.sample_mjmz.my.HotPicActivity;
 import com.mjmz.lrx.sample_mjmz.my.MyLanguageActivity;
 import com.mjmz.lrx.sample_mjmz.my.MyNotifyActivity;
@@ -46,6 +47,7 @@ public class MyFragment extends BaseFragment {
     private Button mHotPicBtn;
     private Button mCustomViewGroupBtn;
     private Button mRyWebViewBtn;
+    private Button mHeadsetBtn;
 
     //数据类
     private boolean isHidden;
@@ -79,6 +81,7 @@ public class MyFragment extends BaseFragment {
         mHotPicBtn = (Button) rootView.findViewById(R.id.hotPicBtn);
         mCustomViewGroupBtn = (Button) rootView.findViewById(R.id.customViewGroupBtn);
         mRyWebViewBtn = (Button) rootView.findViewById(R.id.ryWebBtn);
+        mHeadsetBtn = (Button) rootView.findViewById(R.id.headsetBtn);
 
         //设置数据和监听
         mNotifyBtn.setOnClickListener(new View.OnClickListener() {
@@ -182,6 +185,14 @@ public class MyFragment extends BaseFragment {
                     Spannable spanText = (Spannable) charSequence;
                     Selection.setSelection(spanText, charSequence.length());
                 }
+            }
+        });
+
+        mHeadsetBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), HeadSetActivity.class);
+                startActivity(intent);
             }
         });
 

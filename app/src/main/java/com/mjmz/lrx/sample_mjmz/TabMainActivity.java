@@ -61,11 +61,11 @@ public class TabMainActivity extends BaseFragmentActivity {
         DisplayUtils.initScreen(this);
 
         //打点类初始化
-        PointDataImp.getInstance().pointOnInit(this);
-        PointDataImp.getInstance().pointOnStart(this,System.currentTimeMillis());
+//        PointDataImp.getInstance().pointOnInit(this);
+//        PointDataImp.getInstance().pointOnStart(this,System.currentTimeMillis());
     }
 
-//    @Override
+    //    @Override
 //    public void onWindowFocusChanged(boolean hasFocus) {
 //        super.onWindowFocusChanged(hasFocus);
 //        if(!isRequestPermission) {

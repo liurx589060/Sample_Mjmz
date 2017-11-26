@@ -1,9 +1,6 @@
-package com.mjmz.lrx.sample_mjmz.netBeans;
+package com.mjmz.lrx.sample_mjmz.bean;
 
 import android.util.Log;
-
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 
 /**
  * Created by Administrator on 2017/8/25.

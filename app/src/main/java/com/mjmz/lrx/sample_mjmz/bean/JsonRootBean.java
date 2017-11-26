@@ -1,7 +1,7 @@
 /**
   * Copyright 2017 bejson.com 
   */
-package com.mjmz.lrx.sample_mjmz.netBeans;
+package com.mjmz.lrx.sample_mjmz.bean;
 
 import android.util.Log;
 

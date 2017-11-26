@@ -43,6 +43,7 @@ public class TransformWebViewActivity extends BaseActivity {
         mWebView = new WebView(this);
         mContainer.addView(mWebView,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         mWebView.loadUrl("file:///android_asset/jscall.html");
+//        mWebView.loadUrl("file:///android_asset/marquee.html");
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.addJavascriptInterface(TransformWebViewActivity.this,"android");
 

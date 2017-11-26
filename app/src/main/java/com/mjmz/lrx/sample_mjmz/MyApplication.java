@@ -11,6 +11,7 @@ import com.example.lrx.httpwrapper.httpexecute.DefaultHttpExecute;
 import com.example.lrx.imagewrapper.DefaultImageLoader;
 import com.example.lrx.imagewrapper.ImageWrapper;
 import com.lzy.okgo.OkGo;
+import com.mjmz.lrx.sample_mjmz.bean.HeadsetBean;
 import com.mjmz.lrx.sample_mjmz.common.BossUrl;
 import com.mjmz.lrx.sample_mjmz.common.Const;
 import com.mjmz.lrx.sample_mjmz.common.CrashHandler;
@@ -28,6 +29,8 @@ import io.reactivex.disposables.CompositeDisposable;
  */
 
 public class MyApplication extends Application {
+    private HeadsetBean headsetBean;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -89,5 +92,16 @@ public class MyApplication extends Application {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(this);
+    }
+
+    public HeadsetBean getHeadsetBean() {
+        if(headsetBean == null) {
+            headsetBean = new HeadsetBean();
+        }
+        return headsetBean;
+    }
+
+    public void setHeadsetBean(HeadsetBean headsetBean) {
+        this.headsetBean = headsetBean;
     }
 }

@@ -4,89 +4,107 @@
     android:layout_height="match_parent"
     android:background="#864579">
 
-    <Button
-        android:id="@+id/notify"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="我的消息" />
+        android:layout_height="match_parent">
 
-    <com.mjmz.lrx.sample_mjmz.language.AppButton
-        android:id="@+id/language"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/language_btn_pre" />
-
-    <Button
-        android:id="@+id/RxAndroid"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="RxAndroid" />
-
-    <Button
-        android:id="@+id/okGo_Rxjava"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Okgo_Rxjava" />
-
-    <Button
-        android:id="@+id/webviewBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="webview_Scheme调取App" />
-
-    <Button
-        android:id="@+id/hotPicBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="前往图片热点Activity" />
-
-    <Button
-        android:id="@+id/animateBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="动画" />
-
-    <Button
-        android:id="@+id/encryptionBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="加密" />
-
-    <Button
-        android:id="@+id/customViewGroupBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="自定义viewGroup" />
-
-    <Button
-        android:id="@+id/ryWebBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="recyclerView嵌套webView" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
-
-        <EditText
-            android:id="@+id/editText"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:text="盛世古月"
-            android:layout_alignParentBottom="true"
-            android:layout_toLeftOf="@+id/swichToPassword"
-            android:layout_alignParentLeft="true" />
+            android:orientation="vertical" >
 
-        <Button
-            android:id="@+id/swichToPassword"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:text="Button" />
-    </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+                <EditText
+                    android:id="@+id/editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@+id/swichToPassword"
+                    android:inputType="text"
+                    android:text="盛世古月" />
+
+                <Button
+                    android:id="@+id/swichToPassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:text="Button" />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/webviewBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="webview_Scheme调取App" />
+
+            <Button
+                android:id="@+id/customViewGroupBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="自定义viewGroup" />
+
+            <Button
+                android:id="@+id/okGo_Rxjava"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Okgo_Rxjava" />
+
+            <Button
+                android:id="@+id/notify"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="我的消息" />
+
+            <Button
+                android:id="@+id/RxAndroid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="RxAndroid" />
+
+            <Button
+                android:id="@+id/animateBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="动画" />
+
+            <Button
+                android:id="@+id/encryptionBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="加密" />
+
+            <Button
+                android:id="@+id/hotPicBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="前往图片热点Activity" />
+
+            <com.mjmz.lrx.sample_mjmz.language.AppButton
+                android:id="@+id/language"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/language_btn_pre" />
+
+            <Button
+                android:id="@+id/ryWebBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="recyclerView嵌套webView" />
+
+            <Button
+                android:id="@+id/headsetBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="耳机线控" />
+        </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>
