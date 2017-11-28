@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -39,7 +40,9 @@ public class MyUmengMessageService extends UmengMessageService {
     }
 
     private Notification getNotification(UMessage msg,String message) {
-        Intent intent = new Intent(this,NotificationBroadCastReceiver.class);
+//        Intent intent = new Intent(this,NotificationBroadCastReceiver.class);
+        Intent intent = new Intent();
+        intent.setClassName(getPackageName(),"com.mjmz.lrx.sample_mjmz.NotificationBroadCastReceiver");
         intent.putExtra(AgooConstants.MESSAGE_BODY,message);
         PendingIntent contentIntent = PendingIntent.getBroadcast(this, 0,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -69,10 +72,12 @@ public class MyUmengMessageService extends UmengMessageService {
                 .setTicker(msg.ticker)
                 .setWhen(System.currentTimeMillis())
                 .setPriority(Notification.PRIORITY_DEFAULT)
+                .setColor(Color.parseColor("#457812"))
 				.setAutoCancel(true)
                 .setOngoing(false)
                 .setDefaults(Notification.DEFAULT_VIBRATE)
-                .setSmallIcon(R.drawable.icon_sample_mjmz)
+                .setSmallIcon(R.mipmap.ic_launcher)
+//                .setSmallIcon(R.drawable.icon_sample_mjmz)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.icon_sample_mjmz));
 
         // 指定内容意图

@@ -31,12 +31,12 @@ public class BossUrl {
     /**网络请求的公共参数*/
     private static Map<String,String> paramsMap = new HashMap();
 
-    private static String imei;//标识码
+    private static String imei = "";//标识码
 
     public static void init(Application app) {
         application = app;
         TelephonyManager TelephonyMgr = (TelephonyManager)application.getSystemService(TELEPHONY_SERVICE);
-        imei = TelephonyMgr.getDeviceId();
+//        imei = TelephonyMgr.getDeviceId();
         paramsMap.put("imei",imei);
     }
 
