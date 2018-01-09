@@ -42,7 +42,7 @@ dependencies {
     testCompile 'junit:junit:+'
     //分包库
     compile 'com.android.support:multidex:1.0.1'
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+//    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:25.2.0'
     compile 'com.android.support:design:25.2.0'
     compile 'com.android.support:support-vector-drawable:25.2.0'
@@ -68,12 +68,13 @@ dependencies {
     //Android 6.0申请权限
     compile 'com.yanzhenjie:permission:1.0.5'
     //扫描
-    //    compile project(':zxingbar')
+//        compile project(':zxingbar')
     compile 'com.lrx:zxingbar:1.0.0'
     //RecyclerView的动画
     compile project(':animators')
     //lite-orm数据库
     compile files('libs/lite-orm-1.9.2.jar')
+//    provided files('libs/lite-orm-1.9.2.jar')
     //友盟推送
     compile project(':PushSDK')
     //消息总线
@@ -99,6 +100,8 @@ dependencies {
     compile 'com.lzy.net:okrx2:2.0.1'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     compile 'com.google.code.gson:gson:2.8.1'
+    //appsflyer
+    compile 'com.appsflyer:af-android-sdk:4.8.3'
 }
 repositories {
     mavenCentral()

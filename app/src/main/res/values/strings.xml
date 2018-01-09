@@ -7,4 +7,6 @@
 
     <string name="language_text_current_text">This is a different world with many liars!</string>
     <string name="language_btn_pre">To change the language</string>
+
+    <string name="accessibility_service_description">辅助功能</string>
 </resources>

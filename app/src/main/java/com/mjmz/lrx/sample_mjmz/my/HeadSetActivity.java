@@ -1,49 +1,32 @@
 package com.mjmz.lrx.sample_mjmz.my;
 
-
-import android.content.BroadcastReceiver;
-import android.content.ComponentName;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.PixelFormat;
-import android.media.AudioManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.TextView;
 
-import com.mjmz.lrx.sample_mjmz.MyApplication;
 import com.mjmz.lrx.sample_mjmz.R;
 import com.mjmz.lrx.sample_mjmz.base.BaseActivity;
 import com.mjmz.lrx.sample_mjmz.receiver.MediaButtonReceiver;
-import com.mjmz.lrx.sample_mjmz.tools.AdbShellUtil;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-import org.json.JSONArray;
-import org.json.JSONException;
 
 /**
- * Created by Administrator on 2017/11/4.
+ * Created by Administrator on 2018/1/7.
  */
 
-public class HeadSetActivity extends BaseActivity {
-    private TextView mStatusTxv;
-    private TextView mOperateTxv;
-
-    private AudioManager mAudioManager;
-    private ComponentName mComponentName;
-
-    private WindowManager windowManager;
+public class HeadSetActivity extends BaseActivity{
+    private WindowManager wm;
     private View floatView;
-    private TextView floatTextView;
+    private MediaButtonReceiver mediaButtonReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,152 +34,96 @@ public class HeadSetActivity extends BaseActivity {
         setContentView(R.layout.activity_headset);
 
         init();
-        addFloatView();
     }
 
     private void init() {
-        mStatusTxv = (TextView) findViewById(R.id.status_txv);
-        mOperateTxv = (TextView) findViewById(R.id.operation_txv);
+        wm = (WindowManager)getApplication().getSystemService(Context.WINDOW_SERVICE);
 
-//        mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        addFloatView();
+        registMediaButtonReceiver();
 
-        // AudioManager注册一个MediaButton对象
-//        mComponentName = new ComponentName(getPackageName(), MediaButtonReceiver.class.getName());
-//        registerReceiver(headSetReceiver, new IntentFilter(Intent.ACTION_HEADSET_PLUG));
+//        startAccessibilityService();
+    }
 
-        windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+    /**
+     * 前往设置界面开启服务
+     */
+    private void startAccessibilityService() {
+        new AlertDialog.Builder(this)
+                .setTitle("开启辅助功能")
+                .setIcon(R.mipmap.ic_launcher)
+                .setMessage("使用此项功能需要您开启辅助功能")
+                .setPositiveButton("立即开启", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // 隐式调用系统设置界面
+                        Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
+                        startActivity(intent);
+                    }
+                }).create().show();
+    }
+
+    private void registMediaButtonReceiver() {
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_MEDIA_BUTTON);
+        mediaButtonReceiver = new MediaButtonReceiver();
+        registerReceiver(mediaButtonReceiver,filter);
+    }
+
+    private void unRegistMediaButtonReceiver() {
+        if(mediaButtonReceiver != null) {
+            unregisterReceiver(mediaButtonReceiver);
+        }
+    }
+
+    private void addFloatView() {
+        WindowManager.LayoutParams wmParams = new WindowManager.LayoutParams();
+        //设置window type
+        wmParams.type = WindowManager.LayoutParams.TYPE_PHONE;
+        //设置图片格式，效果为背景透明
+        wmParams.format = PixelFormat.RGBA_8888;
+        //设置浮动窗口不可聚焦（实现操作除浮动窗口外的其他可见窗口的操作）
+        wmParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+        //调整悬浮窗显示的停靠位置为左侧置顶
+        wmParams.gravity = Gravity.RIGHT | Gravity.CENTER_VERTICAL;
+        // 以屏幕左上角为原点，设置x、y初始值，相对于gravity
+        wmParams.x = 0;
+        wmParams.y = 0;
+
+        //设置悬浮窗口长宽数据
+        wmParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        wmParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
         floatView = LayoutInflater.from(this).inflate(R.layout.float_layout,null);
-        floatTextView = (TextView) floatView.findViewById(R.id.textView);
-        floatView.setFocusableInTouchMode(true);
-        floatView.setOnKeyListener(new View.OnKeyListener() {
+
+        if(floatView.getParent() == null) {
+            wm.addView(floatView,wmParams);
+        }
+
+        floatView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                switch (keyCode) {
-                    case KeyEvent.KEYCODE_VOLUME_DOWN:
-                        EventBus.getDefault().post("2");
-                        String[] search = {
-                                "input tap 500 600",// 返回到主界面，数值与按键的对应关系可查阅KeyEvent
-                                "input keyevent 79",
-//                        "sleep 1",// 等待1秒
-//                        "input keyevent 4",
-//                        "am start -n com.mjmz.lrx.sample_mjmz/com.mjmz.lrx.sample_mjmz.TabMainActivity",// 打开微信的启动界面，am命令的用法可自行百度、Google
-                        };
-                        AdbShellUtil.getInstance().execShell(search,false);
-                        return true;
-                    case KeyEvent.KEYCODE_VOLUME_UP:
-                        EventBus.getDefault().post("1");
-                        return true;
-                    case KeyEvent.KEYCODE_VOLUME_MUTE:
-                        return true;
-                }
-                return true;
+            public void onClick(View v) {
+                floatView.setVisibility(View.GONE);
             }
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    private final BroadcastReceiver headSetReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (action.equals(Intent.ACTION_HEADSET_PLUG)) {
-                // phone headset plugged
-                if (intent.getIntExtra("state", 0) == 1) {
-                    // do something
-//                  Log.d(TAG, "耳机检测：插入");
-//                  Toast.makeText(context, "耳机检测：插入", Toast.LENGTH_SHORT) .show();
-                    mAudioManager.registerMediaButtonEventReceiver(mComponentName);
-                    mStatusTxv.setText("耳机检测：插入");
-                    // phone head unplugged
-                } else {
-                    // do something
-//                  Log.d(TAG, "耳机检测：没有插入");
-//                  Toast.makeText(context, "耳机检测：没有插入", Toast.LENGTH_SHORT).show();
-                    mAudioManager.unregisterMediaButtonEventReceiver(mComponentName);
-                    mStatusTxv.setText("耳机检测：没有插入");
-                }
-            }
-        }
-    };
-
-    private void addFloatView() {
-        WindowManager.LayoutParams mParams = new WindowManager.LayoutParams();
-        mParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;// 系统提示window
-//        mParams.format = PixelFormat.TRANSLUCENT;// 支持透明
-        mParams.format = PixelFormat.RGBA_8888;
-//        mParams.flags |= WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;// 焦点
-        mParams.width = WindowManager.LayoutParams.WRAP_CONTENT;//窗口的宽和高
-        mParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        mParams.gravity = Gravity.RIGHT| Gravity. CENTER_VERTICAL; // 调整悬浮窗口至右侧中间
-        mParams.x = 0;
-        mParams.y = 0;
-        windowManager.addView(floatView,mParams);
-    }
-
     private void removeFloatView() {
-        windowManager.removeView(floatView);
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        Log.e("yy","onTouchEvent-x=" + event.getX() + "  y=" + event.getY());
-        return super.onTouchEvent(event);
+        if(floatView != null && floatView.getParent() != null) {
+            wm.removeView(floatView);
+        }
+        unRegistMediaButtonReceiver();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        unregisterReceiver(headSetReceiver);
-//        mAudioManager.unregisterMediaButtonEventReceiver(mComponentName);
-        removeFloatView();
+//        removeFloatView();
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_VOLUME_DOWN:
-                EventBus.getDefault().post("2");
-                String[] search = {
-                        "input tap 500 600",// 返回到主界面，数值与按键的对应关系可查阅KeyEvent
-                        "input keyevent 79",
-//                        "sleep 1",// 等待1秒
-//                        "input keyevent 4",
-//                        "am start -n com.mjmz.lrx.sample_mjmz/com.mjmz.lrx.sample_mjmz.TabMainActivity",// 打开微信的启动界面，am命令的用法可自行百度、Google
-                };
-                AdbShellUtil.getInstance().execShell(search,false);
-                return true;
-            case KeyEvent.KEYCODE_VOLUME_UP:
-                EventBus.getDefault().post("1");
-                return true;
-            case KeyEvent.KEYCODE_VOLUME_MUTE:
-                return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
-    /**
-     * eventBus的消息响应函数
-     * @param type
-     */
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void keydownEvent(String type) {
-        int i = Integer.valueOf(type).intValue();
-        int volume = ((MyApplication)getApplication()).getHeadsetBean().getVolume();
-        boolean isPause = ((MyApplication)getApplication()).getHeadsetBean().isPause();
-        switch (i) {
-            case 0:
-                mOperateTxv.setText("按下暂停--" + isPause);
-                break;
-            case 1:
-                mOperateTxv.setText("按下音量上键--" + volume);
-                break;
-            case 2:
-                mOperateTxv.setText("按下音量下键--" + volume);
-                break;
-        }
+    public boolean onTouchEvent(MotionEvent event) {
+        Log.e("yy","action=" + event.getAction() + "--X=" + event.getX() + "--Y=" + event.getY());
+        return super.onTouchEvent(event);
     }
 }
