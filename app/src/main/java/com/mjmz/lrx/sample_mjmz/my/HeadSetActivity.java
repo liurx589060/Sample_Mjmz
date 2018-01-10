@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.view.WindowManager;
 
 import com.mjmz.lrx.sample_mjmz.R;
 import com.mjmz.lrx.sample_mjmz.base.BaseActivity;
+import com.mjmz.lrx.sample_mjmz.customeview.FloatLayoutView;
 import com.mjmz.lrx.sample_mjmz.receiver.MediaButtonReceiver;
 
 /**
@@ -25,7 +27,7 @@ import com.mjmz.lrx.sample_mjmz.receiver.MediaButtonReceiver;
 
 public class HeadSetActivity extends BaseActivity{
     private WindowManager wm;
-    private View floatView;
+    private FloatLayoutView floatView;
     private MediaButtonReceiver mediaButtonReceiver;
 
     @Override
@@ -83,7 +85,8 @@ public class HeadSetActivity extends BaseActivity{
         //设置图片格式，效果为背景透明
         wmParams.format = PixelFormat.RGBA_8888;
         //设置浮动窗口不可聚焦（实现操作除浮动窗口外的其他可见窗口的操作）
-        wmParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+//        wmParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+        wmParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH;
         //调整悬浮窗显示的停靠位置为左侧置顶
         wmParams.gravity = Gravity.RIGHT | Gravity.CENTER_VERTICAL;
         // 以屏幕左上角为原点，设置x、y初始值，相对于gravity
@@ -94,7 +97,7 @@ public class HeadSetActivity extends BaseActivity{
         wmParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
         wmParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
 
-        floatView = LayoutInflater.from(this).inflate(R.layout.float_layout,null);
+        floatView = (FloatLayoutView) LayoutInflater.from(this).inflate(R.layout.float_layout,null);
 
         if(floatView.getParent() == null) {
             wm.addView(floatView,wmParams);
@@ -106,6 +109,26 @@ public class HeadSetActivity extends BaseActivity{
                 floatView.setVisibility(View.GONE);
             }
         });
+
+        floatView.setFocusableInTouchMode(true);
+//        floatView.setOnKeyListener(new View.OnKeyListener() {
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                Log.e("yy","keyCode=" + keyCode);
+//                switch (keyCode) {
+//                    case KeyEvent.KEYCODE_VOLUME_DOWN:
+//                        Log.e("yy","volume down");
+//                        break;
+//                    case KeyEvent.KEYCODE_VOLUME_UP:
+//                        Log.e("yy","volume up");
+//                        break;
+//                    case KeyEvent.KEYCODE_BACK:
+//                        finish();
+//                        break;
+//                }
+//                return false;
+//            }
+//        });
     }
 
     private void removeFloatView() {
